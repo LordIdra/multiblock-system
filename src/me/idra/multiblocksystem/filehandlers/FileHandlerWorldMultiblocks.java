@@ -23,6 +23,8 @@ import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 public class FileHandlerWorldMultiblocks {
 
+	static final String RECIPE = "recipe";
+	static final String POSITIONS = "positions";
 	
 	static FileConfiguration world_multiblock_config;
 	static File world_multiblock_file; 
@@ -106,11 +108,11 @@ public class FileHandlerWorldMultiblocks {
 			multiblock_section.set("FuelTicks", multiblock.fuel_ticks);
 			
 			// Check current recipe section exists
-			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection("Recipe");
+			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
 			
 			if (recipe_section == null) {
-				multiblock_section.createSection("Recipe");
-				recipe_section = multiblock_section.getConfigurationSection("Recipe");
+				multiblock_section.createSection(RECIPE);
+				recipe_section = multiblock_section.getConfigurationSection(RECIPE);
 			}
 			
 			// Store recipe
@@ -121,11 +123,11 @@ public class FileHandlerWorldMultiblocks {
 				recipe_section.set("Time", 0);
 			
 			// Check map sections exist
-			ConfigurationSection position_section = multiblock_section.getConfigurationSection("Positions");
+			ConfigurationSection position_section = multiblock_section.getConfigurationSection(POSITIONS);
 			
 			if (position_section == null) {
-				multiblock_section.createSection("Positions");
-				position_section = multiblock_section.getConfigurationSection("Positions");
+				multiblock_section.createSection(POSITIONS);
+				position_section = multiblock_section.getConfigurationSection(POSITIONS);
 			}
 			
 			// Store blocks and their respective tags
@@ -156,7 +158,7 @@ public class FileHandlerWorldMultiblocks {
 			
 			// Get the config section
 			ConfigurationSection multiblock_section = world_multiblock_config.getConfigurationSection(id_as_string);
-			ConfigurationSection position_section = multiblock_section.getConfigurationSection("Positions");
+			ConfigurationSection position_section = multiblock_section.getConfigurationSection(POSITIONS);
 					
 			// Get basic variables
 			UUID uuid = UUID.fromString(multiblock_section.getString("Owner"));
@@ -179,7 +181,7 @@ public class FileHandlerWorldMultiblocks {
 			}
 			
 			// Get current recipe information
-			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection("Recipe");
+			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
 			
 			// Store recipe
 			int recipe_index = recipe_section.getInt("Index");

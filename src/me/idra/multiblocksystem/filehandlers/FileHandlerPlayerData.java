@@ -21,11 +21,19 @@ import me.idra.multiblocksystem.objects.PlayerSettings;
 
 public class FileHandlerPlayerData {
 
+	static final String SETTINGS = "settings";
+	static final String _TRUSTED = ".trusted";
 	
 	static FileConfiguration player_data_file;
 	static File data_file; 
 	
 	
+
+	private FileHandlerPlayerData() {
+		// Empty constructor
+	}
+
+
 	
 	public static void loadFile() {
 		
@@ -72,7 +80,7 @@ public class FileHandlerPlayerData {
 			player_section = player_data_file.getConfigurationSection(player.toString());
 		}
 
-		ConfigurationSection settings_section = player_section.getConfigurationSection("settings");
+		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
 		
 		settings_section.set("auto_build_enabled", settings.auto_build_enabled);
 		
@@ -114,7 +122,7 @@ public class FileHandlerPlayerData {
 		PlayerSettings settings = new PlayerSettings();
 		
 		ConfigurationSection player_section = player_data_file.getConfigurationSection(player.toString());
-		ConfigurationSection settings_section = player_section.getConfigurationSection("settings");
+		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
 		
 		settings.auto_build_enabled = settings_section.getBoolean("auto_build_enabled");
 		
@@ -159,8 +167,8 @@ public class FileHandlerPlayerData {
 			player_data_file.createSection(owner.toString());
 			player_section = player_data_file.getConfigurationSection(owner.toString());
 		
-			player_data_file.set(owner.toString() + ".trusted", new ArrayList<String> ());
-			player_section.createSection("settings");
+			player_data_file.set(owner.toString() + _TRUSTED, new ArrayList<String> ());
+			player_section.createSection(SETTINGS);
 			
 			saveSettings(owner, new PlayerSettings ());
 		}
@@ -174,9 +182,9 @@ public class FileHandlerPlayerData {
 		checkPlayer(owner);
 		
 		// Add the specified player to the list of trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + ".trusted");
+		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
 		trusted_array.add(member.toString());
-		player_data_file.set(owner.toString() + ".trusted", trusted_array);
+		player_data_file.set(owner.toString() + _TRUSTED, trusted_array);
 		
 		saveAndReload();
 	}
@@ -189,7 +197,7 @@ public class FileHandlerPlayerData {
 		checkPlayer(owner);
 		
 		// Get already trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + ".trusted");
+		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
 		
 		// Check the specified player to untrust is already trusted (if not, display an error)
 		if (!trusted_array.contains(member.toString()))
@@ -197,7 +205,7 @@ public class FileHandlerPlayerData {
 		
 		// If they do exist, remove them and set the stored array to the new array
 		trusted_array.remove(member.toString());
-		player_data_file.set(owner.toString() + ".trusted", trusted_array);
+		player_data_file.set(owner.toString() + _TRUSTED, trusted_array);
 		
 		saveAndReload();
 		
@@ -213,10 +221,10 @@ public class FileHandlerPlayerData {
 		checkPlayer(owner);
 		
 		// Get already trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + ".trusted");
+		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
 		
 		// Read trusted players into a new array
-		ArrayList<Player> players = new ArrayList<Player> ();
+		ArrayList<Player> players = new ArrayList<> ();
 		for (String uuid : trusted_array)
 			players.add(Bukkit.getPlayer(UUID.fromString(uuid)));
 		

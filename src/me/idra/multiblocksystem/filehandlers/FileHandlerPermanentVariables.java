@@ -12,9 +12,17 @@ import me.idra.multiblocksystem.managers.ManagerPlugin;
 
 public class FileHandlerPermanentVariables {
 
+	static final String STORED_TICK = "stored-stick";
+	static final String CURRENT_ID = "current-id";
 	
 	static FileConfiguration permanent_variable_file;
 	static File data_file;
+
+	
+
+	private FileHandlerPermanentVariables() {
+		// Empty constructor
+	}
 	
 	
 	
@@ -37,18 +45,18 @@ public class FileHandlerPermanentVariables {
 		
 		// Check the CurrentID counter exists
 		
-		if (!permanent_variable_file.contains("current-id")) {
+		if (!permanent_variable_file.contains(CURRENT_ID)) {
 			
-			permanent_variable_file.set("current-id", 0);
+			permanent_variable_file.set(CURRENT_ID, 0);
 			Logger.log(
 					Logger.getWarning("current-id-not-found"),
 					true);
 		}
 		
 		// Check the StoredTick counter exists
-		if (!permanent_variable_file.contains("stored-tick")) {
+		if (!permanent_variable_file.contains(STORED_TICK)) {
 			
-			permanent_variable_file.set("stored-tick", 0);
+			permanent_variable_file.set(STORED_TICK, 0);
 			Logger.log(
 					Logger.getWarning("stored-tick-not-found"),
 					true);
@@ -79,8 +87,8 @@ public class FileHandlerPermanentVariables {
 	public static int currentID() {
 		
 		// Return the current multiblock ID, then increment it by 1
-		int previous_ID = permanent_variable_file.getInt("current-id");
-		permanent_variable_file.set("current-id", previous_ID + 1);
+		int previous_ID = permanent_variable_file.getInt(CURRENT_ID);
+		permanent_variable_file.set(CURRENT_ID, previous_ID + 1);
 		
 		saveAndReload();
 		
@@ -92,7 +100,7 @@ public class FileHandlerPermanentVariables {
 	public static int getStoredTick() {
 		
 		// Return the stored tick number
-		return permanent_variable_file.getInt("stored-tick");
+		return permanent_variable_file.getInt(STORED_TICK);
 	}
 	
 	
@@ -100,7 +108,7 @@ public class FileHandlerPermanentVariables {
 	public static void setStoredTick(long tick) {
 		
 		// Set stored tick number
-		permanent_variable_file.set("stored-tick", tick);
+		permanent_variable_file.set(STORED_TICK, tick);
 		
 		saveAndReload();
 	}
