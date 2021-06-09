@@ -523,10 +523,12 @@ public abstract class BaseWorldMultiblock {
 		// Create multiblock
 		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
 
-		// Add the multiblock to the multiblock array
-		if (world_multiblock != null) {
-			ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+		if (world_multiblock == null) {
+			return;
 		}
+
+		// Add the multiblock to the multiblock array
+		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 	
 	
@@ -536,17 +538,22 @@ public abstract class BaseWorldMultiblock {
 		// Create multiblock
 		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
 		
+		if (world_multiblock == null) {
+			return;
+		}
+
 		world_multiblock.fuel_ticks = in_fuel_ticks;
 
-		if (recipe_index != -1)
+		if (recipe_index != -1) {
 			world_multiblock.active_recipe = abstract_multiblock.recipes.get(recipe_index);
+		}
 		
-		if (world_multiblock.active_recipe != null)
+		if (world_multiblock.active_recipe != null) {
 			world_multiblock.active_recipe.time = recipe_time;
+		}
 		
 		// Add the multiblock to the multiblock array
-		if (world_multiblock != null)
-			ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 	
 	
@@ -565,8 +572,9 @@ public abstract class BaseWorldMultiblock {
 				Inventory inventory = ((Chest) position.getBlock().getState()).getBlockInventory();
 			
 				// Compare the tag for that section - if it matches, check that the inventory doesn't already exist, then add the inventory to our array
-				if ((Arrays.asList(position_map.get(position)).contains(tag)) && (!tag_matches.contains(inventory)))
+				if ((Arrays.asList(position_map.get(position)).contains(tag)) && (!tag_matches.contains(inventory))) {
 					tag_matches.add(inventory);
+				}
 			}
 		}
 		
@@ -585,8 +593,9 @@ public abstract class BaseWorldMultiblock {
 		for (BlockPosition position : position_map.keySet()) {
 			
 			// Compare the tag for that section - if it matches, add the position to our array
-			if (Arrays.asList(position_map.get(position)).contains(tag))
+			if (Arrays.asList(position_map.get(position)).contains(tag)) {
 				tag_matches.add(position);
+			}
 		}
 		
 		// Return the block positions that contain the specified tag
