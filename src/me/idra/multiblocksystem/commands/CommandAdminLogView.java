@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -36,11 +37,11 @@ public class CommandAdminLogView extends BaseCommand{
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
 		
 		// Generate top text
-		ArrayList<String> top_text = new ArrayList<String> ();
+		List<String> top_text = new ArrayList<> ();
 		top_text.add(MessageHandler.getInfo("admin-log-title"));
 		
 		// Array of error times + messages
-		ArrayList<ComponentBuilder> formatted_errors = new ArrayList<ComponentBuilder> ();
+		List<ComponentBuilder> formatted_errors = new ArrayList<> ();
 				
 		// Send logs
 		for (int ID : Logger.log_messages.keySet())

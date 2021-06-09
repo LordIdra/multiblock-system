@@ -1,5 +1,6 @@
 package me.idra.multiblocksystem.lists;
 
+import java.util.Map;
 import java.util.HashMap;
 
 import org.bukkit.command.CommandSender;
@@ -15,5 +16,5 @@ public class ListChatListers {
 
 
 
-	public static HashMap<CommandSender, ChatLister> chat_listers = new HashMap<CommandSender, ChatLister> ();
+	public static Map<CommandSender, ChatLister> chat_listers = new HashMap<> ();
 }

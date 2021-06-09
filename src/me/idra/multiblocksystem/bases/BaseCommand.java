@@ -1,6 +1,7 @@
 package me.idra.multiblocksystem.bases;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,12 +16,12 @@ public abstract class BaseCommand {
 	public Permission permission;
 	public boolean hidden;
 	public boolean console;
-	public ArrayList<ArrayList<String>> all_arguments = new ArrayList<ArrayList<String>> ();
+	public List<List<String>> all_arguments = new ArrayList<> ();
 	
 	public void addName() {
 		if (!hidden) {
 			for (String s : name) {
-				ArrayList<String> new_array = new ArrayList<String> ();
+				List<String> new_array = new ArrayList<> ();
 				new_array.add(s);
 				all_arguments.add(new_array);
 			}

@@ -1,5 +1,8 @@
 package me.idra.multiblocksystem.managers;
 
+
+
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.permissions.Permission;
@@ -20,8 +23,8 @@ public class ManagerPermissions {
 
 
 
-	private static ArrayList<Permission> command_permissions = new ArrayList<Permission> ();
-	private static ArrayList<Permission> multiblock_permissions = new ArrayList<Permission> ();
+	private static List<Permission> command_permissions = new ArrayList<> ();
+	private static List<Permission> multiblock_permissions = new ArrayList<> ();
 	
 	
 	

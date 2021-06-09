@@ -1,6 +1,8 @@
 package me.idra.multiblocksystem.lists;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,8 +19,8 @@ public class ListAbstractMultiblocks {
 	
 
 	
-	public static ArrayList<String> multiblock_names = new ArrayList<String> ();
-	public static HashMap<String, AbstractMultiblock> structures = new HashMap<String, AbstractMultiblock> ();
+	public static List<String> multiblock_names = new ArrayList<> ();
+	public static Map<String, AbstractMultiblock> structures = new HashMap<> ();
 	
 	
 	public static void initialize() {

@@ -1,5 +1,8 @@
 package me.idra.multiblocksystem.objects;
 
+
+
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.Material;
@@ -10,7 +13,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 public class AbstractMixedItemStack {
 
 	public String[] tags = null;
-	public ArrayList<MixedItemStack> items = new ArrayList<MixedItemStack> ();
+	public List<MixedItemStack> items = new ArrayList<> ();
 	
 	
 	
@@ -24,7 +27,7 @@ public class AbstractMixedItemStack {
 		this.tags = tags;
 	}
 	
-	public AbstractMixedItemStack(ArrayList<Material> materials, String[] tags) {
+	public AbstractMixedItemStack(List<Material> materials, String[] tags) {
 		
 		// For each material
 		for (Material material : materials)

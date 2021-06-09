@@ -1,6 +1,6 @@
 package me.idra.multiblocksystem.multiblocks;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
@@ -13,7 +13,7 @@ public class LARGEGOLDPAN extends BaseWorldMultiblock {
 
 	
 	
-	public LARGEGOLDPAN(AbstractMultiblock abstract_multiblock, HashMap<BlockPosition, String[]> blocks, UUID owner, int ID) {
+	public LARGEGOLDPAN(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> blocks, UUID owner, int ID) {
 		super(abstract_multiblock, blocks, owner, ID);
 
 		// Start ticking

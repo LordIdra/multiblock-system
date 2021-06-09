@@ -1,7 +1,8 @@
 package me.idra.multiblocksystem.objects;
 
+import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -37,7 +38,7 @@ public class BlockError {
 		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + current_item.getDisplayName() + ChatColor.DARK_RED + "]";
 
 		// Block(s) that the location should be
-		ArrayList<String> should_be_array = new ArrayList<String> ();
+		List<String> should_be_array = new ArrayList<> ();
 		
 		for (int i = 0; i < should_be_items.items.size(); i++) {
 			
@@ -82,7 +83,7 @@ public class BlockError {
 			primary_color = ChatColor.DARK_RED;
 		
 		// Block(s) that the location should be
-		ArrayList<String> should_be_array = new ArrayList<String> ();
+		List<String> should_be_array = new ArrayList<> ();
 		
 		for (int i = 0; i < should_be_items.items.size(); i++) {
 			
@@ -170,10 +171,10 @@ public class BlockError {
 	
 	
 	
-	public static ArrayList<BlockError> getBlockErrorsFromInfoMap(Player player, HashMap<WorldMixedItemStack, AbstractMixedItemStack> block_map) {
+	public static List<BlockError> getBlockErrorsFromInfoMap(Player player, Map<WorldMixedItemStack, AbstractMixedItemStack> block_map) {
 		
 		// Initialize empty array of block errors
-		ArrayList<BlockError> block_errors = new ArrayList<BlockError> ();
+		List<BlockError> block_errors = new ArrayList<> ();
 		
 		// For every BlockInfo in the structure
 		for (WorldMixedItemStack world_block : block_map.keySet()) {

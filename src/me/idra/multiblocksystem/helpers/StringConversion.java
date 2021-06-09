@@ -1,6 +1,10 @@
 package me.idra.multiblocksystem.helpers;
 
+
+
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -21,16 +25,16 @@ public class StringConversion {
 	}
 
 	
-	public static ArrayList<String> removeDuplicates(ArrayList<String> array) {
+	public static List<String> removeDuplicates(List<String> array) {
 		
 		// Convert array to set
-		HashSet<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 
 		for(int i = 0; i < array.size(); i++)
 		  set.add(array.get(i));
 		
 		// Convert set to array
-		ArrayList<String> new_array = new ArrayList<String> ();
+		List<String> new_array = new ArrayList<> ();
 		new_array.addAll(set);
 		
 		return new_array;
@@ -79,7 +83,7 @@ public class StringConversion {
 		boolean is_slimefun_item = false;
 		Material material = null;
 		SlimefunItem slimefun_item = null;
-		ArrayList<String> tag_data = new ArrayList<String> ();
+		List<String> tag_data = new ArrayList<> ();
 		
 		// Before that, we have to handle tags though (if they exist)
 		if (block_data.contains("[")) {
@@ -132,7 +136,7 @@ public class StringConversion {
 		
 		
 		// Start setting up prefixes
-		ArrayList<Material> materials = new ArrayList<Material> ();
+		List<Material> materials = new ArrayList<> ();
 		boolean uses_prefix_variant = false;
 		
 		// For every tag

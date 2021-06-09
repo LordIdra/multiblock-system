@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.objects;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -30,10 +31,10 @@ public class AbstractMultiblock {
 	public String description;
 	public StructureDescriptor structure;
 	
-	public ArrayList<String> tags = new ArrayList<String> ();
-	public HashMap<String, Object> variables = new HashMap<String, Object> ();
-	public ArrayList<MultiblockRecipe> recipes = new ArrayList<MultiblockRecipe> ();
-	public ArrayList<MultiblockFuel> fuels = new ArrayList<MultiblockFuel> ();
+	public List<String> tags = new ArrayList<> ();
+	public Map<String, Object> variables = new HashMap<> ();
+	public List<MultiblockRecipe> recipes = new ArrayList<> ();
+	public List<MultiblockFuel> fuels = new ArrayList<> ();
 	
 	
 	
@@ -121,13 +122,13 @@ public class AbstractMultiblock {
 				ConfigurationSection config_item_out = current_recipe.getConfigurationSection("ItemOut");
 				
 				// ItemIn
-				ArrayList<MixedItemStack> item_in = new ArrayList<MixedItemStack> ();
+				List<MixedItemStack> item_in = new ArrayList<> ();
 
 				for (String item : config_item_in.getKeys(false))
 					item_in.add(recipeMixedItemStackFromConfigSection(config_item_in.getConfigurationSection(item)));
 					
 				// ItemOut
-				ArrayList<MixedItemStack> item_out = new ArrayList<MixedItemStack> ();
+				List<MixedItemStack> item_out = new ArrayList<> ();
 
 				for (String item : config_item_out.getKeys(false))
 					item_out.add(recipeMixedItemStackFromConfigSection(config_item_out.getConfigurationSection(item)));
@@ -152,7 +153,7 @@ public class AbstractMultiblock {
 		int dimension_z = 0;
 
 		// Generate empty array which will store the block data strings for each layer
-		ArrayList<ArrayList<String>> structure_array = new ArrayList<ArrayList<String>>();
+		List<List<String>> structure_array = new ArrayList<> ();
 
 		try {
 			try (Scanner structure_file_scanner = new Scanner(structure_file).useDelimiter("\\s+")) {
@@ -198,7 +199,7 @@ public class AbstractMultiblock {
 					}
 					
 					// If we're not beginning a new layer, add the block data string to the layer's array
-					ArrayList<String> current_array_list = structure_array.get(structure_array.size()-1);
+					List<String> current_array_list = structure_array.get(structure_array.size()-1);
 					current_array_list.add(word);
 				}
 			}
@@ -207,19 +208,19 @@ public class AbstractMultiblock {
 		}
 			
 		// Convert the data from the structure arrays to item-infos
-		ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>> block_array = new ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>>();
+		List<List<List<AbstractMixedItemStack>>> block_array = new ArrayList<> ();
 		
 		for (int y = 0; y < structure_array.size(); y++) {
-			block_array.add(new ArrayList<ArrayList<AbstractMixedItemStack>> ());
+			block_array.add(new ArrayList<> ());
 			
 			for (int x = 0; x < dimension_x; x++) {
-				block_array.get(y).add(new ArrayList<>());
+				block_array.get(y).add(new ArrayList<> ());
 				
 				for (int z = 0; z < dimension_z; z++) {
 					
 					// Get the array we're dealing with
-					ArrayList<ArrayList<AbstractMixedItemStack>> block_array_y = block_array.get(y);
-					ArrayList<AbstractMixedItemStack> block_array_x = block_array_y.get(x);
+					List<List<AbstractMixedItemStack>> block_array_y = block_array.get(y);
+					List<AbstractMixedItemStack> block_array_x = block_array_y.get(x);
 					
 					// Convert item info string to abstract mixed item stack
 					AbstractMixedItemStack block = StringConversion.stringToAbstractMixedItemStack(structure_array.get(y).get((z * dimension_x) + x));
@@ -344,14 +345,14 @@ public class AbstractMultiblock {
 	}
 		
 	
-	public static HashMap<WorldMixedItemStack, AbstractMixedItemStack> getStructureFromStartingPoint(
+	public static Map<WorldMixedItemStack, AbstractMixedItemStack> getStructureFromStartingPoint(
 			Player player,
 			Location central_block_location,
 			BlockFace central_block_orientation, 
 			StructureDescriptor abstract_descriptor) {
 		
 		// Initialize empty map that will store every BlockInfo and its corresponding ItemInfo
-		HashMap<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new HashMap<WorldMixedItemStack, AbstractMixedItemStack> ();
+		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new HashMap<> ();
 		
 		// Figure out block locations
 		Location starting_point = central_block_location.clone();
@@ -412,10 +413,10 @@ public class AbstractMultiblock {
 		
 		// Enter block checking loop
 		for (int y = 0; y < abstract_descriptor.dimension.getBlockY(); y++) {
-			ArrayList<ArrayList<AbstractMixedItemStack>> abstract_array_y = abstract_descriptor.blocks.get(y);
+			List<List<AbstractMixedItemStack>> abstract_array_y = abstract_descriptor.blocks.get(y);
 			
 			for (int x = 0; x < abstract_descriptor.dimension.getBlockX(); x++) {
-				ArrayList<AbstractMixedItemStack> abstract_array_x = abstract_array_y.get(x);
+				List<AbstractMixedItemStack> abstract_array_x = abstract_array_y.get(x);
 				
 				for (int z = 0; z < abstract_descriptor.dimension.getBlockZ(); z++) {
 					

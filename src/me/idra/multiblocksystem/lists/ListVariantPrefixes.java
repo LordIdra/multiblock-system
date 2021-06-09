@@ -1,6 +1,11 @@
 package me.idra.multiblocksystem.lists;
 
+
+
+import java.util.Map;
 import java.util.HashMap;
+
+
 
 public class ListVariantPrefixes {
 
@@ -43,7 +48,7 @@ public class ListVariantPrefixes {
 			"BLACK"
 	};
 	
-	public static HashMap<String, String[]> prefix_groups = new HashMap<String, String[]> ();
+	public static Map<String, String[]> prefix_groups = new HashMap<String, String[]> ();
 	
 	
 	

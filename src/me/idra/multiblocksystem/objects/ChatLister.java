@@ -1,6 +1,8 @@
 package me.idra.multiblocksystem.objects;
 
-import java.util.ArrayList;
+
+
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +31,7 @@ public class ChatLister {
 	
 	
 	
-	public ChatLister(CommandSender in_player, ArrayList<String> in_info_text, ArrayList<ComponentBuilder> in_list_text, String in_nothing_to_display_error) {
+	public ChatLister(CommandSender in_player, List<String> in_info_text, List<ComponentBuilder> in_list_text, String in_nothing_to_display_error) {
 
 		// Handle color codes for info array
 		for (int i = 0; i < in_info_text.size(); i++)

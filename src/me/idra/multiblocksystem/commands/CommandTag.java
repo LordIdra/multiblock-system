@@ -2,7 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 import org.bukkit.ChatColor;
@@ -123,7 +123,7 @@ public class CommandTag extends BaseCommand{
 			}
 						
 			// Add the inventory to our array
-			ArrayList<Inventory> new_array = multiblock.tags_inventory.get(args[1]);
+			List<Inventory> new_array = multiblock.tags_inventory.get(args[1]);
 			new_array.add(inventory);
 			multiblock.tags_inventory.put(args[1], new_array);
 			
@@ -140,7 +140,7 @@ public class CommandTag extends BaseCommand{
 		}
 		
 		// Position tag
-		ArrayList<BlockPosition> new_array = multiblock.tags_position.get(args[1]);
+		List<BlockPosition> new_array = multiblock.tags_position.get(args[1]);
 		new_array.add(position);
 		multiblock.tags_position.put(args[1], new_array);
 		

@@ -1,6 +1,8 @@
 package me.idra.multiblocksystem.objects;
 
-import java.util.ArrayList;
+
+
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
@@ -19,11 +21,11 @@ public class StructureDescriptor {
 	
 	public Vector central_block = new Vector();
 	public Vector dimension = new Vector();
-	public ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>> blocks;
+	public List<List<List<AbstractMixedItemStack>>> blocks;
 	
 	
 	
-	public StructureDescriptor(int dimension_x, int dimension_z, int dimension_y, ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>> layer_blocks) {
+	public StructureDescriptor(int dimension_x, int dimension_z, int dimension_y, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
 		
 		// Set direct variables
 		dimension.setX(dimension_x);
@@ -77,8 +79,8 @@ public class StructureDescriptor {
 		number_of_air_blocks = 0;
 		
 		// Loop through every block and check if it's an air block. If it is, increment air block counter
-		for (ArrayList<ArrayList<AbstractMixedItemStack>> item_a_a : blocks)
-			for (ArrayList<AbstractMixedItemStack> item_a : item_a_a)
+		for (List<List<AbstractMixedItemStack>> item_a_a : blocks)
+			for (List<AbstractMixedItemStack> item_a : item_a_a)
 				for (AbstractMixedItemStack item : item_a)
 					if (item.containsMaterial(Material.AIR))
 						number_of_air_blocks++;

@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -50,11 +51,11 @@ public class CommandHelp extends BaseCommand{
 		
 		
 		// Command info top text
-		ArrayList<String> top_text = new ArrayList<String> ();
+		List<String> top_text = new ArrayList<> ();
 		top_text.add(MessageHandler.getInfo("help-commands-title"));
 		
 		// Command list
-		ArrayList<ComponentBuilder> formatted_commands = new ArrayList<ComponentBuilder> ();
+		List<ComponentBuilder> formatted_commands = new ArrayList<> ();
 		
 		// For every command
 		for (BaseCommand command_object : ListCommands.command_object_array) {

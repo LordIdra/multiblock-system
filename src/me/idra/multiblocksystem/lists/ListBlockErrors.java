@@ -1,6 +1,10 @@
 package me.idra.multiblocksystem.lists;
 
+
+
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
@@ -27,10 +31,10 @@ public class ListBlockErrors {
 
 	
 	
-	public static HashMap<Player, ArrayList<BlockError>> block_errors = new HashMap<Player, ArrayList<BlockError>> ();
+	public static Map<Player, List<BlockError>> block_errors = new HashMap<> ();
 	
 	
-	public static void setBlockErrors(Player player, ArrayList<BlockError> block_error_array) {
+	public static void setBlockErrors(Player player, List<BlockError> block_error_array) {
 		
 		// Add the new array; this will overwrite existing ones automatically
 		block_errors.put(player, block_error_array);
@@ -57,9 +61,9 @@ public class ListBlockErrors {
 		}
 		
 		// Initialize arrays we'll send to the player
-		ArrayList<BlockError> errors = block_errors.get(player);
-		ArrayList<String> top_text = new ArrayList<String> ();
-		ArrayList<ComponentBuilder> error_text = new ArrayList<ComponentBuilder>();
+		List<BlockError> errors = block_errors.get(player);
+		List<String> top_text = new ArrayList<> ();
+		List<ComponentBuilder> error_text = new ArrayList<>();
 		
 		// Generate top text
 		top_text.add(ChatColor.BLUE + "" + ChatColor.BOLD + "=====[" + ChatColor.AQUA + "" + ChatColor.BOLD + "Multiblock Errors" + ChatColor.BLUE + "" + ChatColor.BOLD + "]=====");

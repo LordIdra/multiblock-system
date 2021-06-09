@@ -1,5 +1,8 @@
 package me.idra.multiblocksystem.objects;
 
+
+
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
@@ -162,10 +165,10 @@ public class MixedItemStack {
 	 * STATIC METHODS
 	 */
 
-	public static ArrayList<MixedItemStack> fromMaterialArray(ArrayList<Material> materials) {
+	public static List<MixedItemStack> fromMaterialArray(List<Material> materials) {
 		
 		// Start building an array of item stacks
-		ArrayList<MixedItemStack> item_stacks = new ArrayList<MixedItemStack> ();
+		List<MixedItemStack> item_stacks = new ArrayList<> ();
 		
 		// Generate item stack for each material
 		for (Material material : materials)
@@ -176,10 +179,10 @@ public class MixedItemStack {
 	}
 	
 	
-	public static ArrayList<MixedItemStack> arrayFromSlimefunID(String slimefun_ID) {
+	public static List<MixedItemStack> arrayFromSlimefunID(String slimefun_ID) {
 		
 		// Start building an array of item stacks
-		ArrayList<MixedItemStack> item_stacks = new ArrayList<MixedItemStack> ();
+		List<MixedItemStack> item_stacks = new ArrayList<> ();
 		
 		// Generate single item stack for the provided inputs
 		item_stacks.add(new MixedItemStack(StringConversion.idToSlimefunItem(slimefun_ID)));

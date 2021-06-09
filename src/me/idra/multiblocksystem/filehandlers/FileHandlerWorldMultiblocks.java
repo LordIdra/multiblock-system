@@ -2,7 +2,9 @@ package me.idra.multiblocksystem.filehandlers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
@@ -173,14 +175,14 @@ public class FileHandlerWorldMultiblocks {
 			AbstractMultiblock abstract_multiblock = ListAbstractMultiblocks.structures.get(name);
 					
 			// Get block positions
-			HashMap<BlockPosition, String[]> blocks = new HashMap<BlockPosition, String[]> ();
+			Map<BlockPosition, String[]> blocks = new HashMap<> ();
 			
 			// Store blocks and their respective tags
 			for (String position_as_string : position_section.getKeys(false)) {
 				
 				// Convert string to position
 				BlockPosition position = new BlockPosition(Bukkit.getWorld(multiblock_section.getString("World")), Long.valueOf(position_as_string));
-				ArrayList<String> tags =  (ArrayList<String>) position_section.getStringList(position_as_string);	// Long : String
+				List<String> tags =  (ArrayList<String>) position_section.getStringList(position_as_string);	// Long : String
 				
 				// Add to block position map
 				blocks.put(position, tags.toArray(new String[tags.size()]));

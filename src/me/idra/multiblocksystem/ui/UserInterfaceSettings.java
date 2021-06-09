@@ -1,5 +1,6 @@
 package me.idra.multiblocksystem.ui;
 
+import java.util.Map;
 import java.util.HashMap;
 
 import org.bukkit.Material;
@@ -26,8 +27,8 @@ public class UserInterfaceSettings extends BaseUserInterface {
 	private final String LOCATION_PARTICLE_COLOR = "location-particle-color";
 	
 	private PlayerSettings settings = null;
-	private HashMap<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<String, UserInterfaceColorAdjuster> ();
-	private HashMap<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<String, UserInterfaceVectorAdjuster> ();
+	private Map<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<> ();
+	private Map<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<> ();
 	
 	
 	

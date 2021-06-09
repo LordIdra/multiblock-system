@@ -1,5 +1,8 @@
 package me.idra.multiblocksystem.lists;
 
+
+
+import java.util.Map;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -20,7 +23,7 @@ public class ListWorldMultiblocks {
 
 
 	
-	public static HashMap<Integer, BaseWorldMultiblock> multiblock_objects = new HashMap<Integer, BaseWorldMultiblock> ();
+	public static Map<Integer, BaseWorldMultiblock> multiblock_objects = new HashMap<> ();
 	
 	
 	

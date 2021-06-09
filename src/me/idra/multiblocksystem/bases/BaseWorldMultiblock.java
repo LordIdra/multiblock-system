@@ -2,6 +2,8 @@ package me.idra.multiblocksystem.bases;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -34,11 +36,11 @@ public abstract class BaseWorldMultiblock {
 	
 	public AbstractMultiblock abstract_multiblock = null; 
 	
-	public HashMap<BlockPosition, String[]> blocks;
-	public HashMap<BlockPosition, String[]> original_tags = new HashMap<BlockPosition, String[]> ();
+	public Map<BlockPosition, String[]> blocks;
+	public Map<BlockPosition, String[]> original_tags = new HashMap<> ();
 	
-	public HashMap<String, ArrayList<Inventory>> tags_inventory = new HashMap<String, ArrayList<Inventory>> ();
-	public HashMap<String, ArrayList<BlockPosition>> tags_position = new HashMap<String, ArrayList<BlockPosition>> ();
+	public Map<String, List<Inventory>> tags_inventory = new HashMap<> ();
+	public Map<String, List<BlockPosition>> tags_position = new HashMap<> ();
 	
 	public MultiblockRecipe active_recipe = null;
 	public TaskTickMultiblock tick_task = null;
@@ -50,7 +52,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	protected BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, HashMap<BlockPosition, String[]> blocks, UUID owner, int ID) {
+	protected BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> blocks, UUID owner, int ID) {
 		
 		// Set default variables
 		this.blocks = blocks;
@@ -86,7 +88,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public boolean hasSpaceForItems(ArrayList<MixedItemStack> items) {
+	public boolean hasSpaceForItems(List<MixedItemStack> items) {
 		
 		// Number of total free slots
 		int free_slots = 0;
@@ -109,11 +111,11 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public boolean hasInputItems(ArrayList<MixedItemStack> items) {
+	public boolean hasInputItems(List<MixedItemStack> items) {
 		
 		// Number of items that match
-		HashMap<MixedItemStack, Integer> items_required = new HashMap<MixedItemStack, Integer> (); 
-		HashMap<MixedItemStack, Integer> items_total = new HashMap<MixedItemStack, Integer> (); 
+		Map<MixedItemStack, Integer> items_required = new HashMap<> (); 
+		Map<MixedItemStack, Integer> items_total = new HashMap<> (); 
 		
 		for (MixedItemStack stack : items) {
 			items_total.put(stack, 0);
@@ -249,7 +251,7 @@ public abstract class BaseWorldMultiblock {
 		) {
 						
 			// Add said items to an array
-			ArrayList<MixedItemStack> items_to_add = new ArrayList<MixedItemStack> ();
+			List<MixedItemStack> items_to_add = new ArrayList<> ();
 			
 			for (MixedItemStack stack : active_recipe.out_stack)
 				items_to_add.add(stack);
@@ -316,7 +318,7 @@ public abstract class BaseWorldMultiblock {
 		for (MultiblockRecipe recipe : abstract_multiblock.recipes) {
 			
 			// Number of items that have been accounted for, for each itemstack
-			HashMap<MixedItemStack, Integer> item_numbers = new HashMap<MixedItemStack, Integer> ();
+			Map<MixedItemStack, Integer> item_numbers = new HashMap<> ();
 			
 			for (MixedItemStack stack : recipe.in_stack)
 				item_numbers.put(stack, 0);
@@ -477,7 +479,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 
-	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID) {
+	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
 		// Get class location, and from that the class itself
 		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
@@ -499,7 +501,7 @@ public abstract class BaseWorldMultiblock {
 		
 		try {
 			world_multiblock = 
-					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class, HashMap.class,
+					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class,Map.class,
 					UUID.class, int.class)
 					.newInstance(abstract_multiblock, block_map, player, ID);
 		
@@ -518,7 +520,7 @@ public abstract class BaseWorldMultiblock {
 
 
 	
-	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID) {
+	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
 		// Create multiblock
 		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
@@ -533,7 +535,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
+	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
 		
 		// Create multiblock
 		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
@@ -558,10 +560,10 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public static ArrayList<Inventory> inventoriesWithTag(HashMap<BlockPosition, String[]> position_map, String tag) {
+	public static List<Inventory> inventoriesWithTag(Map<BlockPosition, String[]> position_map, String tag) {
 		
 		// Array to store all matches
-		ArrayList<Inventory> tag_matches = new ArrayList<Inventory> ();
+		List<Inventory> tag_matches = new ArrayList<> ();
 		
 		// For every block position
 		for (BlockPosition position : position_map.keySet()) {
@@ -584,10 +586,10 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public static ArrayList<BlockPosition> positionsWithTag(HashMap<BlockPosition, String[]> position_map, String tag) {
+	public static List<BlockPosition> positionsWithTag(Map<BlockPosition, String[]> position_map, String tag) {
 		
 		// Array to store all matches
-		ArrayList<BlockPosition> tag_matches = new ArrayList<BlockPosition> ();
+		List<BlockPosition> tag_matches = new ArrayList<> ();
 		
 		// For every block position
 		for (BlockPosition position : position_map.keySet()) {

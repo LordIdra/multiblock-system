@@ -1,5 +1,8 @@
 package me.idra.multiblocksystem.lists;
 
+
+
+import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -15,7 +18,7 @@ public class ListPlayerSettings {
 
 
 	
-	private static HashMap<UUID, PlayerSettings> player_settings = new HashMap<UUID, PlayerSettings> ();
+	private static Map<UUID, PlayerSettings> player_settings = new HashMap<> ();
 	
 	
 	

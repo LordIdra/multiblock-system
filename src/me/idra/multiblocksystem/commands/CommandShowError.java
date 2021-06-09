@@ -2,7 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -38,7 +38,7 @@ public class CommandShowError extends BaseCommand{
 		int index = Integer.parseInt(args[2]);
 		
 		// Get an array of block errors for the specified player
-		ArrayList<BlockError> block_error_list = ListBlockErrors.block_errors.get((Player) sender);
+		List<BlockError> block_error_list = ListBlockErrors.block_errors.get((Player) sender);
 		
 		// If the player has no errors, return false
 		if (block_error_list == null)

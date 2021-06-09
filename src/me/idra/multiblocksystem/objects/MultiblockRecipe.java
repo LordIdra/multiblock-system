@@ -1,11 +1,15 @@
 package me.idra.multiblocksystem.objects;
 
-import java.util.ArrayList;
+
+
+import java.util.List;
+
+
 
 public class MultiblockRecipe {
 	
-	public ArrayList<MixedItemStack> in_stack = null;
-	public ArrayList<MixedItemStack> out_stack = null;
+	public List<MixedItemStack> in_stack = null;
+	public List<MixedItemStack> out_stack = null;
 	
 	public int in_energy = 0;
 	public int out_energy = 0;
@@ -14,8 +18,8 @@ public class MultiblockRecipe {
 	
 	
 	public MultiblockRecipe(
-			ArrayList<MixedItemStack> in_stack,		// Input  items
-			ArrayList<MixedItemStack> out_stack,	// Output items
+			List<MixedItemStack> in_stack,			// Input  items
+			List<MixedItemStack> out_stack,			// Output items
 			int in_energy,							// Input  energy
 			int out_energy,							// Output items
 			int time								// Time

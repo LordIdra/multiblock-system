@@ -34,8 +34,8 @@ public class CommandAdminLogClear extends BaseCommand{
 		
 		// Reset ID and clear log maps
 		Logger.log_ID = 0;
-		Logger.log_times = new HashMap<Integer, String> ();
-		Logger.log_messages = new HashMap<Integer, String> ();
+		Logger.log_times = new HashMap<> ();
+		Logger.log_messages = new HashMap<> ();
 		
 		// Tell the player we've successfully cleared the logs
 		MessageHandler.send(sender, 

@@ -21,8 +21,8 @@ public class TabHandler implements TabCompleter {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		
-	    ArrayList<String> completions = new ArrayList<>();
-	    ArrayList<String> possibilities = new ArrayList<>();
+	    List<String> completions = new ArrayList<> ();
+	    List<String> possibilities = new ArrayList<> ();
 	    
 	    
 	    for (BaseCommand base_command : ListCommands.command_object_array) {

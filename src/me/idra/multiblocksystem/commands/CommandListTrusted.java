@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -41,11 +42,11 @@ public class CommandListTrusted extends BaseCommand{
 		Player[] trusted_players = FileHandlerPlayerData.getTrustedPlayers(((Player) sender).getUniqueId());
 		
 		// Command info top text
-		ArrayList<String> top_text = new ArrayList<String> ();
+		List<String> top_text = new ArrayList<> ();
 		top_text.add(MessageHandler.getInfo("trusted-list-title"));
 		
 		// Player list
-		ArrayList<ComponentBuilder> formatted_players = new ArrayList<ComponentBuilder> ();
+		List<ComponentBuilder> formatted_players = new ArrayList<> ();
 		
 		// For each player
 		for (Player player : trusted_players) {

@@ -3,6 +3,8 @@ package me.idra.multiblocksystem.commands;
 
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +54,7 @@ public class CommandAssemble extends BaseCommand{
 		
 		File multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks");
 		
-		ArrayList<String> new_array = new ArrayList<String> ();
+		List<String> new_array = new ArrayList<> ();
 		
 		for (File file : multiblock_folder.listFiles())
 			new_array.add(file.getName());
@@ -128,8 +130,8 @@ public class CommandAssemble extends BaseCommand{
 		
 		
 		// Create structures to store errors, location->tag map, and item->block info map
-		HashMap<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
-		ArrayList<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, world_to_abstract_map);
+		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
+		List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, world_to_abstract_map);
 		
 		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]
 		int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
@@ -139,7 +141,7 @@ public class CommandAssemble extends BaseCommand{
 		if (percentage == 100) {
 			
 			// Multiblock complete, let's assemble it. Start by creating a map of locations to tags
-			HashMap<BlockPosition, String[]> location_to_tag_map = new HashMap<BlockPosition, String[]> ();
+			Map<BlockPosition, String[]> location_to_tag_map = new HashMap<> ();
 			
 			// For every BlockInfo in the structure
 			for (WorldMixedItemStack world_block: world_to_abstract_map.keySet()) {

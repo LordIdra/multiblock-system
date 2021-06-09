@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 
 
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -37,11 +38,11 @@ public class CommandListMultiblocks extends BaseCommand{
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
 		
 		// Generate top text
-		ArrayList<String> top_text = new ArrayList<String> ();
+		List<String> top_text = new ArrayList<> ();
 		top_text.add(MessageHandler.getInfo("multiblock-list-title"));
 		
 		// Array of multiblocks names + description
-		ArrayList<ComponentBuilder> formatted_multiblocks = new ArrayList<ComponentBuilder> ();
+		List<ComponentBuilder> formatted_multiblocks = new ArrayList<> ();
 		
 		// For every multiblock structure, send the name and description of said structure if the player has the appropriate permission
 		for (AbstractMultiblock structure : ListAbstractMultiblocks.structures.values())
