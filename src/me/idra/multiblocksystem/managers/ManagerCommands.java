@@ -14,8 +14,8 @@ import me.idra.multiblocksystem.lists.ListCommands;
 
 
 public class ManagerCommands implements CommandExecutor {
-	
-	
+
+
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
@@ -69,12 +69,11 @@ public class ManagerCommands implements CommandExecutor {
 					}
 					
 					// If the sender is the console, check that the command can be run by console
-					if (sender instanceof ConsoleCommandSender)
-						if (!command_object.console) {
-							MessageHandler.send(sender, 
-									MessageHandler.getError("command-cannot-be-run-from-console"));
-							return true;
-						}
+					if (sender instanceof ConsoleCommandSender && (!command_object.console)) {
+						MessageHandler.send(sender, 
+								MessageHandler.getError("command-cannot-be-run-from-console"));
+						return true;
+					}
 					
 					// If sufficient arguments after the command name are provided, attempt to execute command
 					if (args.length - command_object.name.length >= command_object.arguments.length) {

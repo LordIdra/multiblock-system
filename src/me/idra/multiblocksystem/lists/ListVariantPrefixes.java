@@ -3,6 +3,12 @@ package me.idra.multiblocksystem.lists;
 import java.util.HashMap;
 
 public class ListVariantPrefixes {
+
+	private ListVariantPrefixes() {
+		// Empty constructor
+	}
+
+
 	
 	public static String[] prefix_normal_wood = new String[] {
 			"OAK",
@@ -59,15 +65,14 @@ public class ListVariantPrefixes {
 		// For every possible prefix
 		for (String possible_prefix : prefix_list) {
 			
-			// If the material name length is long enough to check
-			if (material.length() >= possible_prefix.length()) {
+			// If the material name length is long enough to check, and if the prefixes match
+			if (
+				material.length() >= possible_prefix.length()
+				&& material.substring(0, possible_prefix.length()).toUpperCase().replace(" ", "_").equals(possible_prefix)
+			) {
 
-				// If the prefixes match
-				if (material.substring(0, possible_prefix.length()).toUpperCase().replace(" ", "_").equals(possible_prefix)) {
-					
-					// Delete the prefix and return the remaining string
-					return material.substring(possible_prefix.length() + 1, material.length());
-				}
+				// Delete the prefix and return the remaining string
+				return material.substring(possible_prefix.length() + 1, material.length());
 			}
 		}
 		

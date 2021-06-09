@@ -13,6 +13,12 @@ import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
 public class ListWorldMultiblocks {
+
+	private ListWorldMultiblocks() {
+		// Empty constructor
+	}
+
+
 	
 	public static HashMap<Integer, BaseWorldMultiblock> multiblock_objects = new HashMap<Integer, BaseWorldMultiblock> ();
 	

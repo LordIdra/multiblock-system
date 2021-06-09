@@ -524,7 +524,9 @@ public abstract class BaseWorldMultiblock {
 		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
 
 		// Add the multiblock to the multiblock array
-		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+		if (world_multiblock != null) {
+			ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+		}
 	}
 	
 	

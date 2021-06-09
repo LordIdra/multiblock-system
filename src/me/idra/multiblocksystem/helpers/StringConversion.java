@@ -16,6 +16,10 @@ public class StringConversion {
 
 	
 
+	private StringConversion() {
+		// Empty constructor
+	}
+
 	
 	public static ArrayList<String> removeDuplicates(ArrayList<String> array) {
 		
@@ -114,18 +118,16 @@ public class StringConversion {
 		
 		
 		// Check the slimefun ID is valid
-		if (is_slimefun_item) {
-			if (slimefun_item == null) {
+		if (is_slimefun_item  && (slimefun_item == null)) {
 				
-				// Display a console error and add substitute air in instead
-				Logger.log(
-						Logger.getWarning("slimefun-item-invalid")
-						.replace("%slimefun-item%", block_data),
-						true);
+			// Display a console error and add substitute air in instead
+			Logger.log(
+					Logger.getWarning("slimefun-item-invalid")
+					.replace("%slimefun-item%", block_data),
+					true);
 				
-				// Just return the MixedItemStack as air straight away
-				return new AbstractMixedItemStack(Material.AIR, null);
-			}
+			// Just return the MixedItemStack as air straight away
+			return new AbstractMixedItemStack(Material.AIR, null);
 		}
 		
 		
@@ -163,24 +165,21 @@ public class StringConversion {
 		if (!uses_prefix_variant) {
 			
 			// Check the material is valid
-			if (!is_slimefun_item) {
-				if (material == null) {
+			if (!is_slimefun_item && (material == null)) {
 					
-					// Display a console error and add substitute air in instead
-					Logger.log(
-							Logger.getWarning("material-invalid")
-							.replace("%material%", block_data),
-							true);
+				// Display a console error and add substitute air in instead
+				Logger.log(
+						Logger.getWarning("material-invalid")
+						.replace("%material%", block_data),
+						true);
 					
-					// Just return the MixedItemStack as air straight away
-					return new AbstractMixedItemStack(Material.AIR, null);
-				}
+				// Just return the MixedItemStack as air straight away
+				return new AbstractMixedItemStack(Material.AIR, null);
 			}
 		
 			// Add the default material to the array
 			materials.add(material);
 		}
-			
 		
 		// Generate new item info using the data we just gathered
 		if (is_slimefun_item)

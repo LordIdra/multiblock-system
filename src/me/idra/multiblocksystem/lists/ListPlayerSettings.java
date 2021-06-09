@@ -8,6 +8,12 @@ import me.idra.multiblocksystem.objects.PlayerSettings;
 
 
 public class ListPlayerSettings {
+
+	private ListPlayerSettings() {
+		// Empty constructor
+	}
+
+
 	
 	private static HashMap<UUID, PlayerSettings> player_settings = new HashMap<UUID, PlayerSettings> ();
 	

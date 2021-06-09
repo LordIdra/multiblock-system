@@ -14,6 +14,12 @@ import me.idra.multiblocksystem.objects.AbstractMultiblock;
 
 public class ManagerPermissions {
 
+	private ManagerPermissions() {
+		// Empty constructor
+	}
+
+
+
 	private static ArrayList<Permission> command_permissions = new ArrayList<Permission> ();
 	private static ArrayList<Permission> multiblock_permissions = new ArrayList<Permission> ();
 	

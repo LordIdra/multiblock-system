@@ -62,11 +62,11 @@ public class BlockError {
 		should_be_string += ChatColor.DARK_RED + "]";
 
 		// Generate the final error string
-		return new String  (ChatColor.DARK_RED +  "x" + ChatColor.YELLOW + location_vector.getBlockX() +
-							ChatColor.DARK_RED + " y" + ChatColor.YELLOW + location_vector.getBlockY() +
-							ChatColor.DARK_RED + " z" + ChatColor.YELLOW + location_vector.getBlockZ() +
-							ChatColor.GOLD + "" + ChatColor.BOLD + " --> " +
-							current_string + " should be " + should_be_string);
+		return 	ChatColor.DARK_RED +  "x" + ChatColor.YELLOW + location_vector.getBlockX() +
+				ChatColor.DARK_RED + " y" + ChatColor.YELLOW + location_vector.getBlockY() +
+				ChatColor.DARK_RED + " z" + ChatColor.YELLOW + location_vector.getBlockZ() +
+				ChatColor.GOLD + "" + ChatColor.BOLD + " --> " +
+				current_string + " should be " + should_be_string;
 	}
 	
 	
@@ -127,9 +127,11 @@ public class BlockError {
 					return true;
 					
 			// Compare slimefun-slimefun
-			} else if (abstract_itemstack.isSlimefunItem() && current_block.isSlimefunItem()) {
-				if (current_block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId()))
-					return true;
+			} else if (
+				abstract_itemstack.isSlimefunItem() && current_block.isSlimefunItem()
+				&& current_block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId())
+			) {
+				return true;
 			}
 		}
 		
@@ -154,9 +156,11 @@ public class BlockError {
 					return null;
 			
 			// Compare slimefun-slimefun
-			} else if (abstract_itemstack.isSlimefunItem() && block.isSlimefunItem()) {
-				if (block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId()))
-					return null;
+			} else if (
+				abstract_itemstack.isSlimefunItem() && block.isSlimefunItem()
+				&& block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId())
+			) {
+				return null;
 			}
 		}
 		

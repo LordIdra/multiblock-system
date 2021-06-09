@@ -10,6 +10,12 @@ import me.idra.multiblocksystem.objects.AbstractMultiblock;
 
 
 public class ListAbstractMultiblocks {
+
+	private ListAbstractMultiblocks() {
+		// Empty constructor
+	}
+	
+
 	
 	public static ArrayList<String> multiblock_names = new ArrayList<String> ();
 	public static HashMap<String, AbstractMultiblock> structures = new HashMap<String, AbstractMultiblock> ();

@@ -20,6 +20,12 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 
 public class ListBlockErrors {
+
+	private ListBlockErrors() {
+		// Empty constructor
+	}
+
+	
 	
 	public static HashMap<Player, ArrayList<BlockError>> block_errors = new HashMap<Player, ArrayList<BlockError>> ();
 	

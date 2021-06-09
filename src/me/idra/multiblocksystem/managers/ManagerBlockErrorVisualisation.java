@@ -6,6 +6,12 @@ import me.idra.multiblocksystem.tasks.TaskVisualiseError;
 
 
 public class ManagerBlockErrorVisualisation {
+
+	private ManagerBlockErrorVisualisation() {
+		// Empty constructor
+	}
+
+
 	
 	public static void addError(BlockError error) {
 		
