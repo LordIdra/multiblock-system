@@ -37,7 +37,7 @@ public class FileHandlerPlayerData {
 			try {
 				data_file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// This should never happen - if it does, we have much bigger problems to worry about
 			}
 		}
 		

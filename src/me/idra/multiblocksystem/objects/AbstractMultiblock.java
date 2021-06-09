@@ -45,7 +45,7 @@ public class AbstractMultiblock {
 	
 
 	@SuppressWarnings("resource") // Apparently scanner is never closed, even though there is no scenario where the scanner will not be closed (at least without some insane runtime error)
-	public boolean loadStructure() {
+	public void loadStructure() {
 		
 		/*
 		 * file handling
@@ -62,7 +62,7 @@ public class AbstractMultiblock {
 					Logger.getWarning("multiblock-file-not-found")
 					.replace("%name%", String.valueOf(name)),
 					true);
-			return false;
+			return;
 		}
 		
 		if (!structure_file.exists()) {
@@ -70,7 +70,7 @@ public class AbstractMultiblock {
 					Logger.getWarning("structure-file-not-found")
 					.replace("%name%", String.valueOf(name)),
 					true);
-			return false;
+			return;
 		}
 		
 		
@@ -150,68 +150,72 @@ public class AbstractMultiblock {
 		
 		// Create file scanner
 		Scanner structure_file_scanner = null;
-		
-		try {
-			structure_file_scanner = new Scanner(structure_file).useDelimiter("\\s+");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		// Declare the variables we're about to read
+
+		// Dimensions
 		int dimension_x = 0;
 		int dimension_z = 0;
-		
-		// Get dimension X
-		if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-X:")) {
-			Logger.log(
-					Logger.getWarning("dimension-x-not-found")
-					.replace("%name%", String.valueOf(name)),
-					true);
-			structure_file_scanner.close();
-			return false;
-			
-		} else {
-			dimension_x = structure_file_scanner.nextInt();
-		}
-		
-		// Get dimension Z
-		if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-Z:")) {
-			Logger.log(
-					Logger.getWarning("dimension-z-not-found")
-					.replace("%name%", String.valueOf(name)),
-					true);
-			structure_file_scanner.close();
-			return false;
-			
-		} else {
-			dimension_z = structure_file_scanner.nextInt();
-		}
-		
+
 		// Generate empty array which will store the block data strings for each layer
 		ArrayList<ArrayList<String>> structure_array = new ArrayList<ArrayList<String>>();
-		
-		// For each block data string in the file
-		while (structure_file_scanner.hasNext()) {
-			
-			// Get block data string
-			String word = structure_file_scanner.next();
-			
-			// If we're beginning a new layer
-			if (word.equals("LAYER:")) {
-				
-				// Add a new array to store block data strings for this layer
-				structure_array.add(new ArrayList<String>());
-				continue;
+
+		try {
+			try {
+				structure_file_scanner = new Scanner(structure_file).useDelimiter("\\s+");
+			} catch (FileNotFoundException e) {
+				// We literally just checked that the file exists; this should be impossible
+				return;
 			}
 			
-			// If we're not beginning a new layer, add the block data string to the layer's array
-			ArrayList<String> current_array_list = structure_array.get(structure_array.size()-1);
-			current_array_list.add(word);
+			// Get dimension X
+			if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-X:")) {
+				Logger.log(
+						Logger.getWarning("dimension-x-not-found")
+						.replace("%name%", String.valueOf(name)),
+						true);
+				structure_file_scanner.close();
+				return;
+				
+			} else {
+				dimension_x = structure_file_scanner.nextInt();
+			}
+			
+			// Get dimension Z
+			if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-Z:")) {
+				Logger.log(
+						Logger.getWarning("dimension-z-not-found")
+						.replace("%name%", String.valueOf(name)),
+						true);
+				structure_file_scanner.close();
+				return;
+				
+			} else {
+				dimension_z = structure_file_scanner.nextInt();
+			}
+			
+			// For each block data string in the file
+			while (structure_file_scanner.hasNext()) {
+				
+				// Get block data string
+				String word = structure_file_scanner.next();
+				
+				// If we're beginning a new layer
+				if (word.equals("LAYER:")) {
+					
+					// Add a new array to store block data strings for this layer
+					structure_array.add(new ArrayList<String>());
+					continue;
+				}
+				
+				// If we're not beginning a new layer, add the block data string to the layer's array
+				ArrayList<String> current_array_list = structure_array.get(structure_array.size()-1);
+				current_array_list.add(word);
+			}
+		} catch (Exception e) {
+
+		} finally {
+			structure_file_scanner.close();
 		}
-		
-		// Close the scanner
-		structure_file_scanner.close();
-		
+			
 		// Convert the data from the structure arrays to item-infos
 		ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>> block_array = new ArrayList<ArrayList<ArrayList<AbstractMixedItemStack>>>();
 		
@@ -244,9 +248,6 @@ public class AbstractMultiblock {
 				dimension_z,
 				structure_array.size(),
 				block_array);
-		
-		// Successful execution
-		return true;
 	}
 
 

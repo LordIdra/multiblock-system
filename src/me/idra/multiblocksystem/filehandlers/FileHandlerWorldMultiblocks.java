@@ -39,7 +39,7 @@ public class FileHandlerWorldMultiblocks {
 			try {
 				world_multiblock_file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// This should never happen - if it does, we have much bigger problems to worry about
 			}
 		}
 		
@@ -75,7 +75,7 @@ public class FileHandlerWorldMultiblocks {
 		try {
 			world_multiblock_config.save(world_multiblock_file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// This should never happen - if it does, we have much bigger problems to worry about
 		}
 	}
 	
@@ -137,7 +137,7 @@ public class FileHandlerWorldMultiblocks {
 		try {
 			world_multiblock_config.save(world_multiblock_file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// This should never happen - if it does, we have much bigger problems to worry about
 		}
 	}
 	

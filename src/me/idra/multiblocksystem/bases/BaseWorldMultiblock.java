@@ -537,6 +537,7 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("class-not-found")
 					.replace("%class%", String.valueOf(class_location)),
 					true);
+			return;
 		}
 		
 		// Initialize the class, checking for a large number of potential problems
@@ -555,7 +556,7 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("abstract-structure-not-initialized")
 					.replace("%structure%", String.valueOf(class_location)),
 					true);
-			e.printStackTrace();
+			return;
 		}
 		
 		// Return the multiblocks if it's loaded (if it hasn't this will just return null)
@@ -578,6 +579,7 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("class-not-found")
 					.replace("%class%", String.valueOf(class_location)),
 					true);
+			return;
 		}
 		
 		// Initialize the class, checking for a large number of potential problems
@@ -596,7 +598,7 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("abstract-structure-not-initialized")
 					.replace("%structure%", String.valueOf(class_location)),
 					true);
-			e.printStackTrace();
+			return;
 		}
 		
 		world_multiblock.fuel_ticks = in_fuel_ticks;

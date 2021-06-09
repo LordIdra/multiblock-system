@@ -28,7 +28,7 @@ public class FileHandlerPermanentVariables {
 			try {
 				data_file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// This should never happen - if it does, we have much larger problems to worry about
 			}
 		}
 		
