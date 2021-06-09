@@ -229,6 +229,10 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			vector_adjusters.put("error-particle-offset", new UserInterfaceVectorAdjuster(player, this, settings.error_offset_x, settings.error_offset_y, settings.error_offset_z));
 			vector_adjusters.get("error-particle-offset").display();
 			break;
+		
+
+		default:
+			break;
 		}
 		
 		// Bound checking

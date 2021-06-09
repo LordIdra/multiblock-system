@@ -46,7 +46,7 @@ public class TabHandler implements TabCompleter {
 	    		
 	    		if (args_match)
 	    			for (String arg : base_command.all_arguments.get(args.length-1))
-	    			possibilities.add(arg);
+	    				possibilities.add(arg);
 	    	}
 	    }
 	    

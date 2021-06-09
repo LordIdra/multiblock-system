@@ -92,6 +92,10 @@ public class UserInterfaceVectorAdjuster extends BaseUserInterface {
 			else if (click.isRightClick())
 				z--;
 			break;
+	
+		// Default
+		default:
+			break;
 		}
 		
 		

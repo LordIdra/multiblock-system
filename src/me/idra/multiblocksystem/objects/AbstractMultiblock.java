@@ -17,6 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import me.idra.multiblocksystem.constants.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -44,7 +45,6 @@ public class AbstractMultiblock {
 	
 	
 
-	@SuppressWarnings("resource") // Apparently scanner is never closed, even though there is no scenario where the scanner will not be closed (at least without some insane runtime error)
 	public void loadStructure() {
 		
 		/*
@@ -60,7 +60,7 @@ public class AbstractMultiblock {
 		if (!multiblock_file.exists()) {
 			Logger.log(
 					Logger.getWarning("multiblock-file-not-found")
-					.replace("%name%", String.valueOf(name)),
+					.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
 					true);
 			return;
 		}
@@ -68,7 +68,7 @@ public class AbstractMultiblock {
 		if (!structure_file.exists()) {
 			Logger.log(
 					Logger.getWarning("structure-file-not-found")
-					.replace("%name%", String.valueOf(name)),
+					.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
 					true);
 			return;
 		}
@@ -170,7 +170,7 @@ public class AbstractMultiblock {
 			if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-X:")) {
 				Logger.log(
 						Logger.getWarning("dimension-x-not-found")
-						.replace("%name%", String.valueOf(name)),
+						.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
 						true);
 				structure_file_scanner.close();
 				return;
@@ -183,7 +183,7 @@ public class AbstractMultiblock {
 			if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-Z:")) {
 				Logger.log(
 						Logger.getWarning("dimension-z-not-found")
-						.replace("%name%", String.valueOf(name)),
+						.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
 						true);
 				structure_file_scanner.close();
 				return;
@@ -270,8 +270,8 @@ public class AbstractMultiblock {
 			
 			if (material == null) {
 				Logger.log(Logger.getWarning("invalid-normal-id")
-						   .replace("%id%", id)
-						   .replace("%multiblock%", name),
+						   .replace(ConstantPlaceholders.ID, id)
+						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 						   true);
 				return null;
 			}
@@ -287,8 +287,8 @@ public class AbstractMultiblock {
 			
 			if (slimefun_item == null) {
 				Logger.log(Logger.getWarning("invalid-slimefun-id")
-						   .replace("%id%", id)
-						   .replace("%multiblock%", name),
+						   .replace(ConstantPlaceholders.ID, id)
+						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 						   true);
 				return null;
 			}
@@ -299,7 +299,7 @@ public class AbstractMultiblock {
 			
 		} else {
 			Logger.log(Logger.getWarning("invalid-itemstack-type")
-					   .replace("%multiblock%", name),
+					   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 					   true);
 			return null;
 		}
@@ -318,8 +318,8 @@ public class AbstractMultiblock {
 			
 			if (material == null) {
 				Logger.log(Logger.getWarning("invalid-normal-id")
-						   .replace("%id%", id)
-						   .replace("%multiblock%", name),
+						   .replace(ConstantPlaceholders.ID, id)
+						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 						   true);
 				return null;
 			}
@@ -335,8 +335,8 @@ public class AbstractMultiblock {
 			
 			if (slimefun_item == null) {
 				Logger.log(Logger.getWarning("invalid-slimefun-id")
-						   .replace("%id%", id)
-						   .replace("%multiblock%", name),
+						   .replace(ConstantPlaceholders.ID, id)
+						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 						   true);
 				return null;
 			}
@@ -347,7 +347,7 @@ public class AbstractMultiblock {
 			
 		} else {
 			Logger.log(Logger.getWarning("invalid-itemstack-type")
-					   .replace("%multiblock%", name),
+					   .replace(ConstantPlaceholders.MULTIBLOCK, name),
 					   true);
 			return null;
 		}

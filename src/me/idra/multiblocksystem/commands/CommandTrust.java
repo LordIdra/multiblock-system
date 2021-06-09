@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
+import me.idra.multiblocksystem.constants.ConstantPlaceholders;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 
@@ -41,7 +42,7 @@ public class CommandTrust extends BaseCommand{
 		if (player == null) {
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getError("player-not-found")
-					.replace("%player%", args[1]));
+					.replace(ConstantPlaceholders.PLAYER, args[1]));
 			return false;
 		}
 		
@@ -51,7 +52,7 @@ public class CommandTrust extends BaseCommand{
 			FileHandlerPlayerData.removeTrusted(owner.getUniqueId(), player.getUniqueId());
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getSuccess("player-untrusted")
-					.replace("%player%", args[1]));
+					.replace(ConstantPlaceholders.PLAYER, args[1]));
 			
 		// If the player is not in the trusted list, add them
 		} else {
@@ -59,7 +60,7 @@ public class CommandTrust extends BaseCommand{
 			FileHandlerPlayerData.addTrusted(owner.getUniqueId(), player.getUniqueId());
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getSuccess("player-trusted")
-					.replace("%player%", args[1]));
+					.replace(ConstantPlaceholders.PLAYER, args[1]));
 		}
 		
 		// Successful execution

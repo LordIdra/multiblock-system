@@ -92,6 +92,10 @@ public class UserInterfaceColorAdjuster extends BaseUserInterface {
 			else if (click.isRightClick())
 				b--;
 			break;
+		
+		// Default
+		default:
+			break;
 		}
 		
 		
