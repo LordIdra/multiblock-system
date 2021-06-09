@@ -29,7 +29,7 @@ public class MultiblockRecipe {
 	
 	
 	
-	public MultiblockRecipe clone() {
+	public MultiblockRecipe createClone() {
 		return new MultiblockRecipe(in_stack, out_stack, in_energy, out_energy, time);
 	}
 

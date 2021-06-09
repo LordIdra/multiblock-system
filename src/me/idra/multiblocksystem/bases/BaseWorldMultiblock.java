@@ -382,7 +382,7 @@ public abstract class BaseWorldMultiblock {
 			}
 			
 			// Set active recipe
-			active_recipe = recipe.clone();
+			active_recipe = recipe.createClone();
 			recipe_status = RUNNING;
 			
 			return;
