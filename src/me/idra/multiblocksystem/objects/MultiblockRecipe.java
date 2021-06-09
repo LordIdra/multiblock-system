@@ -18,7 +18,7 @@ public class MultiblockRecipe {
 			ArrayList<MixedItemStack> out_stack,	// Output items
 			int in_energy,							// Input  energy
 			int out_energy,							// Output items
-			int time								// Recipe time
+			int time								// Time
 	) {
 		this.in_stack = in_stack;
 		this.in_energy = in_energy;
