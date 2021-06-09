@@ -133,6 +133,28 @@ public class MixedItemStack {
 		else
 			inv.addItem(slimefun_itemstack);
 	}
+
+
+
+	public boolean compareType(ItemStack other_stack) {
+
+		// Compare - normal
+		if (!isSlimefunItem()) {
+			if (other_stack.getType() == itemstack.getType())
+				return true;
+		
+		// Compare - slimefun
+		} else {
+
+			if (SlimefunItem.getByItem(other_stack) == null)
+				return false;
+
+			if (SlimefunItem.getByItem(other_stack).getId().equals(slimefun_itemstack.getItemId()))
+				return true;
+		}
+
+		return false;
+	}
 	
 	
 	

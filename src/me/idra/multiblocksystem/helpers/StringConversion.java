@@ -82,15 +82,22 @@ public class StringConversion {
 			
 			// Get a string of tags, separated by commas
 			String tag_string = block_data.substring(block_data.indexOf("[")+1, block_data.indexOf("]"));
-			Scanner tag_scanner = new Scanner(tag_string).useDelimiter(",");
+			Scanner tag_scanner = null;
+
+			try {
+				tag_scanner = new Scanner(tag_string).useDelimiter(",");
+				
+				// Add tags to tag data
+				while (tag_scanner.hasNext()) {
+					tag_data.add(tag_scanner.next());
+				}
 			
-			// Add tags to tag data
-			while (tag_scanner.hasNext()) {
-				tag_data.add(tag_scanner.next());
+			} catch (Exception e) {
+				return null;
+
+			} finally {
+				tag_scanner.close();
 			}
-			
-			// Close scanner
-			tag_scanner.close();
 			
 			// Get rid of the tags from the original string so we can process the material or slimefun item
 			block_data = block_data.substring(0, block_data.indexOf("["));

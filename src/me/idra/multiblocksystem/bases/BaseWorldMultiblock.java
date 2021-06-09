@@ -134,16 +134,9 @@ public abstract class BaseWorldMultiblock {
 					if (actual_item == null)
 						continue;
 					
-					// Compare - normal
-					if (!target_item.isSlimefunItem()) {
-						if (actual_item.getType() == target_item.itemstack.getType())
-							items_total.put(target_item, items_total.get(target_item) + actual_item.getAmount());
-					
-					// Compare - slimefun
-					} else {
-						if (SlimefunItem.getByItem(actual_item).getId().equals(target_item.slimefun_itemstack.getItemId()))
-							items_total.put(target_item, items_total.get(target_item) + actual_item.getAmount());
-					}
+					// If the items match, add the amount to the relevant item in the hashmap
+					if (target_item.compareType(actual_item))
+						items_total.put(target_item, items_total.get(target_item) + actual_item.getAmount());
 				}
 			}
 		}
@@ -194,10 +187,41 @@ public abstract class BaseWorldMultiblock {
 		// If true hasn't been returned yet, no capacitor has enough energy
 		return null;
 	}
+
+
+
+	public boolean canTickFuelAndEnergy() {
+
+		// Fuel ticks - check
+		if (abstract_multiblock.fuels.size() != 0) {
+			if (fuel_ticks <= 0) {
+				recipe_status = PAUSED_NO_FUEL;
+				return false;
+			}
+		}
+
+		// Input energy - check
+		if (active_recipe.hasInputEnergy()) {
+			if (hasInputEnergy(active_recipe.in_energy) == null) {
+				recipe_status = PAUSED_NOT_ENOUGH_ENERGY;
+				return false;
+			}
+		}
+		
+		// Output energy - check
+		if (active_recipe.hasOutputEnergy()) {
+			if (hasSpaceForEnergy(active_recipe.out_energy) == null) {
+				recipe_status = PAUSED_ENERGY_OUTPUT_FULL;
+				return false;
+			}
+		}
+
+		return true;
+	}
 	
 	
 	
-	public boolean handleRecipes() {
+	public void handleRecipes() {
 		
 		// If the machine uses fuels
 		if (abstract_multiblock.fuels.size() != 0) {
@@ -212,23 +236,9 @@ public abstract class BaseWorldMultiblock {
 					for (MultiblockFuel fuel : abstract_multiblock.fuels) {
 						
 						// Normal item
-						if (!fuel.fuel_stack.isSlimefunItem()) {
-							if (stack != null) {
-								if (fuel.fuel_stack.itemstack.getType() == stack.getType()) {
-									fuel_ticks += fuel.ticks * stack.getAmount();
-									inv.remove(stack);
-								}
-							}
-						
-						// Slimefun item
-						} else {
-							if (SlimefunItem.getByItem(stack) != null) {
-								if (fuel.fuel_stack.slimefun_itemstack.getItemId().equals(SlimefunItem.getByItem(stack).getId())) {
-									fuel_ticks += fuel.ticks * stack.getAmount();
-									inv.remove(stack);
-								}
-							}
-						}
+						if (fuel.fuel_stack.compareType(stack))
+							fuel_ticks += fuel.ticks * stack.getAmount();
+							inv.remove(stack);
 					}		
 				}
 			}
@@ -237,112 +247,72 @@ public abstract class BaseWorldMultiblock {
 		
 		
 		// If a recipe is active
-		if (active_recipe != null) {
+		if (
+			active_recipe != null
+		    && active_recipe.time <= 0
+			&& active_recipe.hasOutputStack()
+			&& hasSpaceForItems(active_recipe.out_stack)
+		) {
+						
+			// Add said items to an array
+			ArrayList<MixedItemStack> items_to_add = new ArrayList<MixedItemStack> ();
 			
-			// If active recipe is finished
-			if (active_recipe.time <= 0) {
+			for (MixedItemStack stack : active_recipe.out_stack)
+				items_to_add.add(stack);
 				
-				// If the output involves items
-				if (active_recipe.hasOutputStack()) {
+			// Add each item in the array to an inventory
+			for (Inventory inv : tags_inventory.get(ITEM_OUT)) {
+
+				while (inv.firstEmpty() != -1) {
 					
-					// If the items can be added
-					if (hasSpaceForItems(active_recipe.out_stack)) {
-						
-						// Add said items to an array
-						ArrayList<MixedItemStack> items_to_add = new ArrayList<MixedItemStack> ();
-						
-						for (MixedItemStack stack : active_recipe.out_stack)
-							items_to_add.add(stack);
-							
-						// Add each item in the array to an inventory
-						for (Inventory inv : tags_inventory.get(ITEM_OUT)) {
-							while (inv.firstEmpty() != -1) {
-								
-								// If there are no more items to add, we're finished
-								if (items_to_add.size() <= 0) {
-									active_recipe = null;
-									break;
-								}
-								
-								// Add the item to inventory
-								MixedItemStack stack = items_to_add.get(0);
-								
-								if (stack.isSlimefunItem())
-									inv.addItem(stack.slimefun_itemstack);
-								else
-									inv.addItem(stack.itemstack);
-								
-								items_to_add.remove(0);
-							}
-							
-							if (items_to_add.size() <= 0) {
-								break;
-							}
-						}
+					// If there are no more items to add, we're finished
+					if (items_to_add.size() <= 0) {
+						active_recipe = null;
+						break;
 					}
+					
+					// Add the item to inventory
+					MixedItemStack stack = items_to_add.get(0);
+					
+					inv.addItem(stack.asItemStack());
+					items_to_add.remove(0);
 				}
 				
-				
-			// If active recipe is not finished
-			} else {
-				
-				// If we are able to handle active recipe's energy
-				BlockPosition input_position = null;
-				BlockPosition output_position = null;
-				
-				
-				// Input energy - check
-				if (active_recipe.hasInputEnergy()) {
-					
-					input_position = hasInputEnergy(active_recipe.in_energy);
-					
-					if (input_position == null) {
-						recipe_status = PAUSED_NOT_ENOUGH_ENERGY;
-						return true;
-					}
-				}
-				
-				// Output energy - check
-				if (active_recipe.hasOutputEnergy()) {
-					
-					output_position = hasSpaceForEnergy(active_recipe.out_energy);
-					
-					if (output_position == null) {
-						recipe_status = PAUSED_ENERGY_OUTPUT_FULL;
-						return true;
-					}
-				}
-				
-				// Fuel ticks - check
-				if (abstract_multiblock.fuels.size() != 0) {
-					
-					if (fuel_ticks <= 0) {
-						recipe_status = PAUSED_NO_FUEL;
-						return true;
-					}
-				}
-				
-				
-				// If we can handle energy
-				// Input energy - remove
-				if (active_recipe.hasInputEnergy()) {
-					Capacitor capacitor = (Capacitor) BlockStorage.check(input_position.toLocation());
-					capacitor.removeCharge(input_position.toLocation(), active_recipe.in_energy);
-				}
-					
-				// Output energy - add
-				if (active_recipe.hasOutputEnergy()) {
-					Capacitor capacitor = (Capacitor) BlockStorage.check(output_position.toLocation());
-					capacitor.addCharge(output_position.toLocation(), active_recipe.out_energy);
-				}
-					
-				// Decrement time
-				active_recipe.time--;
-				fuel_ticks--;
-				
-				// Don't try to find a new recipe
-				return true;
+				if (items_to_add.size() <= 0)
+					break;
 			}
+				
+		
+		// If active recipe is not finished
+		} else if (
+			active_recipe != null
+			&& active_recipe.time <= 0
+		) {
+				
+			// If we are able to handle active recipe's energy
+			if (!canTickFuelAndEnergy())
+				return;
+
+			// Input energy - remove
+			if (active_recipe.hasInputEnergy()) {
+				BlockPosition input_position = hasSpaceForEnergy(active_recipe.out_energy);
+				Capacitor capacitor = (Capacitor) BlockStorage.check(input_position.toLocation());
+				capacitor.removeCharge(input_position.toLocation(), active_recipe.in_energy);
+			}
+				
+			// Output energy - add
+			if (active_recipe.hasOutputEnergy()) {
+				BlockPosition output_position = hasSpaceForEnergy(active_recipe.out_energy);
+				Capacitor capacitor = (Capacitor) BlockStorage.check(output_position.toLocation());
+				capacitor.addCharge(output_position.toLocation(), active_recipe.out_energy);
+			}
+				
+			// Decrement time
+			active_recipe.time--;
+			fuel_ticks--;
+			
+			// Don't try to find a new recipe
+			return;
 		}
 		
 		
@@ -354,84 +324,74 @@ public abstract class BaseWorldMultiblock {
 			// Number of items that have been accounted for, for each itemstack
 			HashMap<MixedItemStack, Integer> item_numbers = new HashMap<MixedItemStack, Integer> ();
 			
-			for (MixedItemStack stack : recipe.in_stack) {
+			for (MixedItemStack stack : recipe.in_stack)
 				item_numbers.put(stack, 0);
-			}
 			
 			// Does the recipe use item inputs?
-			if (recipe.hasInputStack()) {
+			if (!recipe.hasInputStack())
+				continue;
 				
-				// Do we have enough inputs to start the recipe?
-				if (hasInputItems(recipe.in_stack)) {
+			// Do we have enough inputs to start the recipe?
+			if (!hasInputItems(recipe.in_stack))
+				continue;
 				
-					// For each inventory itemstack
-					for (Inventory inv : tags_inventory.get(ITEM_IN)) {
-						for (int i = 0; i < inv.getSize(); i++) {
-							
-							// Get the stack we're dealing with
-							ItemStack inv_stack = inv.getItem(i);
-							
-							// If the stack is empty, continue
-							if (inv_stack == null)
-								continue;
-							
-							// How many items in the inventory stack?
-							int inventory_item_quantity = inv_stack.getAmount();
-							
-							// For each remaining recipe itemstack
-							for (MixedItemStack recipe_stack : item_numbers.keySet()) {
-								
-								// Normal item check
-								if (!recipe_stack.isSlimefunItem()) {
-									if (recipe_stack.itemstack.getType() != inv_stack.getType())
-										continue;
-								
-								// Slimefun item check
-								} else {
-									if (SlimefunItem.getByItem(inv_stack) != null)
-										if (!recipe_stack.slimefun_itemstack.getItemId().equals(SlimefunItem.getByItem(inv_stack).getId()))
-											continue;
-								}
-								
-								// Find how many items need to be removed
-								int recipe_item_quantity = recipe_stack.asItemStack().getAmount();
-								
-								// Remove the entire stack
-								inv.clear(i);
-								
-								// Account for items removed in our hashmap
-								item_numbers.put(recipe_stack, item_numbers.get(recipe_stack) + inventory_item_quantity);
+			// For each inventory itemstack
+			for (Inventory inv : tags_inventory.get(ITEM_IN)) {
+				for (int i = 0; i < inv.getSize(); i++) {
+					
+					// Get the stack we're dealing with
+					ItemStack inv_stack = inv.getItem(i);
+					
+					// If the stack is empty, continue
+					if (inv_stack == null)
+						continue;
+					
+					// How many items in the inventory stack?
+					int inventory_item_quantity = inv_stack.getAmount();
+					
+					// For each remaining recipe itemstack
+					for (MixedItemStack recipe_stack : item_numbers.keySet()) {
+						
+						// Type check
+						if (!recipe_stack.compareType(inv_stack))
+							continue;
+						
+						// Find how many items need to be removed
+						int recipe_item_quantity = recipe_stack.asItemStack().getAmount();
+						
+						// Remove the entire stack
+						inv.clear(i);
+						
+						// Account for items removed in our hashmap
+						item_numbers.put(recipe_stack, item_numbers.get(recipe_stack) + inventory_item_quantity);
 
-								// We removed more items than we should have; add the required amount back
-								if (item_numbers.get(recipe_stack) > recipe_item_quantity) {
-										
-									int amount_to_add_back = item_numbers.get(recipe_stack) - recipe_item_quantity;
-										
-									ItemStack stack_to_add_back = inv_stack.clone();
-									stack_to_add_back.setAmount(amount_to_add_back);
-									inv.addItem(stack_to_add_back);
-								}
+						// We removed more items than we should have; add the required amount back
+						if (item_numbers.get(recipe_stack) > recipe_item_quantity) {
 								
-								// Check if enough items have been removed
-								if (item_numbers.get(recipe_stack) >= recipe_item_quantity) {
-									item_numbers.remove(recipe_stack);
-								}
-							}
+							int amount_to_add_back = item_numbers.get(recipe_stack) - recipe_item_quantity;
+								
+							ItemStack stack_to_add_back = inv_stack.clone();
+							stack_to_add_back.setAmount(amount_to_add_back);
+							inv.addItem(stack_to_add_back);
 						}
+						
+						// Check if enough items have been removed
+						if (item_numbers.get(recipe_stack) >= recipe_item_quantity)
+							item_numbers.remove(recipe_stack);
 					}
-					
-					// Set active recipe
-					active_recipe = recipe.clone();
-					recipe_status = RUNNING;
-					
-					return true;
 				}
 			}
+			
+			// Set active recipe
+			active_recipe = recipe.clone();
+			recipe_status = RUNNING;
+			
+			return;
 		}
 		
 		// No recipe was found, set the status to not enough inputs 
 		recipe_status = PAUSED_NOT_ENOUGH_ITEMS;
-		return true;
+		return;
 	}
 	
 	
