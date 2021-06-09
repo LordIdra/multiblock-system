@@ -10,7 +10,13 @@ import me.idra.multiblocksystem.managers.ManagerPlugin;
 
 public class MessageHandler {
 			
-			
+	
+
+	private MessageHandler() {
+		// Empty constructor
+	}
+
+
 			
 	public static String getInfo(String location) {
 		return ManagerPlugin.messages.getString("Messages.Info." + location);

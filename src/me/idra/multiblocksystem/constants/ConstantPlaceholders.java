@@ -1,6 +1,11 @@
 package me.idra.multiblocksystem.constants;
 
 public class ConstantPlaceholders {
+
+    private ConstantPlaceholders() {
+        // Empty constructor
+    }
+
     
     public static final String PLAYER = "%player%";
     public static final String NAME = "%name%";

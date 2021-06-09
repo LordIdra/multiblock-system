@@ -18,7 +18,8 @@ public class UserInterfaceSettings extends BaseUserInterface {
 
 	private final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
 	private final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
-	private final String ADJUST_TEXT = ">> click to adjust";
+	private final String ADJUST_TEXT = ChatColor.GRAY + ">> click to adjust";
+	private final String CURRENT_VALUE = ChatColor.DARK_AQUA + "current value: ";
 
 	private final String UNRESOLVED_PARTICLE_COLOR = "unresolved-particle-color";
 	private final String RESOLVED_PARTICLE_COLOR = "resolved-particle-color";
@@ -68,55 +69,55 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		if (settings.auto_build_enabled)
 			setItem(0, Material.GREEN_CONCRETE, 
 					ChatColor.GOLD + "" + ChatColor.BOLD + "Automatic Error Switching", 
-					ChatColor.DARK_AQUA + "current value: " + ChatColor.RED + "disabled",
+					CURRENT_VALUE + ChatColor.RED + "disabled",
 					ChatColor.GRAY + ">> click to toggle");
 		else
 			setItem(0, Material.RED_CONCRETE,
 					ChatColor.GOLD + "" + ChatColor.BOLD + "Automatic Error Switching", 
-					ChatColor.DARK_AQUA + "current value: " + ChatColor.GREEN + "enabled",
+					CURRENT_VALUE + ChatColor.GREEN + "enabled",
 					ChatColor.GRAY + ">> click to toggle");
 
 		
 		setItem(9, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (4-30)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.unresolved_error_time),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.unresolved_error_time),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(10, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (0-5)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.resolved_error_time),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.resolved_error_time),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(11, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (20-100)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.error_particle_amount),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.error_particle_amount),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(12, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Time" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.location_particle_time),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.location_particle_time),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(13, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.location_particle_amount),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.location_particle_amount),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(14, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "List Items Per Page" + ChatColor.RESET + ChatColor.YELLOW + " (3-15)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.list_items_per_page),
+				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.list_items_per_page),
 				ChatColor.GRAY + DECREASE_TEXT,
 				ChatColor.GRAY + INCREASE_TEXT);
 		
 		
 		setItem(18, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Particle Color", 
-				ChatColor.DARK_AQUA + "current value: " 
+				CURRENT_VALUE 
 						+ ChatColor.RED + String.valueOf(settings.unresolved_error_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.unresolved_error_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.unresolved_error_b),
@@ -124,7 +125,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		setItem(19, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Particle Color", 
-				ChatColor.DARK_AQUA + "current value: " 
+				CURRENT_VALUE 
 						+ ChatColor.RED + String.valueOf(settings.resolved_error_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.resolved_error_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.resolved_error_b),
@@ -132,7 +133,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		setItem(20, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Location Particle Color", 
-				ChatColor.DARK_AQUA + "current value: " 
+				CURRENT_VALUE 
 						+ ChatColor.RED + String.valueOf(settings.location_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.location_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.location_b),
@@ -141,7 +142,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		setItem(27, Material.LIGHT_GRAY_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Length", 
-				ChatColor.DARK_AQUA + "current value: " 
+				CURRENT_VALUE 
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_x) + " " 
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_y) + " " 
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_z),

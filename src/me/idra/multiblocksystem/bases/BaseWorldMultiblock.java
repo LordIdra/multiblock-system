@@ -50,7 +50,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, HashMap<BlockPosition, String[]> blocks, UUID owner, int ID) {
+	protected BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, HashMap<BlockPosition, String[]> blocks, UUID owner, int ID) {
 		
 		// Set default variables
 		this.blocks = blocks;
@@ -192,27 +192,21 @@ public abstract class BaseWorldMultiblock {
 	public boolean canTickFuelAndEnergy() {
 
 		// Fuel ticks - check
-		if (abstract_multiblock.fuels.size() != 0) {
-			if (fuel_ticks <= 0) {
-				recipe_status = PAUSED_NO_FUEL;
-				return false;
-			}
+		if ((abstract_multiblock.fuels.size() != 0) && (fuel_ticks <= 0)) {
+			recipe_status = PAUSED_NO_FUEL;
+			return false;
 		}
 
 		// Input energy - check
-		if (active_recipe.hasInputEnergy()) {
-			if (hasInputEnergy(active_recipe.in_energy) == null) {
-				recipe_status = PAUSED_NOT_ENOUGH_ENERGY;
-				return false;
-			}
+		if ((active_recipe.hasInputEnergy()) && (hasInputEnergy(active_recipe.in_energy) == null)) {
+			recipe_status = PAUSED_NOT_ENOUGH_ENERGY;
+			return false;
 		}
 		
 		// Output energy - check
-		if (active_recipe.hasOutputEnergy()) {
-			if (hasSpaceForEnergy(active_recipe.out_energy) == null) {
-				recipe_status = PAUSED_ENERGY_OUTPUT_FULL;
-				return false;
-			}
+		if ((active_recipe.hasOutputEnergy()) && (hasSpaceForEnergy(active_recipe.out_energy) == null)) {
+			recipe_status = PAUSED_ENERGY_OUTPUT_FULL;
+			return false;
 		}
 
 		return true;
@@ -235,9 +229,10 @@ public abstract class BaseWorldMultiblock {
 					for (MultiblockFuel fuel : abstract_multiblock.fuels) {
 						
 						// Normal item
-						if (fuel.fuel_stack.compareType(stack))
+						if (fuel.fuel_stack.compareType(stack)) {
 							fuel_ticks += fuel.ticks * stack.getAmount();
 							inv.remove(stack);
+						}
 					}		
 				}
 			}
@@ -481,8 +476,8 @@ public abstract class BaseWorldMultiblock {
 	public static final String PAUSED_NO_FUEL = "PAUSED_NO_FUEL";
 	
 	
-	
-	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID) {
+
+	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
 		// Get class location, and from that the class itself
 		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
@@ -496,7 +491,7 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("class-not-found")
 					.replace("%class%", String.valueOf(class_location)),
 					true);
-			return;
+			return null;
 		}
 		
 		// Initialize the class, checking for a large number of potential problems
@@ -504,8 +499,8 @@ public abstract class BaseWorldMultiblock {
 		
 		try {
 			world_multiblock = 
-					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class, new HashMap<BlockPosition, String[]> ()
-					.getClass(), UUID.class, int.class)
+					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class, HashMap.class,
+					UUID.class, int.class)
 					.newInstance(abstract_multiblock, block_map, player, ID);
 		
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
@@ -515,10 +510,20 @@ public abstract class BaseWorldMultiblock {
 					Logger.getWarning("abstract-structure-not-initialized")
 					.replace("%structure%", String.valueOf(class_location)),
 					true);
-			return;
+			return null;
 		}
+
+		return world_multiblock;
+	}
+
+
+	
+	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
-		// Return the multiblocks if it's loaded (if it hasn't this will just return null)
+		// Create multiblock
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
+
+		// Add the multiblock to the multiblock array
 		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 	
@@ -526,48 +531,18 @@ public abstract class BaseWorldMultiblock {
 	
 	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, HashMap<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
 		
-		// Get class location, and from that the class itself
-		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
-		Class<?> structure_class = null;
-		
-		// If the class isn't found, throw a warning
-		try {
-			structure_class = Class.forName(class_location);
-		} catch (ClassNotFoundException e) {
-			Logger.log(
-					Logger.getWarning("class-not-found")
-					.replace("%class%", String.valueOf(class_location)),
-					true);
-			return;
-		}
-		
-		// Initialize the class, checking for a large number of potential problems
-		BaseWorldMultiblock world_multiblock = null;
-		
-		try {
-			world_multiblock = 
-					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class, new HashMap<BlockPosition, String[]> ()
-					.getClass(), UUID.class, int.class)
-					.newInstance(abstract_multiblock, block_map, player, ID);
-		
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			
-			Logger.log(
-					Logger.getWarning("abstract-structure-not-initialized")
-					.replace("%structure%", String.valueOf(class_location)),
-					true);
-			return;
-		}
+		// Create multiblock
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
 		
 		world_multiblock.fuel_ticks = in_fuel_ticks;
+
 		if (recipe_index != -1)
 			world_multiblock.active_recipe = abstract_multiblock.recipes.get(recipe_index);
 		
 		if (world_multiblock.active_recipe != null)
 			world_multiblock.active_recipe.time = recipe_time;
 		
-		// Return the multiblocks if it's loaded (if it hasn't this will just return null)
+		// Add the multiblock to the multiblock array
 		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 	
@@ -587,9 +562,8 @@ public abstract class BaseWorldMultiblock {
 				Inventory inventory = ((Chest) position.getBlock().getState()).getBlockInventory();
 			
 				// Compare the tag for that section - if it matches, check that the inventory doesn't already exist, then add the inventory to our array
-				if (Arrays.asList(position_map.get(position)).contains(tag))
-					if (!tag_matches.contains(inventory))
-						tag_matches.add(inventory);
+				if ((Arrays.asList(position_map.get(position)).contains(tag)) && (!tag_matches.contains(inventory)))
+					tag_matches.add(inventory);
 			}
 		}
 		

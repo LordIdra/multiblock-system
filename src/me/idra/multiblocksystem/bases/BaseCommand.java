@@ -30,8 +30,8 @@ public abstract class BaseCommand {
 	public void addPermission() {
 		String formatted_command = "multiblocksystem.command.";
 		
-		for (String name : name)
-			formatted_command += name + ".";
+		for (String s : name)
+			formatted_command += s + ".";
 		
 		formatted_command = formatted_command.substring(0, formatted_command.length() - 1);
 		permission = new Permission(formatted_command);

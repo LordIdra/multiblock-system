@@ -25,7 +25,7 @@ public abstract class BaseUserInterface implements Listener {
 	
 	
 	
-	public BaseUserInterface (Player player, int size, String title) {
+	protected  BaseUserInterface (Player player, int size, String title) {
 		
 		this.player = player;
 		

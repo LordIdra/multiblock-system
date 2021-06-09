@@ -17,6 +17,11 @@ public class Logger {
 	public static HashMap<Integer, String> log_times = new HashMap<Integer, String> ();
 	public static HashMap<Integer, String> log_messages = new HashMap<Integer, String> ();
 	
+
+
+	private Logger() {
+		// Empty constructor
+	}
 	
 	
 	public static String getInfo(String location) {

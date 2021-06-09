@@ -28,6 +28,12 @@ public class FileHandlerWorldMultiblocks {
 	
 	static FileConfiguration world_multiblock_config;
 	static File world_multiblock_file; 
+
+
+
+	private FileHandlerWorldMultiblocks() {
+        // Empty constructor
+    }
 	
 	
 	
