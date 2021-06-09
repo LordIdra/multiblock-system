@@ -29,13 +29,20 @@ public abstract class BaseCommand {
 	}
 	
 	public void addPermission() {
-		String formatted_command = "multiblocksystem.command.";
+
+		// Create new StringBuilder
+		StringBuilder formatted_command = new StringBuilder("multiblocksystem.command.");
 		
-		for (String s : name)
-			formatted_command += s + ".";
+		// Add each name to the permission
+		for (String s : name) {
+			formatted_command.append(s + ".");
+		}
 		
-		formatted_command = formatted_command.substring(0, formatted_command.length() - 1);
-		permission = new Permission(formatted_command);
+		// Remove the final '.'
+		String formatted_command_string = formatted_command.substring(0, formatted_command.length() - 1);
+
+		// Generate new permission
+		permission = new Permission(formatted_command_string);
 	}
 	
 	public abstract boolean commandFunction(CommandSender sender, Command command, String label, String[] args);

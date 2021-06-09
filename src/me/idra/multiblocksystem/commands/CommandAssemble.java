@@ -135,7 +135,7 @@ public class CommandAssemble extends BaseCommand{
 		
 		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]
 		int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
-		int percentage = Math.round((float)(correct_blocks*100) / (float)(abstract_descriptor.number_of_solid_blocks));
+		int percentage = Math.round((correct_blocks*100) / (float)(abstract_descriptor.number_of_solid_blocks));
 
 		// Check if multiblock is complete or not
 		if (percentage == 100) {

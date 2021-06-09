@@ -105,8 +105,8 @@ public abstract class BaseWorldMultiblock {
 		// If there are enough free slots, return true - if not, return false
 		if (free_slots >= items.size())
 			return true;
-		else
-			return false;
+
+		return false;
 	}
 	
 	
@@ -323,12 +323,8 @@ public abstract class BaseWorldMultiblock {
 			for (MixedItemStack stack : recipe.in_stack)
 				item_numbers.put(stack, 0);
 			
-			// Does the recipe use item inputs?
-			if (!recipe.hasInputStack())
-				continue;
-				
-			// Do we have enough inputs to start the recipe?
-			if (!hasInputItems(recipe.in_stack))
+			// Does the recipe use item inputs? Do we have enough inputs to start the recipe?
+			if (!recipe.hasInputStack() || !hasInputItems(recipe.in_stack))
 				continue;
 				
 			// For each inventory itemstack
@@ -387,7 +383,6 @@ public abstract class BaseWorldMultiblock {
 		
 		// No recipe was found, set the status to not enough inputs 
 		recipe_status = PAUSED_NOT_ENOUGH_ITEMS;
-		return;
 	}
 	
 	
@@ -466,7 +461,7 @@ public abstract class BaseWorldMultiblock {
 	public static final String ENERGY_IN = "EnergyIn";
 	public static final String ENERGY_OUT = "EnergyOut";
 	
-	public static final String[] inventory_tags = new String[] {
+	protected static final String[] inventory_tags = new String[] {
 			ITEM_IN, ITEM_OUT, FUEL_IN
 	};
 
@@ -556,6 +551,12 @@ public abstract class BaseWorldMultiblock {
 		
 		// Add the multiblock to the multiblock array
 		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+	}
+
+
+
+	public static boolean isInventoryTag(String tag) {
+		return Arrays.asList(BaseWorldMultiblock.inventory_tags).contains(tag);
 	}
 	
 	

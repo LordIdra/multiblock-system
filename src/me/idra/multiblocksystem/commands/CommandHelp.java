@@ -61,9 +61,7 @@ public class CommandHelp extends BaseCommand{
 		for (BaseCommand command_object : ListCommands.command_object_array) {
 			
 			// If it's supposed to be hidden or the player doesn't have permissions, don't display any information about it
-			if (command_object.hidden)
-				continue;
-			if (!sender.hasPermission(command_object.permission))
+			if (command_object.hidden || !sender.hasPermission(command_object.permission))
 				continue;
 			
 			// Get command attributes

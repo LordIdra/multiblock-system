@@ -97,8 +97,9 @@ public class CommandTag extends BaseCommand{
 		// Is the tag an inventory tag?
 		boolean is_inventory_tag = false;
 		
-		if (Arrays.asList(BaseWorldMultiblock.inventory_tags).contains(args[1]))
+		if (BaseWorldMultiblock.isInventoryTag(args[1])) {
 			is_inventory_tag = true;
+		}
 		
 		// If so, try to get the attached inventory and add it to the multiblock's map
 		if (is_inventory_tag) {
