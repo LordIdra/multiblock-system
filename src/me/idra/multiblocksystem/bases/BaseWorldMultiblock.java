@@ -545,7 +545,8 @@ public abstract class BaseWorldMultiblock {
 			world_multiblock.active_recipe.time = recipe_time;
 		
 		// Add the multiblock to the multiblock array
-		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
+		if (world_multiblock != null)
+			ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 	
 	
