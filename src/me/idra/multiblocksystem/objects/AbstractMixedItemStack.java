@@ -1,0 +1,59 @@
+package me.idra.multiblocksystem.objects;
+
+import java.util.ArrayList;
+
+import org.bukkit.Material;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+
+
+
+public class AbstractMixedItemStack {
+
+	public String[] tags = null;
+	public ArrayList<MixedItemStack> items = new ArrayList<MixedItemStack> ();
+	
+	
+	
+	
+	public AbstractMixedItemStack(Material material, String[] tags) {
+		
+		// Add a single material to our MixedItemStack
+		items.add(new MixedItemStack(material));
+		
+		// Set tags
+		this.tags = tags;
+	}
+	
+	public AbstractMixedItemStack(ArrayList<Material> materials, String[] tags) {
+		
+		// For each material
+		for (Material material : materials)
+			items.add(new MixedItemStack(material));
+		
+		// Set tags
+		this.tags = tags;
+	}
+	
+	public AbstractMixedItemStack(SlimefunItem slimefun_item, String[] tags) {
+		
+		// For each material
+		items.add(new MixedItemStack(slimefun_item));
+		
+		// Set tags
+		this.tags = tags;
+	}
+	
+	
+	
+	public boolean containsMaterial(Material material) {
+		
+		for (MixedItemStack item : items) {
+			if (item.isSlimefunItem())
+				continue;
+			else if (item.itemstack.getType() == material)
+				return true;
+		}
+		
+		return false;
+	}
+}
