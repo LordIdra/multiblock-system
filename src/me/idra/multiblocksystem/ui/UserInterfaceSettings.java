@@ -16,6 +16,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public class UserInterfaceSettings extends BaseUserInterface {
 
+	private final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
+	private final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
+	private final String ADJUST_TEXT = ">> click to adjust";
+
+	private final String UNRESOLVED_PARTICLE_COLOR = "unresolved-particle-color";
+	private final String RESOLVED_PARTICLE_COLOR = "resolved-particle-color";
+	private final String LOCATION_PARTICLE_COLOR = "location-particle-color";
+	
 	private PlayerSettings settings = null;
 	private HashMap<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<String, UserInterfaceColorAdjuster> ();
 	private HashMap<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<String, UserInterfaceVectorAdjuster> ();
@@ -24,21 +32,21 @@ public class UserInterfaceSettings extends BaseUserInterface {
 	
 	public void initializeItems() {
 		
-		UserInterfaceColorAdjuster unresolved_particle_color_adjuster = color_adjusters.get("unresolved-particle-color");
+		UserInterfaceColorAdjuster unresolved_particle_color_adjuster = color_adjusters.get(UNRESOLVED_PARTICLE_COLOR);
 		if (unresolved_particle_color_adjuster != null) {
 			settings.unresolved_error_r = unresolved_particle_color_adjuster.r;
 			settings.unresolved_error_g = unresolved_particle_color_adjuster.g;
 			settings.unresolved_error_b = unresolved_particle_color_adjuster.b;
 		}
 		
-		UserInterfaceColorAdjuster resolved_particle_color_adjuster = color_adjusters.get("resolved-particle-color");
+		UserInterfaceColorAdjuster resolved_particle_color_adjuster = color_adjusters.get(RESOLVED_PARTICLE_COLOR);
 		if (resolved_particle_color_adjuster != null) {
 			settings.resolved_error_r = resolved_particle_color_adjuster.r;
 			settings.resolved_error_g = resolved_particle_color_adjuster.g;
 			settings.resolved_error_b = resolved_particle_color_adjuster.b;
 		}
 		
-		UserInterfaceColorAdjuster location_particle_color_adjuster = color_adjusters.get("location-particle-color");
+		UserInterfaceColorAdjuster location_particle_color_adjuster = color_adjusters.get(LOCATION_PARTICLE_COLOR);
 		if (location_particle_color_adjuster != null) {
 			settings.location_r = location_particle_color_adjuster.r;
 			settings.location_g = location_particle_color_adjuster.g;
@@ -72,38 +80,38 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		setItem(9, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (4-30)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.unresolved_error_time),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(10, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (0-5)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.resolved_error_time),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(11, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (20-100)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.error_particle_amount),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(12, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Time" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.location_particle_time),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(13, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.location_particle_amount),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		setItem(14, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "List Items Per Page" + ChatColor.RESET + ChatColor.YELLOW + " (3-15)", 
 				ChatColor.DARK_AQUA + "current value: " + ChatColor.AQUA + String.valueOf(settings.list_items_per_page),
-				ChatColor.GRAY + ">> right click to increase",
-				ChatColor.GRAY + ">> left click to increase");
+				ChatColor.GRAY + DECREASE_TEXT,
+				ChatColor.GRAY + INCREASE_TEXT);
 		
 		
 		setItem(18, Material.BLUE_CONCRETE,
@@ -112,7 +120,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 						+ ChatColor.RED + String.valueOf(settings.unresolved_error_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.unresolved_error_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.unresolved_error_b),
-				ChatColor.GRAY + ">> click to adjust");
+				ChatColor.GRAY + ADJUST_TEXT);
 		
 		setItem(19, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Particle Color", 
@@ -120,7 +128,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 						+ ChatColor.RED + String.valueOf(settings.resolved_error_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.resolved_error_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.resolved_error_b),
-				ChatColor.GRAY + ">> click to adjust");
+				ChatColor.GRAY + ADJUST_TEXT);
 		
 		setItem(20, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Location Particle Color", 
@@ -128,7 +136,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 						+ ChatColor.RED + String.valueOf(settings.location_r) + " " 
 						+ ChatColor.GREEN + String.valueOf(settings.location_g) + " " 
 						+ ChatColor.BLUE + String.valueOf(settings.location_b),
-				ChatColor.GRAY + ">> click to adjust");
+				ChatColor.GRAY + ADJUST_TEXT);
 		
 		
 		setItem(27, Material.LIGHT_GRAY_CONCRETE,
@@ -137,7 +145,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_x) + " " 
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_y) + " " 
 						+ ChatColor.WHITE + String.valueOf(settings.error_offset_z),
-				ChatColor.GRAY + ">> click to adjust");
+				ChatColor.GRAY + ADJUST_TEXT);
 	}
 	
 	
@@ -210,18 +218,18 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			
 			
 		case 18:
-			color_adjusters.put("unresolved-particle-color", new UserInterfaceColorAdjuster(player, this, settings.unresolved_error_r, settings.unresolved_error_g, settings.unresolved_error_b));
-			color_adjusters.get("unresolved-particle-color").display();
+			color_adjusters.put(UNRESOLVED_PARTICLE_COLOR, new UserInterfaceColorAdjuster(player, this, settings.unresolved_error_r, settings.unresolved_error_g, settings.unresolved_error_b));
+			color_adjusters.get(UNRESOLVED_PARTICLE_COLOR).display();
 			break;
 
 		case 19:
-			color_adjusters.put("resolved-particle-color", new UserInterfaceColorAdjuster(player, this, settings.resolved_error_r, settings.resolved_error_g, settings.resolved_error_b));
-			color_adjusters.get("resolved-particle-color").display();
+			color_adjusters.put(RESOLVED_PARTICLE_COLOR, new UserInterfaceColorAdjuster(player, this, settings.resolved_error_r, settings.resolved_error_g, settings.resolved_error_b));
+			color_adjusters.get(RESOLVED_PARTICLE_COLOR).display();
 			break;
 			
 		case 20:
-			color_adjusters.put("location-particle-color", new UserInterfaceColorAdjuster(player, this, settings.location_r, settings.location_g, settings.location_b));
-			color_adjusters.get("location-particle-color").display();
+			color_adjusters.put(LOCATION_PARTICLE_COLOR, new UserInterfaceColorAdjuster(player, this, settings.location_r, settings.location_g, settings.location_b));
+			color_adjusters.get(LOCATION_PARTICLE_COLOR).display();
 			break;
 
 			

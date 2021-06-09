@@ -18,6 +18,7 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 public class TaskVisualiseError extends BukkitRunnable{
 	
+	static final String BLOCKS_LEFT = " blocks left";
 	BlockError error;
 	public int visual_time;
 	public Vector offset;
@@ -59,9 +60,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 		}
 		
 		if (error.isResolved())
-			sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + " blocks left";
+			sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
 		else
-			sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + " blocks left";
+			sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
 		
 		// Send the titles
 		error.player.sendTitle(
@@ -146,9 +147,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 				}
 				
 				if (error.isResolved())
-					sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + " blocks left";
+					sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
 				else
-					sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + " blocks left";
+					sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
 				
 				// Send the titles
 				error.player.sendTitle(

@@ -11,6 +11,11 @@ import net.md_5.bungee.api.ChatColor;
 
 public class UserInterfaceColorAdjuster extends BaseUserInterface {
 
+	private final String LIMIT_TEXT = " (0-10)";
+	private final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
+	private final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
+	private final String CURRENT_VALUE_TEXT = ChatColor.DARK_AQUA + "current value: ";
+
 	private UserInterfaceSettings parent;
 	
 	public int r = 0;
@@ -25,22 +30,22 @@ public class UserInterfaceColorAdjuster extends BaseUserInterface {
 				ChatColor.WHITE + "" + ChatColor.BOLD + "Return");
 		
 		setItem(3, Material.RED_CONCRETE, 
-				ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.GOLD + " (0-10)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.YELLOW + String.valueOf(r),
-				ChatColor.GRAY + ">> left click to increase",
-				ChatColor.GRAY + ">> right click to decrease");
+				ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(r),
+				INCREASE_TEXT,
+				DECREASE_TEXT);
 
 		setItem(4, Material.GREEN_CONCRETE, 
-				ChatColor.GREEN + "" + ChatColor.BOLD + "Green" + ChatColor.RESET + ChatColor.GOLD + " (0-10)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.YELLOW + String.valueOf(g),
-				ChatColor.GRAY + ">> left click to increase",
-				ChatColor.GRAY + ">> right click to decrease");
+				ChatColor.GREEN + "" + ChatColor.BOLD + "Green" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(g),
+				INCREASE_TEXT,
+				DECREASE_TEXT);
 		
 		setItem(5, Material.BLUE_CONCRETE, 
-				ChatColor.BLUE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.GOLD + " (0-10)", 
-				ChatColor.DARK_AQUA + "current value: " + ChatColor.YELLOW + String.valueOf(b),
-				ChatColor.GRAY + ">> left click to increase",
-				ChatColor.GRAY + ">> right click to decrease");
+				ChatColor.BLUE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(b),
+				INCREASE_TEXT,
+				DECREASE_TEXT);
 	}
 	
 	
