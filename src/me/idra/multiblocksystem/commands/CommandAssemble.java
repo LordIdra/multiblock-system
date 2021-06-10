@@ -181,7 +181,7 @@ public class CommandAssemble extends BaseCommand{
 			
 			// Also display the location of each block, so it's clear where the multiblock is
 			for (WorldMixedItemStack world_block : world_to_abstract_map.keySet()) {
-				TaskVisualiseLocation task = new TaskVisualiseLocation(world_block.location, ManagerPlugin.config.getInt("LocationVisualisation.particle-ticks"));
+				TaskVisualiseLocation task = new TaskVisualiseLocation(player, world_block.location);
 	    		task.runTaskTimer(ManagerPlugin.plugin, 0, ManagerPlugin.config.getInt("LocationVisualisation.particle-interval"));
 			}
 		}

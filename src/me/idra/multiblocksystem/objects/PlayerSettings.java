@@ -5,13 +5,11 @@ import java.util.UUID;
 
 
 public class PlayerSettings {
-
+	
 	public UUID player;
 	
 	
 	public boolean auto_build_enabled = true;
-	public boolean auto_build_running = false;
-	
 	
 	public int unresolved_error_time = 15;
 	public int resolved_error_time = 1;

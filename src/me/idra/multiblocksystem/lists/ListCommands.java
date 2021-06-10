@@ -4,7 +4,6 @@ import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.commands.CommandAdminLogClear;
 import me.idra.multiblocksystem.commands.CommandAdminLogView;
 import me.idra.multiblocksystem.commands.CommandAssemble;
-import me.idra.multiblocksystem.commands.CommandCancelAutobuild;
 import me.idra.multiblocksystem.commands.CommandHelp;
 import me.idra.multiblocksystem.commands.CommandListMultiblocks;
 import me.idra.multiblocksystem.commands.CommandListTrusted;
@@ -35,7 +34,6 @@ public class ListCommands {
 			new CommandAdminLogView(),
 			new CommandAdminLogClear(),
 			new CommandTag(),
-			new CommandSettings(),
-			new CommandCancelAutobuild()
+			new CommandSettings()
 	};
 }

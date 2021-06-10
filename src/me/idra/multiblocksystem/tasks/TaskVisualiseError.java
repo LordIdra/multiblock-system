@@ -23,7 +23,6 @@ public class TaskVisualiseError extends BukkitRunnable{
 	public int visual_time;
 	public Vector offset;
 	public int amount;
-	public boolean originally_was_autobuild = false;
 	PlayerSettings settings;
 	
 	
@@ -43,10 +42,6 @@ public class TaskVisualiseError extends BukkitRunnable{
 				 settings.error_offset_z);
 		amount = settings.error_particle_amount;
 		
-		// Find if auto-build is currently enabled
-		if (settings.auto_build_running)
-			originally_was_autobuild = true;
-		
 		// Generate main/sub titles
 		String main_title = error.getErrorTitle(false);
 		String sub_title;
@@ -59,16 +54,24 @@ public class TaskVisualiseError extends BukkitRunnable{
 			}
 		}
 		
-		if (error.isResolved())
-			sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-		else
-			sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+		if (settings.auto_build_enabled) {
+			if (error.isResolved())
+				sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+			else
+				sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+		
+		} else {
+			if (error.isResolved())
+				sub_title = "";
+			else
+				sub_title = "";
+		}
 		
 		// Send the titles
 		error.player.sendTitle(
 				main_title, sub_title, 
 				2, 
-				settings.unresolved_error_time, 
+				settings.unresolved_error_time * 20, 
 				2);
 	}
 	
@@ -107,13 +110,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 		
 		// Cancel the task if the time has expired, or if the autobuild status has been changed
 		if (visual_time <= 0) {
+
 			error.player.sendTitle("", "", 0, 1, 0);
 			cancel();
-		
-		} else if (originally_was_autobuild != ListPlayerSettings.getPlayerSettings(error.player.getUniqueId()).auto_build_running) {
-			error.player.sendTitle("", "", 0, 1, 0);
-			cancel();
-			
 			
 		// Keep running if it hasn't
 		} else {
@@ -126,9 +125,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 			
 				// Create particles
 				visualise(
-					settings.unresolved_error_r,
-					settings.unresolved_error_g,
-					settings.unresolved_error_b);
+					settings.unresolved_error_r * 25,
+					settings.unresolved_error_g * 25,
+					settings.unresolved_error_b * 25);
 	
 			
 			// If the error has been resolved
@@ -155,17 +154,17 @@ public class TaskVisualiseError extends BukkitRunnable{
 				error.player.sendTitle(
 						main_title, sub_title, 
 						2, 
-						settings.resolved_error_time, 
+						settings.resolved_error_time * 20, 
 						2);
 				
 				// Generate particles
 				visualise(
-						2,
-						settings.resolved_error_time,
-						2);
+						settings.resolved_error_r * 25,
+						settings.resolved_error_g * 25,
+						settings.resolved_error_b * 25);
 				
 				// Schedule a new task to visualise the next error if auto-build is enabled
-				if (ListPlayerSettings.getPlayerSettings(error.player.getUniqueId()).auto_build_running) {
+				if (ListPlayerSettings.getPlayerSettings(error.player.getUniqueId()).auto_build_enabled) {
 					for (BlockError new_error : ListBlockErrors.block_errors.get(error.player)) {
 						if (!new_error.isResolved()) {
 							ManagerBlockErrorVisualisation.addError(new_error);

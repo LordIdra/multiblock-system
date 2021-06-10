@@ -2,10 +2,12 @@ package me.idra.multiblocksystem.tasks;
 
 import java.awt.Color;
 
+import org.bukkit.entity.Player;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.idra.multiblocksystem.managers.ManagerPlugin;
+import me.idra.multiblocksystem.lists.ListPlayerSettings;
+import me.idra.multiblocksystem.objects.PlayerSettings;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
@@ -13,6 +15,7 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 public class TaskVisualiseLocation extends BukkitRunnable{
 	
+	PlayerSettings player_settings;
 	Location loc;
 	Location offset;
 	public int visual_time;
@@ -20,20 +23,20 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 	
 	
 	
-	public TaskVisualiseLocation(Location in_loc, int in_visual_time) {
+	public TaskVisualiseLocation(Player player, Location in_loc) {
 		super();
+
+		// Player settings
+		player_settings = ListPlayerSettings.getPlayerSettings(player.getUniqueId());
 		
 		// Time we should display this for
-		visual_time = in_visual_time;
+		visual_time = player_settings.location_particle_time;
 		
 		// Where we should display it
 		loc = in_loc.add(new Location(in_loc.getWorld(), 0.5, 0.5, 0.5));
 		
 		// What colour we'll visualise the block with
-		color = new Color(
-				ManagerPlugin.config.getInt("LocationVisualisation.particle-color.r"),
-				ManagerPlugin.config.getInt("LocationVisualisation.particle-color.g"),
-				ManagerPlugin.config.getInt("LocationVisualisation.particle-color.b"));
+		color = new Color(player_settings.location_r * 25, player_settings.location_g * 25, player_settings.location_b * 25);
 	}
 	
 
@@ -55,7 +58,7 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 			ParticleBuilder particle = new ParticleBuilder(ParticleEffect.REDSTONE, loc);
 
 			// Load amount of particles from config, and set colour of particles
-			particle.setAmount(ManagerPlugin.config.getInt("LocationVisualisation.particle-amount"));
+			particle.setAmount(player_settings.location_particle_amount);
 	        particle.setColor(color);
 	        
 	        // Display particles

@@ -70,12 +70,12 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		if (settings.auto_build_enabled)
 			setItem(0, Material.GREEN_CONCRETE, 
 					ChatColor.GOLD + "" + ChatColor.BOLD + "Automatic Error Switching", 
-					CURRENT_VALUE + ChatColor.RED + "disabled",
+					CURRENT_VALUE + ChatColor.GREEN + "enabled",
 					ChatColor.GRAY + ">> click to toggle");
 		else
 			setItem(0, Material.RED_CONCRETE,
 					ChatColor.GOLD + "" + ChatColor.BOLD + "Automatic Error Switching", 
-					CURRENT_VALUE + ChatColor.GREEN + "enabled",
+					CURRENT_VALUE + ChatColor.RED + "disabled",
 					ChatColor.GRAY + ">> click to toggle");
 
 		

@@ -40,24 +40,24 @@ public class ListBlockErrors {
 		block_errors.put(player, block_error_array);
 	}
 	
-	public static boolean display(Player player) {
+	public static void display(Player player) {
 		
 		// Check that a BlockError array actually exists for specified player
 		if (block_errors.get(player) == null) {
 			MessageHandler.send(player, 
 					MessageHandler.getError("multiblock-assembly-not-attempted"));
-			return false;
+			return;
 		}
 		
 		// If the player has auto-build enabled, start by displaying the first error
 		PlayerSettings settings = ListPlayerSettings.getPlayerSettings(player.getUniqueId());
+		
 		if (settings.auto_build_enabled) {
-			
-			settings.auto_build_running = true;
+
 			BlockError block_error = ListBlockErrors.block_errors.get(player).get(0);
 			ManagerBlockErrorVisualisation.addError(block_error);
 			
-			return true;
+			return;
 		}
 		
 		// Initialize arrays we'll send to the player
@@ -108,8 +108,5 @@ public class ListBlockErrors {
 		));
 		
 		ListChatListers.chat_listers.get(player).display(1);
-		
-		// Successful execution, yay
-		return true;
 	}
 }

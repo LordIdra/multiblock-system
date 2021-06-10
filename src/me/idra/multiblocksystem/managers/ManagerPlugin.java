@@ -41,7 +41,7 @@ public class ManagerPlugin {
 		plugin = in_plugin;
     	config = plugin.getConfig();
     	messages = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
-    	tick_interval = config.getInt("Ticks.tick-interval");
+    	tick_interval = config.getInt("Ticks.multiblock-tick-interval");
     	
     	// Set up config
     	plugin.saveDefaultConfig();
