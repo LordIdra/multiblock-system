@@ -145,10 +145,18 @@ public class TaskVisualiseError extends BukkitRunnable{
 					}
 				}
 				
-				if (error.isResolved())
-					sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-				else
-					sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+				if (settings.auto_build_enabled) {
+					if (error.isResolved())
+						sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+					else
+						sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+				
+				} else {
+					if (error.isResolved())
+						sub_title = "";
+					else
+						sub_title = "";
+				}
 				
 				// Send the titles
 				error.player.sendTitle(
