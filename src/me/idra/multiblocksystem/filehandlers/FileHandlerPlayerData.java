@@ -164,12 +164,17 @@ public class FileHandlerPlayerData {
 		ConfigurationSection player_section = player_data_file.getConfigurationSection(owner.toString());
 						
 		if (player_section == null) {
+
 			player_data_file.createSection(owner.toString());
 			player_section = player_data_file.getConfigurationSection(owner.toString());
-		
+
 			player_data_file.set(owner.toString() + _TRUSTED, new ArrayList<String> ());
+		}
+
+		if (player_section.getConfigurationSection(SETTINGS) == null) {
+
 			player_section.createSection(SETTINGS);
-			
+
 			saveSettings(owner, new PlayerSettings ());
 		}
 	}

@@ -30,19 +30,19 @@ public class UserInterfaceVectorAdjuster extends BaseUserInterface {
 				ChatColor.WHITE + "" + ChatColor.BOLD + "Return");
 		
 		setItem(3, Material.WHITE_CONCRETE, 
-				ChatColor.WHITE + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				ChatColor.WHITE + "" + ChatColor.BOLD + "x" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
 				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(x),
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 
 		setItem(4, Material.WHITE_CONCRETE, 
-				ChatColor.WHITE + "" + ChatColor.BOLD + "Green" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				ChatColor.WHITE + "" + ChatColor.BOLD + "y" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
 				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(y),
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 		
 		setItem(5, Material.WHITE_CONCRETE, 
-				ChatColor.WHITE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
+				ChatColor.WHITE + "" + ChatColor.BOLD + "z" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
 				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(z),
 				INCREASE_TEXT,
 				DECREASE_TEXT);
