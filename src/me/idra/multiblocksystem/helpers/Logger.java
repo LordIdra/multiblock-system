@@ -1,6 +1,7 @@
 package me.idra.multiblocksystem.helpers;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,10 +15,10 @@ import java.time.LocalDateTime;
 
 public class Logger {
 	
-	public static int log_ID = 0;
+	private static int log_ID = 0;
 	
-	public static HashMap<Integer, String> log_times = new HashMap<Integer, String> ();
-	public static HashMap<Integer, String> log_messages = new HashMap<Integer, String> ();
+	private static Map<Integer, String> log_times = new HashMap<> ();
+	public static Map<Integer, String> log_messages = new HashMap<> ();
 
 	public static final String OPTION_NOT_FOUND = "option_not_found";
 	public static final String OPTION_INVALID = "option_invalid";
@@ -27,7 +28,23 @@ public class Logger {
 	private Logger() {
 		// Empty constructor
 	}
+
+
+	public static void reset() {
+		log_ID 			= 0;
+		log_times 		= new HashMap<> ();
+		log_messages 	= new HashMap<> ();
+	}
+
+	public static String getLogTime(int ID) {
+		return log_times.get(ID);
+	}
+
+	public static String getLogMessage(int ID) {
+		return log_messages.get(ID);
+	}
 	
+
 	
 	public static String getInfo(String location) {
 		return ManagerPlugin.messages.getString("Logger.Info." + location);

@@ -162,7 +162,7 @@ public class FileHandlerWorldMultiblocks {
 		for (String id_as_string : world_multiblock_config.getKeys(false)) {
 				
 			// Convert string to int
-			int ID = Integer.valueOf(id_as_string);
+			int ID = Integer.parseInt(id_as_string);
 			
 			// Get the config section
 			ConfigurationSection multiblock_section = world_multiblock_config.getConfigurationSection(id_as_string);

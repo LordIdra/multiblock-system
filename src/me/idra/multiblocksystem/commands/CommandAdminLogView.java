@@ -47,8 +47,8 @@ public class CommandAdminLogView extends BaseCommand{
 		for (int ID : Logger.log_messages.keySet())
 			formatted_errors.add(new ComponentBuilder("").append(
 					ChatColor.translateAlternateColorCodes('&', MessageHandler.getInfo("admin-log-format")
-					.replace("%time%", Logger.log_times.get(ID))
-					.replace("%error%", Logger.log_messages.get(ID)))));
+					.replace("%time%", Logger.getLogTime(ID))
+					.replace("%error%", Logger.getLogMessage(ID)))));
 		
 		// Set chatlister
 		ListChatListers.chat_listers.put(sender, new ChatLister(

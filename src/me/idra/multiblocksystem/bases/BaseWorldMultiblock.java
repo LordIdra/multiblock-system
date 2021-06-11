@@ -103,10 +103,7 @@ public abstract class BaseWorldMultiblock {
 		}
 		
 		// If there are enough free slots, return true - if not, return false
-		if (free_slots >= items.size())
-			return true;
-
-		return false;
+		return free_slots >= items.size();
 	}
 	
 	

@@ -2,8 +2,6 @@ package me.idra.multiblocksystem.commands;
 
 
 
-import java.util.HashMap;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -33,9 +31,7 @@ public class CommandAdminLogClear extends BaseCommand{
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
 		
 		// Reset ID and clear log maps
-		Logger.log_ID = 0;
-		Logger.log_times = new HashMap<> ();
-		Logger.log_messages = new HashMap<> ();
+		Logger.reset();
 		
 		// Tell the player we've successfully cleared the logs
 		MessageHandler.send(sender, 
