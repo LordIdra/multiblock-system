@@ -194,7 +194,7 @@ public class StringConversion {
 		Material material = StringConversion.idToMaterial(id);
 		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
 
-		return (material == null && slimefun_item == null) ? false : true;
+		return material == null && slimefun_item == null;
 
 	}
 
