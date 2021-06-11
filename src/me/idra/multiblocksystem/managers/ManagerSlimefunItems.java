@@ -73,8 +73,8 @@ public class ManagerSlimefunItems {
 		}
 
 		// Check slimefun items/research files exist
-		File slimefun_research_file = new File(slimefun_folder, "researches.yml");
-		File slimefun_item_file = new File(slimefun_folder, "items.yml");
+		File slimefun_research_file = new File(slimefun_folder, RESEARCH_FILE_NAME);
+		File slimefun_item_file = new File(slimefun_folder, ITEM_FILE_NAME);
 
 		if (!slimefun_research_file.exists()) {
 			try {
