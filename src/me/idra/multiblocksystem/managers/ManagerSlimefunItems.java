@@ -215,7 +215,7 @@ public class ManagerSlimefunItems {
 
 			for (String recipe_key : recipe_items_section.getKeys(false)) {
 				
-				int index = Integer.valueOf(recipe_key);
+				int index = Integer.parseInt(recipe_key);
 				String id = recipe_items_section.getString(recipe_key);
 
 				recipe[index] = StringConversion.itemStackFromString(id);
