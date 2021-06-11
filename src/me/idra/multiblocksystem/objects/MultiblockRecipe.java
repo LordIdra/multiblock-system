@@ -38,26 +38,18 @@ public class MultiblockRecipe {
 	}
 
 	public boolean hasInputStack() {
-		if (in_stack == null)
-			return false;
-		return true;
+		return in_stack == null;
 	}
 	
 	public boolean hasInputEnergy() {
-		if (in_energy == 0)
-			return false;
-		return true;
+		return in_energy == 0;
 	}
 	
 	public boolean hasOutputStack() {
-		if (out_stack == null)
-			return false;
-		return true;
+		return out_stack == null;
 	}
 	
 	public boolean hasOutputEnergy() {
-		if (out_energy == 0)
-			return false;
-		return true;
+		return out_energy == 0;
 	}
 }
