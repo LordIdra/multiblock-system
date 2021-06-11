@@ -19,8 +19,8 @@ public class ListAbstractMultiblocks {
 	
 
 	
-	public static List<String> multiblock_names = new ArrayList<> ();
-	public static Map<String, AbstractMultiblock> structures = new HashMap<> ();
+	private static List<String> multiblock_names = new ArrayList<> ();
+	private static Map<String, AbstractMultiblock> structures = new HashMap<> ();
 	
 	
 	public static void initialize() {
