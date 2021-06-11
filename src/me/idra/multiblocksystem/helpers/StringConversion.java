@@ -55,19 +55,19 @@ public class StringConversion {
 		name = name.toLowerCase().replace("_", " ");
 		
 		// Capitalise each word
-		String final_name = "";
-		String words[] = name.split("\\s");
+		StringBuilder final_name = new StringBuilder();
+		String[] words = name.split("\\s");
 		
 		for (int i = 0; i < words.length; i++) {
-			
-			final_name += words[i].substring(0, 1).toUpperCase() + words[i].substring(1, words[i].length());  
+			 
+			final_name.append(words[i].substring(0, 1).toUpperCase() + words[i].substring(1, words[i].length()));
 			
 			if (i != words.length - 1)
-				final_name += " ";
+				final_name.append(" ");
 		}
 		
 		// Return the final name
-		return final_name;
+		return final_name.toString();
 	}
 	
 	
@@ -194,11 +194,8 @@ public class StringConversion {
 		Material material = StringConversion.idToMaterial(id);
 		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
 
-		if (material == null && slimefun_item == null) {
-			return false;
-		}
+		return (material == null && slimefun_item == null) ? false : true;
 
-		return true;
 	}
 
 

@@ -65,21 +65,16 @@ public class CommandHelp extends BaseCommand{
 				continue;
 			
 			// Get command attributes
-			StringBuilder name = new StringBuilder("");
-			StringBuilder arguments = new StringBuilder("");
+			StringBuilder name = new StringBuilder();
+			StringBuilder arguments = new StringBuilder();
 			String description =  command_object.description;
 			
 			// Format command
-			for (String arg : command_object.name) {
-				name.append(arg);
-				name.append(" ");
-			}
+			for (String arg : command_object.name)
+				name.append(arg + " ");
 					
-			for (String argument : command_object.arguments) {
-				arguments.append("<");
-				arguments.append(argument);
-				arguments.append("> ");
-			}
+			for (String argument : command_object.arguments)
+				arguments.append("<" + argument + "> ");
 			
 			// Add formatted command to ChatLister
 			formatted_commands.add(new ComponentBuilder("").append(
