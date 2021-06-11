@@ -54,6 +54,10 @@ public class ManagerPlugin {
 		File data_folder = new File(plugin.getDataFolder(), "data");
 		if (!data_folder.exists())
 			data_folder.mkdir();
+
+		File slimefun_folder = new File(plugin.getDataFolder(), "slimefun");
+			if (!slimefun_folder.exists())
+				slimefun_folder.mkdir();
 		
 		FileHandlerPermanentVariables.loadFile();
 		FileHandlerPlayerData.loadFile();

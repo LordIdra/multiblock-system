@@ -13,7 +13,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
-import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -118,15 +117,15 @@ public class ManagerSlimefunItems {
 			// Get variables
 			ConfigurationSection research_section = research_config.getConfigurationSection(key);
 
-			int number = research_section.getInt("number");
-			int xp = research_section.getInt("xp");
+			int number 	= research_section.getInt("number");
+			int xp 		= research_section.getInt("xp");
 			String name = research_section.getString("name");
 
 			// Variable checking
-			if (number == 0) 		researchOptionNotFound(key, "number");
-			if (xp == 0) 		researchOptionNotFound(key, "xp");
-			if (name == null) 	researchOptionNotFound(key, "name");
-			
+			if (number == 0) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "number");
+			if (xp == 0) 		Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "xp");
+			if (name == null) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "name");
+
 			// Generate research
 			NamespacedKey research_key = new NamespacedKey(ManagerPlugin.plugin, key);
 			Research research = new Research(research_key, number, name, xp);
@@ -146,29 +145,26 @@ public class ManagerSlimefunItems {
 			ConfigurationSection display_item_section = section.getConfigurationSection("item");
 			ConfigurationSection recipe_section = section.getConfigurationSection("recipe");
 
-			if (display_item_section == null)	itemOptionNotFound(key, "item");
-			if (recipe_section == null)			itemOptionNotFound(key, "recipe");
-
+			if (display_item_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
+			if (recipe_section == null)			Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
+			
 			ConfigurationSection recipe_items_section = recipe_section.getConfigurationSection("items");
 
-			if (recipe_items_section == null)	itemOptionNotFound(key, "items");
+			if (recipe_items_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_items_section, null);
 
 			// Variables
-			String name = section.getString("name");
-			
-			String display_item_type = display_item_section.getString("type").toUpperCase();
-			String display_item_id = display_item_section.getString("id");
+			String name 				= section.getString("name");
+			String display_item_type 	= display_item_section.getString("type").toUpperCase();
+			String display_item_id 		= display_item_section.getString("id");
+			int amount 			 		= recipe_section.getInt("amount");
+			RecipeType recipe_type		= RECIPE_TYPES.get(recipe_section.getString("type"));
 
-			int amount = recipe_section.getInt("amount");
-
-			RecipeType recipe_type = RECIPE_TYPES.get(recipe_section.getString("type"));
-
-			if (name == null)							itemOptionNotFound(key, "name");
-			if (display_item_id == null)				itemOptionNotFound(key, "id");
-			if (display_item_type == null
-				|| (!display_item_type.equals("NORMAL")
-				&&  !display_item_type.equals("HEAD")))	itemOptionNotFound(key, "type");
-			if (amount == 0) 							itemOptionNotFound(key, "amount");
+			if (name == null)							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "name");
+			if (display_item_type == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "type");
+			if (display_item_id == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "id");
+			if (!display_item_type.equals("NORMAL")
+				&&  !display_item_type.equals("HEAD"))	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "amount");
+			if (amount == 0) 							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "type");
 
 
 			// Get recipe items + amount
@@ -224,27 +220,5 @@ public class ManagerSlimefunItems {
 		for (Research research : researches.values()) {
 			research.register();
 		}
-	}
-
-
-
-	private static void researchOptionNotFound(String name, String type) {
-
-		Logger.log(
-			Logger.getWarning("config-option-not-found")
-			.replace(ConstantPlaceholders.TYPE, type)
-			.replace(ConstantPlaceholders.NAME, name)
-			.replace(ConstantPlaceholders.FILE, RESEARCH_FILE_NAME),
-			true);
-	}
-
-	private static void itemOptionNotFound(String name, String type) {
-
-		Logger.log(
-			Logger.getWarning("config-option-not-found")
-			.replace(ConstantPlaceholders.TYPE, type)
-			.replace(ConstantPlaceholders.NAME, name)
-			.replace(ConstantPlaceholders.FILE, ITEM_FILE_NAME),
-			true);
 	}
 }
