@@ -54,15 +54,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 			}
 		}
 		
-		if (settings.auto_build_enabled) {
-			if (error.isResolved())
-				sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-			else
-				sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-		
-		} else {		
-			sub_title = "";		
-		}
+		sub_title = getSubTitle(blocks_left);
 		
 		// Send the titles
 		error.player.sendTitle(
@@ -72,6 +64,18 @@ public class TaskVisualiseError extends BukkitRunnable{
 				2);
 	}
 	
+	private String getSubTitle(int blocks_left) {
+		
+		if (settings.auto_build_enabled) {
+			if (error.isResolved())
+				return ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+			else
+				return ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
+		
+		} else {		
+			return "";		
+		}
+	}
 	
 	public void visualise(int r, int g, int b) {
 		
@@ -142,15 +146,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 					}
 				}
 				
-				if (settings.auto_build_enabled) {
-					if (error.isResolved())
-						sub_title = ChatColor.GREEN + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-					else
-						sub_title = ChatColor.DARK_RED + String.valueOf(blocks_left) + ChatColor.YELLOW + BLOCKS_LEFT;
-				
-				} else {				
-						sub_title = "";
-				}
+				sub_title = getSubTitle(blocks_left);
 				
 				// Send the titles
 				error.player.sendTitle(
