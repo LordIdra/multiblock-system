@@ -50,17 +50,17 @@ public class BlockError {
 		should_be_array = StringConversion.removeDuplicates(should_be_array);
 		
 		// Convert array to single string	
-		String should_be_string = ChatColor.DARK_RED + "[";;
+		StringBuilder should_be_string = new StringBuilder(ChatColor.DARK_RED + "[");
 		
 		for (int i = 0; i < should_be_array.size(); i++) {
 			
-			should_be_string += should_be_array.get(i);
+			should_be_string.append(should_be_array.get(i));
 			
 			if (i != should_be_array.size() - 1)
-				should_be_string += (ChatColor.DARK_RED + ", ");
+				should_be_string.append(ChatColor.DARK_RED + ", ");
 		}
 		
-		should_be_string += ChatColor.DARK_RED + "]";
+		should_be_string.append(ChatColor.DARK_RED + "]");
 
 		// Generate the final error string
 		return 	ChatColor.DARK_RED +  "x" + ChatColor.YELLOW + location_vector.getBlockX() +
@@ -95,20 +95,20 @@ public class BlockError {
 		should_be_array = StringConversion.removeDuplicates(should_be_array);
 		
 		// Convert array to single string
-		String should_be_string = primary_color + "[";;
-		
+		StringBuilder should_be_string = new StringBuilder(primary_color + "[");
+		 
 		for (int i = 0; i < should_be_array.size(); i++) {
 			
-			should_be_string += should_be_array.get(i);
+			should_be_string.append(should_be_array.get(i));
 			
 			if (i != should_be_array.size() - 1)
-				should_be_string += (primary_color + ", ");
+				should_be_string.append(primary_color + ", ");
 		}
 		
-		should_be_string += primary_color + "]";
+		should_be_string.append(primary_color + "]");
 		
 		// Generate the final error string
-		return should_be_string;
+		return should_be_string.toString();
 	}
 	
 	

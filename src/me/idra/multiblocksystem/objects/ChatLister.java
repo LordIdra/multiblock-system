@@ -100,7 +100,7 @@ public class ChatLister {
 			// Create left arrow if needed
 			if (page > 1) {
 				TextComponent arrow_left = new TextComponent("<<< ");
-				arrow_left.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb page " + String.valueOf(page - 1)));
+				arrow_left.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb page " + (page - 1)));
 				arrow_left.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Previous Page")));
 				navigate_message.append(arrow_left);
 				navigate_message.color(net.md_5.bungee.api.ChatColor.WHITE);
@@ -110,9 +110,9 @@ public class ChatLister {
 			// Create 'page x out of y'
 			TextComponent new_text = new TextComponent(
 					ChatColor.BLUE + "page " + 
-					ChatColor.AQUA + String.valueOf(page) +
+					ChatColor.AQUA + page +
 					ChatColor.BLUE + " out of " +
-					ChatColor.AQUA + String.valueOf(max_pages) +
+					ChatColor.AQUA + max_pages +
 					" ");
 			
 			// Reset click/hover events
@@ -123,7 +123,7 @@ public class ChatLister {
 			// Create right arrow if needed
 			if (page < max_pages) {
 				TextComponent arrow_right = new TextComponent(">>>");
-				arrow_right.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb page " + String.valueOf(page + 1)));
+				arrow_right.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb page " + (page + 1)));
 				arrow_right.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Next Page")));
 				navigate_message.append(arrow_right);
 				navigate_message.color(net.md_5.bungee.api.ChatColor.WHITE);
