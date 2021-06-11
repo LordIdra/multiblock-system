@@ -160,7 +160,7 @@ public class AbstractMultiblock {
 			try (Scanner structure_file_scanner = new Scanner(structure_file).useDelimiter("\\s+")) {
 					
 				// Get dimension X
-				if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-X:")) {
+				if (!structure_file_scanner.next().equalsIgnoreCase("DIMENSION-X:")) {
 					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-X");
 					return;
 					
@@ -169,7 +169,7 @@ public class AbstractMultiblock {
 				}
 				
 				// Get dimension Z
-				if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-Z:")) {
+				if (!structure_file_scanner.next().equalsIgnoreCase("DIMENSION-Z:")) {
 					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-Z");
 					return;
 					
@@ -187,7 +187,7 @@ public class AbstractMultiblock {
 					if (word.equals("LAYER:")) {
 						
 						// Add a new array to store block data strings for this layer
-						structure_array.add(new ArrayList<String>());
+						structure_array.add(new ArrayList<>());
 						continue;
 					}
 					
