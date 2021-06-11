@@ -9,9 +9,13 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import me.idra.multiblocksystem.constants.ConstantPlaceholders;
 import me.idra.multiblocksystem.lists.ListVariantPrefixes;
 import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
+import me.idra.multiblocksystem.objects.MixedItemStack;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
@@ -190,5 +194,37 @@ public class StringConversion {
 			return new AbstractMixedItemStack(slimefun_item, tag_data.toArray(new String[tag_data.size()]));
 		else
 			return new AbstractMixedItemStack(materials, tag_data.toArray(new String[tag_data.size()]));
+	}
+
+
+	
+	public static boolean stackExists(String id) {
+
+		Material material = StringConversion.idToMaterial(id);
+		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
+
+		if (material == null && slimefun_item == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+
+
+	public static ItemStack itemStackFromString(String id) {
+
+		if (!stackExists(id)) {
+			Logger.log(
+				Logger.getWarning("invalid-item-type")
+				.replace(ConstantPlaceholders.TYPE, id), 
+				true);
+				
+			return null;
+		}
+
+		MixedItemStack stack = new MixedItemStack(StringConversion.idToMaterial(id), StringConversion.idToSlimefunItem(id));
+
+		return stack.asItemStack();
 	}
 }

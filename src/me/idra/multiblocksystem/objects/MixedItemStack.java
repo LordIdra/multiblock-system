@@ -78,7 +78,7 @@ public class MixedItemStack {
 	}
 	
 	
-	MixedItemStack(Material material, SlimefunItem slimefun_item) {
+	public MixedItemStack(Material material, SlimefunItem slimefun_item) {
 		
 		// Initializer for blocks that could either be slimefun or normal items
 		// Slimefun item

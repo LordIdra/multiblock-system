@@ -11,4 +11,7 @@ public class ConstantPlaceholders {
     public static final String NAME = "%name%";
     public static final String MULTIBLOCK = "%multiblock%";
     public static final String ID = "%id%";
+    public static final String RESEARCH = "%research%";
+    public static final String TYPE = "%type%";
+    public static final String FILE = "%file%";
 }

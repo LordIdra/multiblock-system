@@ -4,6 +4,7 @@ package me.idra.multiblocksystem;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerCommands;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -13,7 +14,7 @@ import me.idra.multiblocksystem.objects.TabHandler;
 
 
 
-public final class MultiblockSystem extends JavaPlugin {
+public final class MultiblockSystem extends JavaPlugin implements SlimefunAddon {
 	
 	
     @Override
@@ -41,4 +42,19 @@ public final class MultiblockSystem extends JavaPlugin {
     	
     	FileHandlerWorldMultiblocks.saveMultiblocks();
     }
+
+
+
+	@Override
+	public JavaPlugin getJavaPlugin() {
+		return this;
+	}
+
+
+
+	@Override
+	public String getBugTrackerURL() {
+		// no
+		return null;
+	}
 }

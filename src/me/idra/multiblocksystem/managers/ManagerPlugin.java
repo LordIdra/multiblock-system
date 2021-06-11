@@ -3,8 +3,8 @@ package me.idra.multiblocksystem.managers;
 import java.io.File;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
+import me.idra.multiblocksystem.MultiblockSystem;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
@@ -25,7 +25,7 @@ public class ManagerPlugin {
 	public static final String VERSION = "0.1.0";
 	public static final String AUTHOR = "Idra";
 
-	public static Plugin plugin;
+	public static MultiblockSystem plugin;
 	public static FileConfiguration config;
 	public static FileConfiguration messages;
 	
@@ -35,7 +35,7 @@ public class ManagerPlugin {
 	
 	
 	
-	public static void initialize(Plugin in_plugin) {
+	public static void initialize(MultiblockSystem in_plugin) {
 		
     	// Set important attributes
 		plugin = in_plugin;
@@ -68,5 +68,6 @@ public class ManagerPlugin {
 		ListVariantPrefixes.initialize();
     	ListAbstractMultiblocks.initialize();
     	ManagerPermissions.initialize();
+		ManagerSlimefunItems.initialize();
 	}
 }

@@ -6,24 +6,20 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-
-	<classpathentry kind="lib" path="depend-api/spigot-api-1.16.5-R0.1-SNAPSHOT-shaded.jar">
+	<classpathentry kind="lib" path="C:/Users/percy/Documents/GitHub/MultiblockSystem/depend-api/ParticleLib-Plugin.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-
-	<classpathentry kind="lib" path="depend-api/Slimefun-4.9-UNOFFICIAL.jar">
+	<classpathentry kind="lib" path="C:/Users/percy/Documents/GitHub/MultiblockSystem/depend-api/Slimefun-4.9-UNOFFICIAL.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-
-	<classpathentry kind="lib" path="depend-api/ParticleLib-Plugin.jar">
+	<classpathentry kind="lib" path="C:/Users/percy/Documents/GitHub/MultiblockSystem/depend-api/spigot-api-1.16.5-R0.1-SNAPSHOT-shaded.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	
 	<classpathentry kind="output" path="bin"/>
 </classpath>
