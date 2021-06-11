@@ -17,14 +17,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public class UserInterfaceSettings extends BaseUserInterface {
 
-	private final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
-	private final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
-	private final String ADJUST_TEXT = ChatColor.GRAY + ">> click to adjust";
-	private final String CURRENT_VALUE = ChatColor.DARK_AQUA + "current value: ";
+	private static final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
+	private static final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
+	private static final String ADJUST_TEXT = ChatColor.GRAY + ">> click to adjust";
+	private static final String CURRENT_VALUE = ChatColor.DARK_AQUA + "current value: ";
 
-	private final String UNRESOLVED_PARTICLE_COLOR = "unresolved-particle-color";
-	private final String RESOLVED_PARTICLE_COLOR = "resolved-particle-color";
-	private final String LOCATION_PARTICLE_COLOR = "location-particle-color";
+	private static final String UNRESOLVED_PARTICLE_COLOR = "unresolved-particle-color";
+	private static final String RESOLVED_PARTICLE_COLOR = "resolved-particle-color";
+	private static final String LOCATION_PARTICLE_COLOR = "location-particle-color";
 	
 	private PlayerSettings settings = null;
 	private Map<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<> ();

@@ -45,8 +45,9 @@ public class StructureDescriptor {
 					AbstractMixedItemStack block = layer_blocks.get(y).get(x).get(z);
 					
 					// If it doesn't exist, just screw it and move on
-					if (block == null)
+					if (block == null) {
 						continue;
+					}
 					
 					// If it does exist, check it's a lectern
 					if (block.containsMaterial(Material.LECTERN)) {	

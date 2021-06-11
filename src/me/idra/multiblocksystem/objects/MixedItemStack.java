@@ -113,10 +113,7 @@ public class MixedItemStack {
 	public boolean isSlimefunItem() {
 		
 		// Returns true only if slimefun item is not null
-		if (slimefun_itemstack == null)
-			return false;
-		else
-			return true;
+		return slimefun_itemstack == null;
 	}
 	
 	

@@ -11,10 +11,10 @@ import net.md_5.bungee.api.ChatColor;
 
 public class UserInterfaceColorAdjuster extends BaseUserInterface {
 
-	private final String LIMIT_TEXT = " (0-10)";
-	private final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
-	private final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
-	private final String CURRENT_VALUE_TEXT = ChatColor.DARK_AQUA + "current value: ";
+	private static final String LIMIT_TEXT = " (0-10)";
+	private static final String INCREASE_TEXT = ChatColor.GRAY + ">> left click to increase";
+	private static final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
+	private static final String CURRENT_VALUE_TEXT = ChatColor.DARK_AQUA + "current value: ";
 
 	private UserInterfaceSettings parent;
 	

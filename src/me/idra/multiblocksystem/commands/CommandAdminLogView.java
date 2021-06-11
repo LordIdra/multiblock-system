@@ -44,7 +44,7 @@ public class CommandAdminLogView extends BaseCommand{
 		List<ComponentBuilder> formatted_errors = new ArrayList<> ();
 				
 		// Send logs
-		for (int ID : Logger.log_messages.keySet())
+		for (int ID : Logger.getIDSet())
 			formatted_errors.add(new ComponentBuilder("").append(
 					ChatColor.translateAlternateColorCodes('&', MessageHandler.getInfo("admin-log-format")
 					.replace("%time%", Logger.getLogTime(ID))
