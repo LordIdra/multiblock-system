@@ -93,8 +93,17 @@ public class MixedItemStack {
 			this.itemstack = new ItemStack(Material.AIR);
 		}
 	}
+
+
+
+	public MixedItemStack(String id) {
+		
+		// Convert to both material and slimefun item
+		Material material = Material.getMaterial(id);
+		
+	}
 	
-	
+
 	
 	public boolean isSlimefunItem() {
 		

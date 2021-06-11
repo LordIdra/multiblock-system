@@ -3,6 +3,7 @@ package me.idra.multiblocksystem.helpers;
 
 
 import java.util.List;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
@@ -80,7 +81,7 @@ public class StringConversion {
 	}
 	
 	
-	public static AbstractMixedItemStack stringToAbstractMixedItemStack(String block_data) {
+	public static AbstractMixedItemStack stringToAbstractMixedItemStack(File file, int layer, String block_data) {
 
 		// Get material and slimefun data (if the latter exists)
 		boolean is_slimefun_item = false;
@@ -128,12 +129,9 @@ public class StringConversion {
 		if (is_slimefun_item  && (slimefun_item == null)) {
 				
 			// Display a console error and add substitute air in instead
-			Logger.log(
-					Logger.getWarning("slimefun-item-invalid")
-					.replace("%slimefun-item%", block_data),
-					true);
+			Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
 				
-			// Just return the MixedItemStack as air straight away
+			// Just return null
 			return new AbstractMixedItemStack(Material.AIR, null);
 		}
 		
@@ -157,10 +155,7 @@ public class StringConversion {
 					if (prefix_material != null)
 						materials.add(prefix_material);
 					else
-						Logger.log(
-								Logger.getWarning("material-invalid")
-								.replace("%material%", prefix_material_name),
-								true);
+						Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
 				}
 				
 				// We've already added materials, so no need to try to generate one solely from the material data (would throw an error anyways)
@@ -175,10 +170,7 @@ public class StringConversion {
 			if (!is_slimefun_item && (material == null)) {
 					
 				// Display a console error and add substitute air in instead
-				Logger.log(
-						Logger.getWarning("material-invalid")
-						.replace("%material%", block_data),
-						true);
+				Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
 					
 				// Just return the MixedItemStack as air straight away
 				return new AbstractMixedItemStack(Material.AIR, null);
@@ -214,11 +206,6 @@ public class StringConversion {
 	public static ItemStack itemStackFromString(String id) {
 
 		if (!stackExists(id)) {
-			Logger.log(
-				Logger.getWarning("invalid-item-type")
-				.replace(ConstantPlaceholders.TYPE, id), 
-				true);
-				
 			return null;
 		}
 

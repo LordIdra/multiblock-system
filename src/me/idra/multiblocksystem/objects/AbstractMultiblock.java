@@ -107,7 +107,7 @@ public class AbstractMultiblock {
 				
 				ConfigurationSection current_fuel = fuel_config.getConfigurationSection(key);
 				
-				fuels.add(new MultiblockFuel(fuelMixedItemStackFromConfigSection(current_fuel), current_fuel.getInt("time")));
+				fuels.add(new MultiblockFuel(fuelMixedItemStackFromConfigSection(multiblock_file, current_fuel), current_fuel.getInt("time")));
 			}
 		}
 		
@@ -125,13 +125,13 @@ public class AbstractMultiblock {
 				List<MixedItemStack> item_in = new ArrayList<> ();
 
 				for (String item : config_item_in.getKeys(false))
-					item_in.add(recipeMixedItemStackFromConfigSection(config_item_in.getConfigurationSection(item)));
+					item_in.add(recipeMixedItemStackFromConfigSection(multiblock_file, config_item_in.getConfigurationSection(item)));
 					
 				// ItemOut
 				List<MixedItemStack> item_out = new ArrayList<> ();
 
 				for (String item : config_item_out.getKeys(false))
-					item_out.add(recipeMixedItemStackFromConfigSection(config_item_out.getConfigurationSection(item)));
+					item_out.add(recipeMixedItemStackFromConfigSection(multiblock_file, config_item_out.getConfigurationSection(item)));
 				
 				// Energy + time
 				int energy_in = current_recipe.getInt("EnergyIn");
@@ -160,11 +160,7 @@ public class AbstractMultiblock {
 					
 				// Get dimension X
 				if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-X:")) {
-					Logger.log(
-							Logger.getWarning("dimension-x-not-found")
-							.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
-							true);
-					structure_file_scanner.close();
+					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-X");
 					return;
 					
 				} else {
@@ -173,11 +169,7 @@ public class AbstractMultiblock {
 				
 				// Get dimension Z
 				if (!structure_file_scanner.next().toUpperCase().equals("DIMENSION-Z:")) {
-					Logger.log(
-							Logger.getWarning("dimension-z-not-found")
-							.replace(ConstantPlaceholders.NAME, String.valueOf(name)),
-							true);
-					structure_file_scanner.close();
+					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-Z");
 					return;
 					
 				} else {
@@ -223,14 +215,14 @@ public class AbstractMultiblock {
 					List<AbstractMixedItemStack> block_array_x = block_array_y.get(x);
 					
 					// Convert item info string to abstract mixed item stack
-					AbstractMixedItemStack block = StringConversion.stringToAbstractMixedItemStack(structure_array.get(y).get((z * dimension_x) + x));
+					AbstractMixedItemStack block = StringConversion.stringToAbstractMixedItemStack(structure_file, y, structure_array.get(y).get((z * dimension_x) + x));
 					block_array_x.add(block);
 					
 					// Set the arrays again (not 100% sure if this is necessary)
 					block_array_y.set(x, block_array_x);
 					block_array.set(y, block_array_y);
 				}
-			}	
+			}
 		}
 		
 		// Use this to create a new structure descriptor
@@ -247,7 +239,7 @@ public class AbstractMultiblock {
 	 * STATIC METHODS
 	 */
 		
-	private MixedItemStack recipeMixedItemStackFromConfigSection(ConfigurationSection recipe_config_section) {
+	private MixedItemStack recipeMixedItemStackFromConfigSection(File recipe_file, ConfigurationSection recipe_config_section) {
 		
 		// Get attributes from config section
 		String type = recipe_config_section.getString("type").toUpperCase(); 
@@ -260,10 +252,7 @@ public class AbstractMultiblock {
 			Material material = StringConversion.idToMaterial(id);
 			
 			if (material == null) {
-				Logger.log(Logger.getWarning("invalid-normal-id")
-						   .replace(ConstantPlaceholders.ID, id)
-						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-						   true);
+				Logger.configError(Logger.OPTION_NOT_FOUND, recipe_file, recipe_config_section, "id");
 				return null;
 			}
 			
@@ -277,10 +266,7 @@ public class AbstractMultiblock {
 			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
 			
 			if (slimefun_item == null) {
-				Logger.log(Logger.getWarning("invalid-slimefun-id")
-						   .replace(ConstantPlaceholders.ID, id)
-						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-						   true);
+				Logger.configError(Logger.OPTION_INVALID, recipe_file, recipe_config_section, "id");
 				return null;
 			}
 						
@@ -289,14 +275,12 @@ public class AbstractMultiblock {
 			
 			
 		} else {
-			Logger.log(Logger.getWarning("invalid-itemstack-type")
-					   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-					   true);
+			Logger.configError(Logger.OPTION_INVALID, recipe_file, recipe_config_section, "type");
 			return null;
 		}
 	}
 	
-	private MixedItemStack fuelMixedItemStackFromConfigSection(ConfigurationSection fuel_config_section) {
+	private MixedItemStack fuelMixedItemStackFromConfigSection(File file, ConfigurationSection fuel_config_section) {
 		
 		// Get attributes from config section
 		String type = fuel_config_section.getString("type").toUpperCase(); 
@@ -308,10 +292,7 @@ public class AbstractMultiblock {
 			Material material = StringConversion.idToMaterial(id);
 			
 			if (material == null) {
-				Logger.log(Logger.getWarning("invalid-normal-id")
-						   .replace(ConstantPlaceholders.ID, id)
-						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-						   true);
+				Logger.configError(Logger.OPTION_INVALID, file, fuel_config_section, "id");
 				return null;
 			}
 			
@@ -325,10 +306,7 @@ public class AbstractMultiblock {
 			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
 			
 			if (slimefun_item == null) {
-				Logger.log(Logger.getWarning("invalid-slimefun-id")
-						   .replace(ConstantPlaceholders.ID, id)
-						   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-						   true);
+				Logger.configError(Logger.OPTION_INVALID, file, fuel_config_section, "id");
 				return null;
 			}
 						

@@ -70,13 +70,15 @@ public class Logger {
 
 			if (option != null) {
 				error_message.replace("%path%", section.toString() + "." + option);
-				return;
+
+			} else {
+				error_message.replace("%path%", section.toString());
 			}
 
-			error_message.replace("%path%", section.toString());
-			return;
+		} else {
+			error_message.replace("%path%", option);
 		}
 
-		error_message.replace("%path%", option);
+		log(error_message, true);
 	}
 }

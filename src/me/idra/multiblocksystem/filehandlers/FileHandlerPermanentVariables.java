@@ -15,8 +15,8 @@ public class FileHandlerPermanentVariables {
 	static final String STORED_TICK = "stored-stick";
 	static final String CURRENT_ID = "current-id";
 	
-	static FileConfiguration permanent_variable_file;
-	static File data_file;
+	static FileConfiguration config;
+	static File file;
 
 	
 
@@ -29,37 +29,33 @@ public class FileHandlerPermanentVariables {
 	public static void loadFile() {
 		
 		// Load the files
-		data_file = new File(new File(ManagerPlugin.plugin.getDataFolder(), "data"), "PermanentVariables.yml");
+		file = new File(new File(ManagerPlugin.plugin.getDataFolder(), "data"), "PermanentVariables.yml");
 	
 		// Check the PermanentVariables.yml file exists
-		if (!data_file.exists()) {
+		if (!file.exists()) {
 			try {
-				data_file.createNewFile();
+				file.createNewFile();
 			} catch (IOException e) {
 				// This should never happen - if it does, we have much larger problems to worry about
 			}
 		}
 		
 		// Load the config
-		permanent_variable_file = YamlConfiguration.loadConfiguration(data_file);
+		config = YamlConfiguration.loadConfiguration(file);
 		
 		// Check the CurrentID counter exists
 		
-		if (!permanent_variable_file.contains(CURRENT_ID)) {
+		if (!config.contains(CURRENT_ID)) {
 			
-			permanent_variable_file.set(CURRENT_ID, 0);
-			Logger.log(
-					Logger.getWarning("current-id-not-found"),
-					true);
+			config.set(CURRENT_ID, 0);
+			Logger.configError(Logger.OPTION_NOT_FOUND, file, null, CURRENT_ID);
 		}
 		
 		// Check the StoredTick counter exists
-		if (!permanent_variable_file.contains(STORED_TICK)) {
+		if (!config.contains(STORED_TICK)) {
 			
-			permanent_variable_file.set(STORED_TICK, 0);
-			Logger.log(
-					Logger.getWarning("stored-tick-not-found"),
-					true);
+			config.set(STORED_TICK, 0);
+			Logger.configError(Logger.OPTION_NOT_FOUND, file, null, STORED_TICK);
 		}
 		
 		// Save config file
@@ -71,15 +67,15 @@ public class FileHandlerPermanentVariables {
 	public static void saveAndReload() {
 		
 		try {
-			permanent_variable_file.save(data_file);
+			config.save(file);
 		} catch (IOException e) {
 			Logger.log(
 					Logger.getWarning("save-fail-permanent-data"),
 					true);
 		}
 		
-		data_file = new File(new File(ManagerPlugin.plugin.getDataFolder(), "data"), "PermanentVariables.yml");
-		permanent_variable_file = YamlConfiguration.loadConfiguration(data_file);
+		file = new File(new File(ManagerPlugin.plugin.getDataFolder(), "data"), "PermanentVariables.yml");
+		config = YamlConfiguration.loadConfiguration(file);
 	}
 
 	
@@ -87,8 +83,8 @@ public class FileHandlerPermanentVariables {
 	public static int currentID() {
 		
 		// Return the current multiblock ID, then increment it by 1
-		int previous_ID = permanent_variable_file.getInt(CURRENT_ID);
-		permanent_variable_file.set(CURRENT_ID, previous_ID + 1);
+		int previous_ID = config.getInt(CURRENT_ID);
+		config.set(CURRENT_ID, previous_ID + 1);
 		
 		saveAndReload();
 		
@@ -100,7 +96,7 @@ public class FileHandlerPermanentVariables {
 	public static int getStoredTick() {
 		
 		// Return the stored tick number
-		return permanent_variable_file.getInt(STORED_TICK);
+		return config.getInt(STORED_TICK);
 	}
 	
 	
@@ -108,7 +104,7 @@ public class FileHandlerPermanentVariables {
 	public static void setStoredTick(long tick) {
 		
 		// Set stored tick number
-		permanent_variable_file.set(STORED_TICK, tick);
+		config.set(STORED_TICK, tick);
 		
 		saveAndReload();
 	}

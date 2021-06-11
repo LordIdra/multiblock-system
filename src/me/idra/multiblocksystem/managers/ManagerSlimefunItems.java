@@ -185,6 +185,10 @@ public class ManagerSlimefunItems {
 				String id = recipe_items_section.getString(recipe_key);
 
 				recipe[index] = StringConversion.itemStackFromString(id);
+
+				if (recipe[index] == null) {
+					Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, recipe_items_section, recipe_key);
+				}
 			}
 
 			// Get lore
