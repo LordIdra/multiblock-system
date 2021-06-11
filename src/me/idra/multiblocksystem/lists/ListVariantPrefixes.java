@@ -15,7 +15,7 @@ public class ListVariantPrefixes {
 
 
 	
-	public static String[] prefix_normal_wood = new String[] {
+	private static final String[] prefix_normal_wood = new String[] {
 			"OAK",
 			"SPRUCE",
 			"BIRCH",
@@ -24,12 +24,12 @@ public class ListVariantPrefixes {
 			"DARK_OAK"
 	};
 	
-	public static String[] prefix_nether_wood = new String[] {
+	private static final String[] prefix_nether_wood = new String[] {
 			"CRIMSON",
 			"WARPED"
 	};
 	
-	public static String[] prefix_color = new String[] {
+	private static final String[] prefix_color = new String[] {
 			"WHITE",
 			"ORANGE",
 			"MAGENTA",
@@ -48,7 +48,7 @@ public class ListVariantPrefixes {
 			"BLACK"
 	};
 	
-	public static Map<String, String[]> prefix_groups = new HashMap<String, String[]> ();
+	public static Map<String, String[]> prefix_groups = new HashMap<> ();
 	
 	
 	
