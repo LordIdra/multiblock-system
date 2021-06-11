@@ -53,16 +53,16 @@ public class ManagerCommands implements CommandExecutor {
 						continue;
 					
 					// Generate the permission we need to check
-					String command_permission = "multiblocksystem.command.";
+					StringBuilder command_permission = new StringBuilder("multiblocksystem.command.");
 					
 					for (int i = 0; i < command_object.name.length; i++) {
-						command_permission += command_object.name[i];
+						command_permission.append(command_object.name[i]);
 						if (i != command_object.name.length - 1)
-							command_permission += ".";
+							command_permission.append(".");
 					}
 					
 					// Check the sender has appropriate permissions
-					if (!sender.hasPermission(command_permission)) {
+					if (!sender.hasPermission(command_permission.toString())) {
 						MessageHandler.send(sender, 
 								MessageHandler.getError("no-permission-command"));
 						return true;
@@ -86,15 +86,17 @@ public class ManagerCommands implements CommandExecutor {
 					}
 							
 					// Incorrect number of arguments provided, let's notify the sender
-					String name = "";
-					String arguments = "";
+					StringBuilder name = new StringBuilder();
+					StringBuilder arguments = new StringBuilder();
 					String description =  command_object.description;
 					
-					for (String arg : command_object.name)
-						name += arg + " ";
+					for (String arg : command_object.name) {
+						name.append(arg + " ");
+					}
 							
-					for (String argument : command_object.arguments)
-						arguments += "<" + argument + "> ";
+					for (String argument : command_object.arguments) {
+						arguments.append("<" + argument + "> ");
+					}
 					
 					// Send all the above together
 					MessageHandler.send(sender,

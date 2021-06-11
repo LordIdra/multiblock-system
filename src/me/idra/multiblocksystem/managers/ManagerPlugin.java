@@ -22,8 +22,8 @@ public class ManagerPlugin {
 
 
 	
-	public static String VERSION = "0.1.0";
-	public static String AUTHOR = "Idra";
+	public static final String VERSION = "0.1.1";
+	public static final String AUTHOR = "Idra";
 
 	public static MultiblockSystem plugin;
 	public static FileConfiguration config;
