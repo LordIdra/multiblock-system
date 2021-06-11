@@ -69,14 +69,14 @@ public class Logger {
 		if (section != null) {
 
 			if (option != null) {
-				error_message.replace("%path%", section.toString() + "." + option);
+				error_message = error_message.replace(ConstantPlaceholders.PATH, section.toString() + "." + option);
 
 			} else {
-				error_message.replace("%path%", section.toString());
+				error_message = error_message.replace(ConstantPlaceholders.PATH, section.toString());
 			}
 
 		} else {
-			error_message.replace("%path%", option);
+			error_message = error_message.replace(ConstantPlaceholders.PATH, option);
 		}
 
 		log(error_message, true);

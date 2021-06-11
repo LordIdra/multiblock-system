@@ -14,4 +14,5 @@ public class ConstantPlaceholders {
     public static final String RESEARCH = "%research%";
     public static final String TYPE = "%type%";
     public static final String FILE = "%file%";
+    public static final String PATH = "%path%";
 }

@@ -33,36 +33,35 @@ public class ManagerSlimefunItems {
 	public static final String ITEM_FILE_NAME = "items.yml";
 	public static final String RESEARCH_FILE_NAME = "researches.yml";
 
-	public static final Map<String, RecipeType> RECIPE_TYPES = new HashMap<> () {{
-
-		put("ANCIENT_ALTAR", RecipeType.ANCIENT_ALTAR);
-		put("ARMOR_FORGE", RecipeType.ARMOR_FORGE);
-		put("BARTER_DROP", RecipeType.BARTER_DROP);
-		put("COMPRESSOR", RecipeType.COMPRESSOR);
-		put("ENHANCED_CRAFTING_TABLE", RecipeType.ENHANCED_CRAFTING_TABLE);
-		put("FOOD_COMPOSTER", RecipeType.FOOD_COMPOSTER);
-		put("FOOD_FABRICATOR", RecipeType.FOOD_FABRICATOR);
-		put("FREEZER", RecipeType.FREEZER);
-		put("GEO_MINER", RecipeType.GEO_MINER);
-		put("GOLD_PAN", RecipeType.GOLD_PAN);
-		put("GRIND_STONE", RecipeType.GRIND_STONE);
-		put("HEATED_PRESSURE_CHAMBER", RecipeType.HEATED_PRESSURE_CHAMBER);
-		put("JUICER", RecipeType.JUICER);
-		put("MAGIC_WORKBENCH", RecipeType.MAGIC_WORKBENCH);
-		put("MOB_DROP", RecipeType.MOB_DROP);
-		put("MULTIBLOCK", RecipeType.MULTIBLOCK);
-		put("NUCLEAR_REACTOR", RecipeType.NUCLEAR_REACTOR);
-		put("NULL", RecipeType.NULL);
-		put("ORE_CRUSHER", RecipeType.ORE_CRUSHER);
-		put("ORE_WASHER", RecipeType.ORE_WASHER);
-		put("PRESSURE_CHAMBER", RecipeType.PRESSURE_CHAMBER);
-		put("REFINERY", RecipeType.REFINERY);
-		put("SMELTERY", RecipeType.SMELTERY);
-	}};
+	public static final Map<String, RecipeType> RECIPE_TYPES = new HashMap<> ();
 
 
 	public static void initialize() {
 
+		RECIPE_TYPES.put("ANCIENT_ALTAR", RecipeType.ANCIENT_ALTAR);
+		RECIPE_TYPES.put("ARMOR_FORGE", RecipeType.ARMOR_FORGE);
+		RECIPE_TYPES.put("BARTER_DROP", RecipeType.BARTER_DROP);
+		RECIPE_TYPES.put("COMPRESSOR", RecipeType.COMPRESSOR);
+		RECIPE_TYPES.put("ENHANCED_CRAFTING_TABLE", RecipeType.ENHANCED_CRAFTING_TABLE);
+		RECIPE_TYPES.put("FOOD_COMPOSTER", RecipeType.FOOD_COMPOSTER);
+		RECIPE_TYPES.put("FOOD_FABRICATOR", RecipeType.FOOD_FABRICATOR);
+		RECIPE_TYPES.put("FREEZER", RecipeType.FREEZER);
+		RECIPE_TYPES.put("GEO_MINER", RecipeType.GEO_MINER);
+		RECIPE_TYPES.put("GOLD_PAN", RecipeType.GOLD_PAN);
+		RECIPE_TYPES.put("GRIND_STONE", RecipeType.GRIND_STONE);
+		RECIPE_TYPES.put("HEATED_PRESSURE_CHAMBER", RecipeType.HEATED_PRESSURE_CHAMBER);
+		RECIPE_TYPES.put("JUICER", RecipeType.JUICER);
+		RECIPE_TYPES.put("MAGIC_WORKBENCH", RecipeType.MAGIC_WORKBENCH);
+		RECIPE_TYPES.put("MOB_DROP", RecipeType.MOB_DROP);
+		RECIPE_TYPES.put("MULTIBLOCK", RecipeType.MULTIBLOCK);
+		RECIPE_TYPES.put("NUCLEAR_REACTOR", RecipeType.NUCLEAR_REACTOR);
+		RECIPE_TYPES.put("NULL", RecipeType.NULL);
+		RECIPE_TYPES.put("ORE_CRUSHER", RecipeType.ORE_CRUSHER);
+		RECIPE_TYPES.put("ORE_WASHER", RecipeType.ORE_WASHER);
+		RECIPE_TYPES.put("PRESSURE_CHAMBER", RecipeType.PRESSURE_CHAMBER);
+		RECIPE_TYPES.put("REFINERY", RecipeType.REFINERY);
+		RECIPE_TYPES.put("SMELTERY", RecipeType.SMELTERY);
+		
 		/*
 		 * file handling
 		 */
