@@ -51,18 +51,18 @@ public class ChatLister {
 	
 	
 	public boolean display(int page) {
+				
+		// Is the list empty?
+		if (list_text.length == 0) {
+			MessageHandler.send(player, 
+					MessageHandler.getError("nothing-to-display"));
+			return false;
+		}
 		
 		// Are there enough arguments to warrant displaying this page?
 		if (page > max_pages) {
 			MessageHandler.send(player, 
 					MessageHandler.getError("invalid-page"));
-			return false;
-		}
-		
-		// Is the list empty?
-		if (list_text.length == 0) {
-			MessageHandler.send(player, 
-					MessageHandler.getError("nothing-to-display"));
 			return false;
 		}
 		

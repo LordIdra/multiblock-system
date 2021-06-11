@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -330,7 +331,7 @@ public class AbstractMultiblock {
 			StructureDescriptor abstract_descriptor) {
 		
 		// Initialize empty map that will store every BlockInfo and its corresponding ItemInfo
-		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new HashMap<> ();
+		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new LinkedHashMap<> ();
 		
 		// Figure out block locations
 		Location starting_point = central_block_location.clone();

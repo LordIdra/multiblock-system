@@ -99,8 +99,13 @@ public class MixedItemStack {
 	public MixedItemStack(String id) {
 		
 		// Convert to both material and slimefun item
-		Material material = Material.getMaterial(id);
-		
+		Material material = StringConversion.idToMaterial(id);
+		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
+
+		// If either are not null, create
+		if (material != null) 		this.itemstack = 			new ItemStack(material);
+		if (slimefun_item != null) 	this.slimefun_itemstack = 	new SlimefunItemStack(slimefun_item.getId(), slimefun_item.getItem());
+		else 						this.itemstack = 			new ItemStack(Material.AIR);
 	}
 	
 
