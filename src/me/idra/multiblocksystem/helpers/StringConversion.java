@@ -12,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
-import me.idra.multiblocksystem.constants.ConstantPlaceholders;
 import me.idra.multiblocksystem.lists.ListVariantPrefixes;
 import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
 import me.idra.multiblocksystem.objects.MixedItemStack;

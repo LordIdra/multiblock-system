@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
-import me.idra.multiblocksystem.constants.ConstantPlaceholders;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 

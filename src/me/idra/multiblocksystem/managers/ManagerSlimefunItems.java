@@ -13,7 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
-import me.idra.multiblocksystem.constants.ConstantPlaceholders;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;

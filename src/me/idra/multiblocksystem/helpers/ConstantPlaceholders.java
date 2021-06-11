@@ -1,4 +1,4 @@
-package me.idra.multiblocksystem.constants;
+package me.idra.multiblocksystem.helpers;
 
 public class ConstantPlaceholders {
 

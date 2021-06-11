@@ -17,7 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import me.idra.multiblocksystem.constants.ConstantPlaceholders;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
