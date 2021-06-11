@@ -70,7 +70,7 @@ public class CommandTag extends BaseCommand{
 		// Get the multiblock the player is trying to interface with
 		BaseWorldMultiblock multiblock = ListWorldMultiblocks.getMultiblockFromLocation(target_block.getLocation());
 		
-		// Is the target block part of a multiblock
+		// Is the target block part of a multiblock?
 		if (multiblock == null) {
 				MessageHandler.send(player, 
 						MessageHandler.getError("not-part-of-multiblock"));
@@ -85,24 +85,20 @@ public class CommandTag extends BaseCommand{
 			return false;
 		}
 		
-		// Is the tag valid?
-		if (!multiblock.abstract_multiblock.tags.contains(args[1])) {
-			MessageHandler.send(player, 
-					MessageHandler.getError("invalid-tag")
-					.replace("%multiblock%", multiblock.abstract_multiblock.name)
-					.replace("%tag%", args[1]));
-			return false;
-		}
-		
 		// Is the tag an inventory tag?
-		boolean is_inventory_tag = false;
-		
-		if (BaseWorldMultiblock.isInventoryTag(args[1])) {
-			is_inventory_tag = true;
-		}
+		boolean is_inventory_tag = multiblock.abstract_multiblock.inventory_tags.contains(args[1]);
 		
 		// If so, try to get the attached inventory and add it to the multiblock's map
 		if (is_inventory_tag) {
+
+			// Is the tag valid?
+			if (!multiblock.abstract_multiblock.inventory_tags.contains(args[1])) {
+				MessageHandler.send(player, 
+						MessageHandler.getError("invalid-inventory-tag")
+						.replace("%multiblock%", multiblock.abstract_multiblock.name)
+						.replace("%tag%", args[1]));
+				return false;
+			}
 			
 			// Is the target block valid?
 			if (target_block.getType() != Material.CHEST && target_block.getType() != Material.BARREL) {
@@ -133,6 +129,16 @@ public class CommandTag extends BaseCommand{
 					MessageHandler.getSuccess("tag-set"));
 			
 			return true;
+		}
+
+		// Not an inventory tag
+		// Is the tag valid?
+		if (!multiblock.abstract_multiblock.position_tags.contains(args[1])) {
+			MessageHandler.send(player,
+					MessageHandler.getError("invalid-position-tag")
+					.replace("%multiblock%", multiblock.abstract_multiblock.name)
+					.replace("%tag%", args[1]));
+			return false;
 		}
 		
 		// Remove existing position tags from the block

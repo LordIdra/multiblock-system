@@ -64,8 +64,15 @@ public class TabHandler implements TabCompleter {
 					continue;
 				}
 
-				for (String tag : multiblock.abstract_multiblock.tags) {
-					possibilities.add(tag);
+				if (target_block.getType() == Material.CHEST || target_block.getType() == Material.BARREL) {
+					for (String tag : multiblock.abstract_multiblock.inventory_tags) {
+						possibilities.add(tag);
+					}
+
+				} else {
+					for (String tag : multiblock.abstract_multiblock.position_tags) {
+						possibilities.add(tag);
+					}
 				}
 
 				continue;

@@ -32,7 +32,9 @@ public class AbstractMultiblock {
 	public String description;
 	public StructureDescriptor structure;
 	
-	public List<String> tags = new ArrayList<> ();
+	public List<String> position_tags = new ArrayList<> ();
+	public List<String> inventory_tags = new ArrayList<> ();
+
 	public Map<String, Object> variables = new HashMap<> ();
 	public List<MultiblockRecipe> recipes = new ArrayList<> ();
 	public List<MultiblockFuel> fuels = new ArrayList<> ();
@@ -87,15 +89,21 @@ public class AbstractMultiblock {
 		description = multiblock_config.getString("Description");
 		
 		// Get certain sections we need to read
-		List<String> tag_config = multiblock_config.getStringList("RequiredTags");
+		List<String> position_tag_config = multiblock_config.getStringList("PositionTags");
+		List<String> inventory_tag_config = multiblock_config.getStringList("InventoryTags");
 		ConfigurationSection variable_config = multiblock_config.getConfigurationSection("Variables");
 		ConfigurationSection fuel_config = multiblock_config.getConfigurationSection("Fuels");
 		ConfigurationSection recipe_config = multiblock_config.getConfigurationSection("Recipes");
 		
-		// Get required tags
-		if (tag_config != null)
-			for (String tag : tag_config)
-				tags.add(tag);
+		// Position tags
+		if (position_tag_config != null)
+			for (String tag : position_tag_config)
+				position_tags.add(tag);
+		
+		// Inventory tags
+		if (inventory_tag_config != null)
+			for (String tag : inventory_tag_config)
+				inventory_tags.add(tag);
 		
 		// Get variables
 		if (variable_config != null)
