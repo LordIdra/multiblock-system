@@ -51,10 +51,9 @@ public class AbstractMixedItemStack {
 	public boolean containsMaterial(Material material) {
 		
 		for (MixedItemStack item : items) {
-			if (item.isSlimefunItem())
-				continue;
-			else if (item.itemstack.getType() == material)
+			if (item.itemstack.getType() == material) {
 				return true;
+			}
 		}
 		
 		return false;
