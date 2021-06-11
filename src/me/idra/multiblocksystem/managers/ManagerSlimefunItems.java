@@ -122,9 +122,20 @@ public class ManagerSlimefunItems {
 			String name = research_section.getString("name");
 
 			// Variable checking
-			if (number == 0) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "number");
-			if (xp == 0) 		Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "xp");
-			if (name == null) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "name");
+			if (number == 0) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "number");
+				continue;
+			}
+
+			if (xp == 0) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "xp");
+				continue;
+			}
+
+			if (name == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "name");
+				continue;
+			}
 
 			// Generate research
 			NamespacedKey research_key = new NamespacedKey(ManagerPlugin.plugin, key);
@@ -145,12 +156,22 @@ public class ManagerSlimefunItems {
 			ConfigurationSection display_item_section = section.getConfigurationSection("item");
 			ConfigurationSection recipe_section = section.getConfigurationSection("recipe");
 
-			if (display_item_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
-			if (recipe_section == null)			Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
+			if (display_item_section == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
+				continue;
+			}
+
+			if (recipe_section == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
+				continue;
+			}
 			
 			ConfigurationSection recipe_items_section = recipe_section.getConfigurationSection("items");
 
-			if (recipe_items_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_items_section, null);
+			if (recipe_items_section == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_items_section, null);
+				continue;
+			}
 
 			// Variables
 			String name 				= section.getString("name");
@@ -159,12 +180,30 @@ public class ManagerSlimefunItems {
 			int amount 			 		= recipe_section.getInt("amount");
 			RecipeType recipe_type		= RECIPE_TYPES.get(recipe_section.getString("type"));
 
-			if (name == null)							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "name");
-			if (display_item_type == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "type");
-			if (display_item_id == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "id");
-			if (!display_item_type.equals("NORMAL")
-				&&  !display_item_type.equals("HEAD"))	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "amount");
-			if (amount == 0) 							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "type");
+			if (name == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "name");
+				continue;
+			}
+
+			if (display_item_type == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "type");
+				continue;
+			}
+
+			if (display_item_id == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "id");
+				continue;
+			}
+
+			if (!display_item_type.equals("NORMAL") && !display_item_type.equals("HEAD")) {
+				Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, display_item_section, "type");
+				continue;
+			}
+
+			if (amount == 0) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "amount");
+				continue;
+			}
 
 
 			// Get recipe items + amount
