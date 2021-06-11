@@ -69,10 +69,10 @@ public class Logger {
 		if (section != null) {
 
 			if (option != null) {
-				error_message = error_message.replace(ConstantPlaceholders.PATH, section.toString() + "." + option);
+				error_message = error_message.replace(ConstantPlaceholders.PATH, section.getCurrentPath() + "." + option);
 
 			} else {
-				error_message = error_message.replace(ConstantPlaceholders.PATH, section.toString());
+				error_message = error_message.replace(ConstantPlaceholders.PATH, section.getCurrentPath());
 			}
 
 		} else {
