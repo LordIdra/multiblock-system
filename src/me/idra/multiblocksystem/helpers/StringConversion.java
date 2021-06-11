@@ -22,7 +22,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 public class StringConversion {
 
-	
+	public static final String LABEL_LAYER = "layer-";
 
 	private StringConversion() {
 		// Empty constructor
@@ -129,7 +129,7 @@ public class StringConversion {
 		if (is_slimefun_item  && (slimefun_item == null)) {
 				
 			// Display a console error and add substitute air in instead
-			Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
+			Logger.configError(Logger.OPTION_INVALID, file, null, LABEL_LAYER + String.valueOf(layer) + "." + block_data);
 				
 			// Just return null
 			return new AbstractMixedItemStack(Material.AIR, null);
@@ -155,7 +155,7 @@ public class StringConversion {
 					if (prefix_material != null)
 						materials.add(prefix_material);
 					else
-						Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
+						Logger.configError(Logger.OPTION_INVALID, file, null, LABEL_LAYER + String.valueOf(layer) + "." + block_data);
 				}
 				
 				// We've already added materials, so no need to try to generate one solely from the material data (would throw an error anyways)
@@ -170,7 +170,7 @@ public class StringConversion {
 			if (!is_slimefun_item && (material == null)) {
 					
 				// Display a console error and add substitute air in instead
-				Logger.configError(Logger.OPTION_INVALID, file, null, "layer-" + String.valueOf(layer) + "." + block_data);
+				Logger.configError(Logger.OPTION_INVALID, file, null, LABEL_LAYER + String.valueOf(layer) + "." + block_data);
 					
 				// Just return the MixedItemStack as air straight away
 				return new AbstractMixedItemStack(Material.AIR, null);
