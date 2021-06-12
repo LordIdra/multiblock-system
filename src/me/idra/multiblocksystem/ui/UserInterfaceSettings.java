@@ -84,38 +84,38 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		setItem(9, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (4-30)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.unresolved_error_time),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		setItem(10, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (0-5)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.resolved_error_time),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		setItem(11, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (20-100)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.error_particle_amount),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		setItem(12, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Time" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.location_particle_time),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		setItem(13, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.location_particle_amount),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		setItem(14, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "List Items Per Page" + ChatColor.RESET + ChatColor.YELLOW + " (3-15)", 
 				CURRENT_VALUE + ChatColor.AQUA + String.valueOf(settings.list_items_per_page),
-				ChatColor.GRAY + DECREASE_TEXT,
-				ChatColor.GRAY + INCREASE_TEXT);
+				DECREASE_TEXT,
+				INCREASE_TEXT);
 		
 		
 		setItem(18, Material.BLUE_CONCRETE,
