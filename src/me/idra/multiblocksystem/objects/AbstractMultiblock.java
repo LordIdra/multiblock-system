@@ -36,6 +36,8 @@ public class AbstractMultiblock {
 	public String name;
 	public String description;
 	public StructureDescriptor structure;
+
+	public String fuelname;
 	
 	public List<String> inventory_tags = new ArrayList<> ();
 	public List<String> fuel_tags = new ArrayList<> ();
@@ -117,6 +119,7 @@ public class AbstractMultiblock {
 		
 		// Get parameters from config
 		description = multiblock_config.getString("Description");
+		fuelname = multiblock_config.getString("FuelName");
 		
 		// Get certain sections we need to read
 		List<String> inventory_tag_list = multiblock_config.getStringList("InventoryTags");

@@ -153,6 +153,12 @@ public abstract class BaseWorldMultiblock {
 
 
 
+	public void handleFuel() {
+		
+	}
+
+
+
 	public void handleRecipes() {
 		
 	}
