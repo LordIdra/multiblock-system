@@ -243,8 +243,8 @@ public class AbstractMultiblock {
 				// Initialize variables
 				int time = current_recipe.getInt("TIME");
 				Map<String, Integer> energy = null;
-				Map<String, List<MixedItemStack>> inputs = null;
-				Map<String, List<MixedItemStack>> outputs = null;
+				Map<String, List<RecipeMixedItemStack>> inputs = null;
+				Map<String, List<RecipeMixedItemStack>> outputs = null;
 
 				// Check recipe time is valid
 				if (time == 0) {

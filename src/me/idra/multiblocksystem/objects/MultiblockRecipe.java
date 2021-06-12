@@ -9,16 +9,16 @@ import java.util.Map;
 
 public class MultiblockRecipe {
 	
-	public Map<String, List<MixedItemStack>> inputs = null;
-	public Map<String, List<MixedItemStack>> outputs = null;
+	public Map<String, List<RecipeMixedItemStack>> inputs = null;
+	public Map<String, List<RecipeMixedItemStack>> outputs = null;
 	public Map<String, Integer> energy = null;
 	public int time = 0;
 	
 	
 	
 	public MultiblockRecipe(
-			Map<String, List<MixedItemStack>> inputs,		// Input  items
-			Map<String, List<MixedItemStack>> outputs,		// Output items
+			Map<String, List<RecipeMixedItemStack>> inputs,		// Input  items
+			Map<String, List<RecipeMixedItemStack>> outputs,		// Output items
 			Map<String, Integer> energy,					// Energy
 			int time										// Time
 	) {

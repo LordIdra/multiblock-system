@@ -160,7 +160,7 @@ public class CommandAssemble extends BaseCommand{
 			
 			// Actually create the multiblock
 			int ID = FileHandlerPermanentVariables.currentID();
-			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, args[1], location_to_tag_map, player.getUniqueId(), ID);
+			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, location_to_tag_map, player.getUniqueId(), ID);
 			
 			// Notify the user
 			MessageHandler.send(sender,

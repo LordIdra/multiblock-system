@@ -22,6 +22,7 @@ import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.idra.multiblocksystem.objects.MixedItemStack;
 import me.idra.multiblocksystem.objects.MultiblockFuel;
 import me.idra.multiblocksystem.objects.MultiblockRecipe;
+import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
 import me.idra.multiblocksystem.tasks.TaskTickMultiblock;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -343,13 +344,20 @@ public abstract class BaseWorldMultiblock {
 			for (String tag : recipe.inputs.keySet()) {
 
 				// Items that should be in the tag
-				List<MixedItemStack> stack = recipe.inputs.get(tag);
+				List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
 
 				// For each inventory in the tag
 				for (Inventory inv : tags_inventory.get(tag)) {
 					
 					// Check that the target items exist within the inventory
-					
+					for (MixedItemStack stack : stacks) {
+						Map<Integer, ? extends ItemStack> items = inv.all(stack.asItemStack().getType());
+
+						// If there's no match
+						if (items.isEmpty()) {
+							continue;
+						}
+					}
 				}
 			}
 

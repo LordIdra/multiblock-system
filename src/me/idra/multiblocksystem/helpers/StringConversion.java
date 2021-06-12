@@ -16,6 +16,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.idra.multiblocksystem.lists.ListVariantPrefixes;
 import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
 import me.idra.multiblocksystem.objects.MixedItemStack;
+import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
@@ -209,6 +210,23 @@ public class StringConversion {
 		// If either are not null, create MixedItemStack
 		if (material != null) 		return new MixedItemStack(material);
 		if (slimefun_item != null) 	return new MixedItemStack(slimefun_item);
+		else 						return null;
+	}
+
+
+
+	public static RecipeMixedItemStack recipeMixedItemStackFromID(String id) {
+		
+		// Capitalise ID (both normal and slimefun IDs are always capital)
+		id = id.toUpperCase();
+
+		// Convert to both material and slimefun item
+		Material material = StringConversion.idToMaterial(id);
+		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
+
+		// If either are not null, create RecipeMixedItemStack
+		if (material != null) 		return new RecipeMixedItemStack(material);
+		if (slimefun_item != null) 	return new RecipeMixedItemStack(slimefun_item);
 		else 						return null;
 	}
 }

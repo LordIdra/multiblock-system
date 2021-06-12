@@ -66,19 +66,6 @@ public class MixedItemStack {
 		}
 	}
 
-
-
-	public void setAmount(int amount) {
-
-		// Sets the amount attribute of the relevant itemstack
-		if (isSlimefunItem()) {
-			slimefun_itemstack.setAmount(amount);
-		
-		} else {
-			itemstack.setAmount(amount);
-		}
-	}
-
 	
 	public boolean isSlimefunItem() {
 		
