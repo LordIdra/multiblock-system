@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.event.inventory.ClickType;
+
 public class PlayerSettings {
 	
 	public UUID player;
@@ -87,9 +89,33 @@ public class PlayerSettings {
 		
 		SettingContainer updatedSettingContainer = settingContainerMap.get(settingContainerKey);
 		updatedSettingContainer.value = new_value;
-		settingContainerMap.put(settingContainerKey, updatedSettingContainer)
+		settingContainerMap.put(settingContainerKey, updatedSettingContainer);
 		
 	}
 	
+	public String getContainerValue(String settingContainerKey) {
+		SettingContainer settingContainer = settingContainerMap.get(settingContainerKey);
+		return String.valueOf(settingContainer.value);
+	}
+	
+	public int getContainerValueAsInt(String settingContainerKey) {
+		SettingContainer settingContainer = settingContainerMap.get(settingContainerKey);
+		return settingContainer.value;
+	}
+	
+	public void changeValue(String settingContainerKey, int increment_value) {
+		SettingContainer settingContainer = settingContainerMap.get(settingContainerKey);
+		settingContainer.value += increment_value;
+		settingContainerMap.put(settingContainerKey, settingContainer);	
+	}
+	
+	public void handleClick(String settingContainerKey, ClickType click) {
+		
+		if (click.isLeftClick())
+			this.changeValue(settingContainerKey, 1);
+		else if (click.isRightClick())
+			this.changeValue(settingContainerKey, -1);
+		
+	}
 	
 }
