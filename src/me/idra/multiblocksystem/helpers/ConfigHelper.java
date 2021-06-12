@@ -13,6 +13,8 @@ import me.idra.multiblocksystem.objects.MixedItemStack;
 
 
 public class ConfigHelper {
+	
+	private ConfigHelper() {}
     
     public static Map<String, Integer> getEnergyMap(File file, ConfigurationSection config_energy) {
 
