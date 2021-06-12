@@ -150,6 +150,12 @@ public abstract class BaseWorldMultiblock {
 			}
 		}
 	}
+
+
+
+	public void handleRecipes() {
+		
+	}
 	
 	
 	

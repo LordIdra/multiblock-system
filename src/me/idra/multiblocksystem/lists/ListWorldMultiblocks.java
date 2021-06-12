@@ -46,27 +46,16 @@ public class ListWorldMultiblocks {
 
 	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
-		// Get class location, and from that the class itself
-		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
-		Class<?> structure_class = null;
-		
-		// If the class isn't found, throw a warning
-		try {
-			structure_class = Class.forName(class_location);
-		} catch (ClassNotFoundException e) {
-			Logger.log(
-					Logger.getWarning("class-not-found")
-					.replace("%class%", String.valueOf(class_location)),
-					true);
-			return null;
-		}
-		
 		// Initialize the class, checking for a large number of potential problems
 		BaseWorldMultiblock world_multiblock = null;
 		
+		if (abstract_multiblock.structure_class == null) {
+			return null;
+		}
+
 		try {
 			world_multiblock = 
-					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class,Map.class,
+					(BaseWorldMultiblock) abstract_multiblock.structure_class.getDeclaredConstructor(AbstractMultiblock.class,Map.class,
 					UUID.class, int.class)
 					.newInstance(abstract_multiblock, block_map, player, ID);
 		
@@ -75,7 +64,7 @@ public class ListWorldMultiblocks {
 			
 			Logger.log(
 					Logger.getWarning("world-multiblock-class-not-initialized")
-					.replace("%structure%", String.valueOf(class_location)),
+					.replace("%structure%", String.valueOf(abstract_multiblock.name)),
 					true);
 			e.printStackTrace();
 			return null;

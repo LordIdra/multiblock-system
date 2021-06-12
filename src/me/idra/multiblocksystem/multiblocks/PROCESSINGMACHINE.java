@@ -9,11 +9,11 @@ import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
 
-public class LARGEDUSTWASHER extends BaseWorldMultiblock {
+public class PROCESSINGMACHINE extends BaseWorldMultiblock {
 
 	
 	
-	public LARGEDUSTWASHER(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> blocks, UUID owner, int ID) {
+	public PROCESSINGMACHINE(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> blocks, UUID owner, int ID) {
 		super(abstract_multiblock, blocks, owner, ID);
 
 		// Start ticking
@@ -24,6 +24,6 @@ public class LARGEDUSTWASHER extends BaseWorldMultiblock {
 	
 	@Override
 	public void tick() {
-		// handleRecipes();
+		handleRecipes();
 	}
 }

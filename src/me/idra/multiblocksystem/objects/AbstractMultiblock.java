@@ -27,6 +27,11 @@ import me.idra.multiblocksystem.managers.ManagerPlugin;
 
 
 public class AbstractMultiblock {
+
+	File multiblock_folder;
+	File multiblock_file;
+	File structure_file;
+	FileConfiguration multiblock_config;
 	
 	public String name;
 	public String description;
@@ -42,27 +47,22 @@ public class AbstractMultiblock {
 	public Map<String, Object> variables = new HashMap<> ();
 	public List<MultiblockRecipe> recipes = new ArrayList<> ();
 	public List<MultiblockFuel> fuels = new ArrayList<> ();
+
+	public Class<?> structure_class;
 	
 	
 	
 	public AbstractMultiblock(String name) {
 		this.name = name;
-		loadStructure();
-	}
-	
-	
 
-	public void loadStructure() {
-		
-		/*
-		 * FILE HANDLING
-		 */
-		
+		//File handling
 		// Open multiblock files
-		File multiblock_folder = new File(new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks"), name);
-		File multiblock_file = new File(multiblock_folder, "settings.yml");
-		File structure_file = new File(multiblock_folder, "structure.yml");
-		
+		multiblock_folder = new File(new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks"), name);
+		multiblock_file = new File(multiblock_folder, "settings.yml");
+		structure_file = new File(multiblock_folder, "structure.yml");
+
+		multiblock_config = YamlConfiguration.loadConfiguration(multiblock_file);
+
 		// Check the files actually exist
 		if (!multiblock_file.exists()) {
 			Logger.log(
@@ -79,6 +79,35 @@ public class AbstractMultiblock {
 					true);
 			return;
 		}
+
+		// Load multiblock structure
+		loadStructure();
+
+		// Get class location, and from that the class itself
+		// Don't need to check if the files exist because that's already been done in loadStructure()
+		String classname = multiblock_config.getString("Classname");
+
+		if (classname == null) {
+			Logger.configError(Logger.OPTION_NOT_FOUND, multiblock_file, null, "Classname");
+			return;
+		}
+
+		String class_location = "me.idra.multiblocksystem.multiblocks." + classname.toUpperCase();
+		
+		// If the class isn't found, throw a warning
+		try {
+			structure_class = Class.forName(class_location);
+		} catch (ClassNotFoundException e) {
+			Logger.log(
+					Logger.getWarning("class-not-found")
+					.replace("%class%", String.valueOf(class_location)),
+					true);
+		}
+	}
+	
+	
+
+	public void loadStructure() {
 		
 		
 		
@@ -86,10 +115,7 @@ public class AbstractMultiblock {
 		 * CONFIG LOADING
 		 */
 		
-		// Get config from multiblock file
-		FileConfiguration multiblock_config = YamlConfiguration.loadConfiguration(multiblock_file);
-		
-		// Get parameters from said config
+		// Get parameters from config
 		description = multiblock_config.getString("Description");
 		
 		// Get certain sections we need to read
