@@ -20,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.BlockIterator;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
-import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListBlockErrors;
@@ -161,7 +160,7 @@ public class CommandAssemble extends BaseCommand{
 			
 			// Actually create the multiblock
 			int ID = FileHandlerPermanentVariables.currentID();
-			BaseWorldMultiblock.instantiateWorldMultiblock(abstract_structure_object, args[1], location_to_tag_map, player.getUniqueId(), ID);
+			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, args[1], location_to_tag_map, player.getUniqueId(), ID);
 			
 			// Notify the user
 			MessageHandler.send(sender,

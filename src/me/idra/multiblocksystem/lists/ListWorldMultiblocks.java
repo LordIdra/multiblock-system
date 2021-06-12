@@ -3,14 +3,15 @@ package me.idra.multiblocksystem.lists;
 
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.HashMap;
 
-import org.bukkit.Bukkit;
+import java.lang.reflect.InvocationTargetException;
 import org.bukkit.Location;
 
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.helpers.Logger;
-import me.idra.multiblocksystem.helpers.MessageHandler;
+import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
@@ -40,26 +41,86 @@ public class ListWorldMultiblocks {
 		// If no multiblock contains the location, return null
 		return null;
 	}
-	
-	
-	
-	public static void addMultiblock(BaseWorldMultiblock multiblock_object) {
+
+
+
+	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
-		// Check the multiblock is not already in the array
-		if (multiblock_objects.containsKey(multiblock_object.ID)) {
-			
-			// We have a pretty big problem
+		// Get class location, and from that the class itself
+		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
+		Class<?> structure_class = null;
+		
+		// If the class isn't found, throw a warning
+		try {
+			structure_class = Class.forName(class_location);
+		} catch (ClassNotFoundException e) {
 			Logger.log(
-					Logger.getWarning("abstract-structure-not-initialized")
-					.replace("%id%", String.valueOf(String.valueOf(multiblock_object.ID))),
+					Logger.getWarning("class-not-found")
+					.replace("%class%", String.valueOf(class_location)),
 					true);
-			
-			if (Bukkit.getPlayer(multiblock_object.owner) != null)
-				MessageHandler.send(Bukkit.getPlayer(multiblock_object.owner), 
-						MessageHandler.getError("id-invalid"));
+			return null;
 		}
 		
-		// Key = ID; value = BaseMultiblockObject
-		multiblock_objects.put(multiblock_object.ID, multiblock_object);
+		// Initialize the class, checking for a large number of potential problems
+		BaseWorldMultiblock world_multiblock = null;
+		
+		try {
+			world_multiblock = 
+					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class,Map.class,
+					UUID.class, int.class)
+					.newInstance(abstract_multiblock, block_map, player, ID);
+		
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			
+			Logger.log(
+					Logger.getWarning("world-multiblock-class-not-initialized")
+					.replace("%structure%", String.valueOf(class_location)),
+					true);
+			e.printStackTrace();
+			return null;
+		}
+
+		return world_multiblock;
+	}
+
+
+	
+	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
+		
+		// Create multiblock
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
+
+		if (world_multiblock == null) {
+			return;
+		}
+
+		// Add the multiblock to the multiblock array
+		multiblock_objects.put(world_multiblock.ID, world_multiblock);
+	}
+	
+	
+	
+	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
+		
+		// Create multiblock
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
+		
+		if (world_multiblock == null) {
+			return;
+		}
+
+		world_multiblock.fuel_ticks = in_fuel_ticks;
+
+		if (recipe_index != -1) {
+			world_multiblock.active_recipe = abstract_multiblock.recipes.get(recipe_index);
+		}
+		
+		if (world_multiblock.active_recipe != null) {
+			world_multiblock.active_recipe.time = recipe_time;
+		}
+		
+		// Add the multiblock to the multiblock array
+		multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 }

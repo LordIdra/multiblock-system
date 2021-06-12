@@ -196,7 +196,7 @@ public class FileHandlerWorldMultiblocks {
 			int recipe_time = recipe_section.getInt("Time");
 			
 			// Generate WorldMultiblock
-			BaseWorldMultiblock.instantiateWorldMultiblock(abstract_multiblock, name, blocks, uuid, ID, fuel_ticks, recipe_index, recipe_time);
+			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_multiblock, name, blocks, uuid, ID, fuel_ticks, recipe_index, recipe_time);
 		}
 		
 		// Successful execution

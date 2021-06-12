@@ -1,6 +1,5 @@
 package me.idra.multiblocksystem.bases;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -217,91 +216,5 @@ public abstract class BaseWorldMultiblock {
 		
 		// Return the block positions that contain the specified tag
 		return tag_matches;
-	}
-
-
-
-	/*
-	 * INSTANTIATION
-	 */
-
-	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
-		
-		// Get class location, and from that the class itself
-		String class_location = "me.idra.multiblocksystem.multiblocks." + name.toUpperCase();
-		Class<?> structure_class = null;
-		
-		// If the class isn't found, throw a warning
-		try {
-			structure_class = Class.forName(class_location);
-		} catch (ClassNotFoundException e) {
-			Logger.log(
-					Logger.getWarning("class-not-found")
-					.replace("%class%", String.valueOf(class_location)),
-					true);
-			return null;
-		}
-		
-		// Initialize the class, checking for a large number of potential problems
-		BaseWorldMultiblock world_multiblock = null;
-		
-		try {
-			world_multiblock = 
-					(BaseWorldMultiblock) structure_class.getDeclaredConstructor(AbstractMultiblock.class,Map.class,
-					UUID.class, int.class)
-					.newInstance(abstract_multiblock, block_map, player, ID);
-		
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			
-			Logger.log(
-					Logger.getWarning("world-multiblock-class-not-initialized")
-					.replace("%structure%", String.valueOf(class_location)),
-					true);
-			e.printStackTrace();
-			return null;
-		}
-
-		return world_multiblock;
-	}
-
-
-	
-	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
-		
-		// Create multiblock
-		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
-
-		if (world_multiblock == null) {
-			return;
-		}
-
-		// Add the multiblock to the multiblock array
-		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
-	}
-	
-	
-	
-	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
-		
-		// Create multiblock
-		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
-		
-		if (world_multiblock == null) {
-			return;
-		}
-
-		world_multiblock.fuel_ticks = in_fuel_ticks;
-
-		if (recipe_index != -1) {
-			world_multiblock.active_recipe = abstract_multiblock.recipes.get(recipe_index);
-		}
-		
-		if (world_multiblock.active_recipe != null) {
-			world_multiblock.active_recipe.time = recipe_time;
-		}
-		
-		// Add the multiblock to the multiblock array
-		ListWorldMultiblocks.multiblock_objects.put(world_multiblock.ID, world_multiblock);
 	}
 }
