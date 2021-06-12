@@ -45,45 +45,47 @@ public class ConfigHelper {
 
         // Add each pair of tag to input items
         for (String input_tag : config_inputs.getKeys(false)) {
+            for (String input_key : config_inputs.getConfigurationSection(input_tag).getKeys(false)) {
 
-            List<String> input_values = config_inputs.getStringList(input_tag);
-            
-            // Check input value is valid
-            if (input_values == null) {
-                continue;
-            }
-
-            List<RecipeMixedItemStack> input_items = new ArrayList<> ();
-
-            // Convert each input value to a MixedItemStack
-            for (String input_value : input_values) {
-
-                // Seperate string into amount and ID
-                String[] split_string = input_value.split("\\s");
-
-                if (split_string.length != 2) {
-                    Logger.configError(Logger.OPTION_INVALID, file, config_inputs, input_tag);
+                List<String> input_values = config_inputs.getStringList(input_key);
+                
+                // Check input value is valid
+                if (input_values == null) {
                     continue;
                 }
 
-                // Get amount and ID from the resulting two strings
-                int amount = Integer.parseInt(split_string[0]);
-                String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+                List<RecipeMixedItemStack> input_items = new ArrayList<> ();
 
-                // Check the stack is valid
-                if (stack == null) {
-                    Logger.configError(Logger.OPTION_INVALID, file, config_inputs, input_tag + "." + input_value);
-                    continue;
+                // Convert each input value to a MixedItemStack
+                for (String input_value : input_values) {
+
+                    // Seperate string into amount and ID
+                    String[] split_string = input_value.split("\\s");
+
+                    if (split_string.length != 2) {
+                        Logger.configError(Logger.OPTION_INVALID, file, config_inputs, input_key);
+                        continue;
+                    }
+
+                    // Get amount and ID from the resulting two strings
+                    int amount = Integer.parseInt(split_string[0]);
+                    String id = split_string[1];
+                    RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+
+                    // Check the stack is valid
+                    if (stack == null) {
+                        Logger.configError(Logger.OPTION_INVALID, file, config_inputs, input_key + "." + input_value);
+                        continue;
+                    }
+
+                    // Add stack to the array
+                    stack.amount = amount;
+                    input_items.add(stack);
                 }
 
-                // Add stack to the array
-                stack.amount = amount;
-                input_items.add(stack);
+                // Add the resulting list of stacks to the map
+                inputs.put(input_tag, input_items);
             }
-
-            // Add the resulting list of stacks to the map
-            inputs.put(input_tag, input_items);
         }
 
         return inputs;
@@ -98,45 +100,47 @@ public class ConfigHelper {
 
         // Add each pair of tag to output items
         for (String output_tag : config_outputs.getKeys(false)) {
+            for (String output_key : config_outputs.getConfigurationSection(output_tag).getKeys(false)) {
 
-            List<String> output_values = config_outputs.getStringList(output_tag);
-            
-            // Check output value is valid
-            if (output_values == null) {
-                continue;
-            }
-
-            List<RecipeMixedItemStack> output_items = new ArrayList<> ();
-
-            // Convert each output value to a MixedItemStack
-            for (String output_value : output_values) {
-
-                // Seperate string into amount and ID
-                String[] split_string = output_value.split("\\s");
-
-                if (split_string.length != 2) {
-                    Logger.configError(Logger.OPTION_INVALID, file, config_outputs, output_tag);
+                List<String> output_values = config_outputs.getStringList(output_key);
+                
+                // Check output value is valid
+                if (output_values == null) {
                     continue;
                 }
 
-                // Get amount and ID from the resulting two strings
-                int amount = Integer.parseInt(split_string[0]);
-                String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+                List<RecipeMixedItemStack> output_items = new ArrayList<> ();
 
-                // Check the stack is valid
-                if (stack == null) {
-                    Logger.configError(Logger.OPTION_INVALID, file, config_outputs, output_tag + "." + output_value);
-                    continue;
+                // Convert each output value to a MixedItemStack
+                for (String output_value : output_values) {
+
+                    // Seperate string into amount and ID
+                    String[] split_string = output_value.split("\\s");
+
+                    if (split_string.length != 2) {
+                        Logger.configError(Logger.OPTION_INVALID, file, config_outputs, output_key);
+                        continue;
+                    }
+
+                    // Get amount and ID from the resulting two strings
+                    int amount = Integer.parseInt(split_string[0]);
+                    String id = split_string[1];
+                    RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+
+                    // Check the stack is valid
+                    if (stack == null) {
+                        Logger.configError(Logger.OPTION_INVALID, file, config_outputs, output_key + "." + output_value);
+                        continue;
+                    }
+
+                    // Add stack to the array
+                    stack.amount = amount;
+                    output_items.add(stack);
                 }
 
-                // Add stack to the array
-                stack.amount = amount;
-                output_items.add(stack);
+                // Add the resulting list of stacks to the map
+                outputs.put(output_key, output_items);
             }
-
-            // Add the resulting list of stacks to the map
-            outputs.put(output_tag, output_items);
         }
 
         return outputs;

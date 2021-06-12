@@ -332,9 +332,13 @@ public abstract class BaseWorldMultiblock {
 
 
 	private void startNewRecipe() {
+
+		Logger.log("terence 1", true);
 		
 		// For each recipe
 		for (MultiblockRecipe recipe : abstract_multiblock.recipes) {
+
+			Logger.log("terence 2", true);
 
 			// Are inputs missing?
 			boolean recipe_valid = true;
@@ -342,15 +346,21 @@ public abstract class BaseWorldMultiblock {
 			// For each input tag
 			for (String tag : recipe.inputs.keySet()) {
 
+				Logger.log("terence 3" + recipe.inputs.size(), true);
+
 				// Items that should be in the tag
 				List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
 
 				// For each inventory in the tag
 				for (Inventory inv : tags_inventory.get(tag)) {
+
+					Logger.log("terence 4", true);
 					
 					// Check that the target items exist within the inventory
 					for (RecipeMixedItemStack recipe_stack : stacks) {
 						Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
+
+						Logger.log("terence 5", true);
 
 						// If there's no match
 						if (items.isEmpty()) {
@@ -359,8 +369,12 @@ public abstract class BaseWorldMultiblock {
 
 						for (ItemStack inventory_stack : items.values()) {
 
+							Logger.log("terence 6", true);
+
 							// Slimefun item check
 							if (SlimefunItem.getByItem(inventory_stack) != null) {
+
+								Logger.log("terence 7", true);
 
 								if (!recipe_stack.isSlimefunItem()) {
 									continue;
@@ -377,6 +391,7 @@ public abstract class BaseWorldMultiblock {
 					}
 				}
 				
+
 				// If any stack is not below 0 by now, we don't have enough items to start the recipe
 				for (RecipeMixedItemStack stack : stacks) {
 					if (!(stack.amount <= 0)) {
@@ -384,16 +399,17 @@ public abstract class BaseWorldMultiblock {
 						break;
 					}
 				}
+
+				if (!recipe_valid) {
+					break;
+				}
 			}
-
 			
-			// 
-			
-
 			// Check if we can add this recipe
-			if (!recipe_valid) {
+			if (recipe_valid) {
+				Logger.log("terence is disaster", true);
 				active_recipe = new MultiblockRecipe(recipe);
-				return;
+				break;
 			}
 		}
 	}

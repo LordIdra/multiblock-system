@@ -16,6 +16,7 @@ import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListPlayerSettings;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.PlayerSettings;
+import me.idra.multiblocksystem.objects.PlayerSettings.SettingContainer;
 
 
 
@@ -82,33 +83,11 @@ public class FileHandlerPlayerData {
 
 		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
 		
-		settings_section.set("auto_build_enabled", settings.auto_build_enabled);
-		
-		settings_section.set("unresolved_error_time", settings.unresolved_error_time);
-		settings_section.set("resolved_error_time", settings.resolved_error_time);
-		settings_section.set("error_particle_amount", settings.error_particle_amount);
-		
-		settings_section.set("location_particle_time", settings.location_particle_time);
-		settings_section.set("location_particle_amount", settings.location_particle_amount);
-		
-		settings_section.set("list_items_per_page", settings.list_items_per_page);
-		
-		settings_section.set("error_offset_x", settings.error_offset_x);
-		settings_section.set("error_offset_y", settings.error_offset_y);
-		settings_section.set("error_offset_z", settings.error_offset_z);
-		
-		settings_section.set("resolved_error_r", settings.resolved_error_r);
-		settings_section.set("resolved_error_g", settings.resolved_error_g);
-		settings_section.set("resolved_error_b", settings.resolved_error_b);
-		
-		settings_section.set("unresolved_error_r", settings.unresolved_error_r);
-		settings_section.set("unresolved_error_g", settings.unresolved_error_g);
-		settings_section.set("unresolved_error_b", settings.unresolved_error_b);
-		
-		settings_section.set("location_r", settings.location_r);
-		settings_section.set("location_g", settings.location_g);
-		settings_section.set("location_b", settings.location_b);
-		
+		for (String container_key : settings.settingContainerMap.keySet()) {
+
+			SettingContainer container = settings.settingContainerMap.get(container_key);
+			settings_section.set(container_key, container.getValue());
+		}
 		
 		saveAndReload();
 	}
@@ -126,30 +105,13 @@ public class FileHandlerPlayerData {
 		
 		settings.auto_build_enabled = settings_section.getBoolean("auto_build_enabled");
 		
-		settings.unresolved_error_time = settings_section.getInt("unresolved_error_time");
-		settings.resolved_error_time = settings_section.getInt("resolved_error_time");
-		settings.error_particle_amount = settings_section.getInt("error_particle_amount");
-		
-		settings.location_particle_time = settings_section.getInt("location_particle_time");
-		settings.location_particle_amount = settings_section.getInt("location_particle_amount");
-		
-		settings.list_items_per_page = settings_section.getInt("list_items_per_page");
-		
-		settings.error_offset_x = settings_section.getInt("error_offset_x");
-		settings.error_offset_y = settings_section.getInt("error_offset_y");
-		settings.error_offset_z = settings_section.getInt("error_offset_z");
-		
-		settings.resolved_error_r = settings_section.getInt("resolved_error_r");
-		settings.resolved_error_g = settings_section.getInt("resolved_error_g");
-		settings.resolved_error_b = settings_section.getInt("resolved_error_b");
-		
-		settings.unresolved_error_r = settings_section.getInt("unresolved_error_r");
-		settings.unresolved_error_g = settings_section.getInt("unresolved_error_g");
-		settings.unresolved_error_b = settings_section.getInt("unresolved_error_b");
-		
-		settings.location_r = settings_section.getInt("location_r");
-		settings.location_g = settings_section.getInt("location_g");
-		settings.location_b = settings_section.getInt("location_b");
+		for (String container_key : settings.settingContainerMap.keySet()) {
+
+			int value = settings_section.getInt(container_key);
+			SettingContainer container = settings.settingContainerMap.get(container_key);
+			container.setValue(value);
+			settings.settingContainerMap.put(container_key, container);
+		}
 		
 		ListPlayerSettings.setPlayerSettings(player, settings);
 		
