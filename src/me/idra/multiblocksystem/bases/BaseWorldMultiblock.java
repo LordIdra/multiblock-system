@@ -32,10 +32,11 @@ public abstract class BaseWorldMultiblock {
 	public AbstractMultiblock abstract_multiblock = null; 
 	
 	public Map<BlockPosition, String[]> blocks;
-	public Map<BlockPosition, String[]> original_tags = new HashMap<> ();
+	public Map<BlockPosition, String[]> original_tags 		= new HashMap<> ();
 	
-	public Map<String, List<Inventory>> tags_inventory = new HashMap<> ();
-	public Map<String, List<BlockPosition>> tags_position = new HashMap<> ();
+	public Map<String, List<Inventory>> tags_inventory 		= new HashMap<> ();
+	public Map<String, List<BlockPosition>> tags_energy 	= new HashMap<> ();
+	public Map<String, List<BlockPosition>> tags_position 	= new HashMap<> ();
 	
 	public MultiblockRecipe active_recipe = null;
 	public TaskTickMultiblock tick_task = null;
@@ -104,10 +105,14 @@ public abstract class BaseWorldMultiblock {
 			tags_inventory.put(tag, inventoriesWithTag(blocks, tag));	
 		}
 
-		for (String tag : abstract_multiblock.position_tags) {
+		for (String tag : abstract_multiblock.energy_tags) {
+			tags_energy.put(tag, positionsWithTag(blocks, tag));
+		}
+
+		for (String tag : abstract_multiblock.position_tags.keySet()) {
 			tags_position.put(tag, positionsWithTag(blocks, tag));
 		}
-				
+		
 		// Check that all the required tags are set
 		// Just throws a warning, given we can't really do much about it at this stage
 		// Inventory tags
@@ -121,9 +126,21 @@ public abstract class BaseWorldMultiblock {
 					true);
 			}
 		}
+
+		// Energy tags
+		for (String tag : abstract_multiblock.energy_tags) {
+			if (tags_energy.get(tag) == null) {
+
+				Logger.log(
+					Logger.getWarning("required-tag-not-found")
+					.replace("%tag%", tag)
+					.replace("%multiblock%", abstract_multiblock.name),
+					true);
+			}
+		}
 					
 		// Position tags
-		for (String tag : abstract_multiblock.inventory_tags) {
+		for (String tag : abstract_multiblock.position_tags.keySet()) {
 				if (tags_position.get(tag) == null) {
 
 					Logger.log(
@@ -238,9 +255,10 @@ public abstract class BaseWorldMultiblock {
 				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			
 			Logger.log(
-					Logger.getWarning("abstract-structure-not-initialized")
+					Logger.getWarning("world-multiblock-class-not-initialized")
 					.replace("%structure%", String.valueOf(class_location)),
 					true);
+			e.printStackTrace();
 			return null;
 		}
 

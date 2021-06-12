@@ -25,7 +25,7 @@ public class MixedItemStack {
 	
 	
 	
-	MixedItemStack(Material material) {
+	public MixedItemStack(Material material) {
 		
 		// Valid item
 		if (material != null) {
@@ -37,8 +37,7 @@ public class MixedItemStack {
 		}
 	}
 	
-	
-	MixedItemStack(SlimefunItem slimefun_item) {
+	public MixedItemStack(SlimefunItem slimefun_item) {
 		
 		// Valid item
 		if (slimefun_item != null) {
@@ -49,34 +48,6 @@ public class MixedItemStack {
 			this.itemstack = new ItemStack(Material.AIR);
 		}
 	}
-	
-	
-	MixedItemStack(Material material, int amount) {
-		
-		// Valid item
-		if (material != null) {
-			this.itemstack = new ItemStack(material, amount);
-		
-		// Invalid item; set the type to air
-		} else {
-			this.itemstack = new ItemStack(Material.AIR);
-		}
-	}
-	
-	
-	
-	MixedItemStack(SlimefunItem slimefun_item, int amount) {
-		
-		// Valid item
-		if (slimefun_item != null) {
-			this.slimefun_itemstack = new SlimefunItemStack(new SlimefunItemStack(slimefun_item.getId(), slimefun_item.getItem()), amount);
-		
-		// Invalid item; set the type to air
-		} else {
-			this.itemstack = new ItemStack(Material.AIR);
-		}
-	}
-	
 	
 	public MixedItemStack(Material material, SlimefunItem slimefun_item) {
 		
@@ -88,6 +59,7 @@ public class MixedItemStack {
 		// Normal item
 		} else if (material != null) {
 			this.itemstack = new ItemStack(material);
+
 		// Invalid item; set the type to air
 		} else {
 			this.itemstack = new ItemStack(Material.AIR);
@@ -96,24 +68,22 @@ public class MixedItemStack {
 
 
 
-	public MixedItemStack(String id) {
-		
-		// Convert to both material and slimefun item
-		Material material = StringConversion.idToMaterial(id);
-		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
+	public void setAmount(int amount) {
 
-		// If either are not null, create
-		if (material != null) 		this.itemstack = 			new ItemStack(material);
-		if (slimefun_item != null) 	this.slimefun_itemstack = 	new SlimefunItemStack(slimefun_item.getId(), slimefun_item.getItem());
-		else 						this.itemstack = 			new ItemStack(Material.AIR);
+		// Sets the amount attribute of the relevant itemstack
+		if (isSlimefunItem()) {
+			slimefun_itemstack.setAmount(amount);
+		
+		} else {
+			itemstack.setAmount(amount);
+		}
 	}
-	
 
 	
 	public boolean isSlimefunItem() {
 		
 		// Returns true only if slimefun item is not null
-		return slimefun_itemstack == null;
+		return slimefun_itemstack != null;
 	}
 	
 	
@@ -121,13 +91,13 @@ public class MixedItemStack {
 	public ItemStack asItemStack() {
 		
 		// Either returns the ItemStack or converts the SlimefunItemStack to a regular ItemStack and returns it 
-		if (isSlimefunItem())
+		if (isSlimefunItem()) {
 			return (ItemStack) slimefun_itemstack;
-		else
+
+		} else {
 			return itemstack;
+		}
 	}
-	
-	
 	
 	public String getDisplayName() {
 		
@@ -147,8 +117,6 @@ public class MixedItemStack {
 		else
 			inv.addItem(slimefun_itemstack);
 	}
-
-
 
 	public boolean compareType(ItemStack other_stack) {
 
@@ -188,7 +156,6 @@ public class MixedItemStack {
 		// Return array of item stacks
 		return item_stacks;
 	}
-	
 	
 	public static List<MixedItemStack> arrayFromSlimefunID(String slimefun_ID) {
 		

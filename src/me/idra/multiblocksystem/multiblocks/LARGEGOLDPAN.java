@@ -24,6 +24,6 @@ public class LARGEGOLDPAN extends BaseWorldMultiblock {
 	
 	@Override
 	public void tick() {
-		handleRecipes();
+		// handleRecipes();
 	}
 }

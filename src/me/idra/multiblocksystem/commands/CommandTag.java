@@ -133,7 +133,7 @@ public class CommandTag extends BaseCommand{
 
 		// Not an inventory tag
 		// Is the tag valid?
-		if (!multiblock.abstract_multiblock.position_tags.contains(args[1])) {
+		if (!multiblock.abstract_multiblock.position_tags.keySet().contains(args[1])) {
 			MessageHandler.send(player,
 					MessageHandler.getError("invalid-position-tag")
 					.replace("%multiblock%", multiblock.abstract_multiblock.name)

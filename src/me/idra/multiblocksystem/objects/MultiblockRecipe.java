@@ -3,53 +3,42 @@ package me.idra.multiblocksystem.objects;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 
 public class MultiblockRecipe {
 	
-	public List<MixedItemStack> in_stack = null;
-	public List<MixedItemStack> out_stack = null;
-	
-	public int in_energy = 0;
-	public int out_energy = 0;
+	public Map<String, List<MixedItemStack>> inputs = null;
+	public Map<String, List<MixedItemStack>> outputs = null;
+	public Map<String, Integer> energy = null;
 	public int time = 0;
 	
 	
 	
 	public MultiblockRecipe(
-			List<MixedItemStack> in_stack,			// Input  items
-			List<MixedItemStack> out_stack,			// Output items
-			int in_energy,							// Input  energy
-			int out_energy,							// Output items
-			int time								// Time
+			Map<String, List<MixedItemStack>> inputs,		// Input  items
+			Map<String, List<MixedItemStack>> outputs,	// Output items
+			Map<String, Integer> energy,					// Energy
+			int time										// Time
 	) {
-		this.in_stack = in_stack;
-		this.in_energy = in_energy;
-		this.out_stack = out_stack;
-		this.out_energy = out_energy;
+		this.inputs = inputs;
+		this.outputs = outputs;
+		this.energy = energy;
 		this.time = time;
 	}
 	
+
 	
-	
-	public MultiblockRecipe createClone() {
-		return new MultiblockRecipe(in_stack, out_stack, in_energy, out_energy, time);
+	public boolean hasEnergy() {
+		return energy == null;
 	}
 
-	public boolean hasInputStack() {
-		return in_stack == null;
+	public boolean hasInputs() {
+		return inputs == null;
 	}
 	
-	public boolean hasInputEnergy() {
-		return in_energy == 0;
-	}
-	
-	public boolean hasOutputStack() {
-		return out_stack == null;
-	}
-	
-	public boolean hasOutputEnergy() {
-		return out_energy == 0;
+	public boolean hasOutputs() {
+		return outputs == null;
 	}
 }

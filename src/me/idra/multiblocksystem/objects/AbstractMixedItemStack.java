@@ -51,8 +51,11 @@ public class AbstractMixedItemStack {
 	public boolean containsMaterial(Material material) {
 		
 		for (MixedItemStack item : items) {
-			if (item.itemstack.getType() == material) {
-				return true;
+
+			if (item.itemstack != null){
+				if (item.itemstack.getType() == material) {
+					return true;
+				}
 			}
 		}
 		

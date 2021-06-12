@@ -78,10 +78,10 @@ public class Logger {
 		String error_message;
 
 		if (type.equals(OPTION_NOT_FOUND)) {
-			error_message = getWarning("config-option-not-found").replace(ConstantPlaceholders.FILE, file.getName());
+			error_message = getWarning("config-option-not-found").replace(ConstantPlaceholders.FILE, file.getPath());
 
 		} else if (type.equals(OPTION_INVALID)) {
-			error_message = getWarning("config-option-invalid").replace(ConstantPlaceholders.FILE, file.getName());
+			error_message = getWarning("config-option-invalid").replace(ConstantPlaceholders.FILE, file.getPath());
 		
 		} else {
 			return;

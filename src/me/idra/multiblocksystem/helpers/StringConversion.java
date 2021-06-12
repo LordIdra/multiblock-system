@@ -188,26 +188,27 @@ public class StringConversion {
 	}
 
 
-	
-	public static boolean stackExists(String id) {
 
-		Material material = StringConversion.idToMaterial(id);
-		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
+	public static ItemStack itemStackFromString(String id) {
 
-		return material == null && slimefun_item == null;
-
+		MixedItemStack stack = new MixedItemStack(StringConversion.idToMaterial(id.toUpperCase()), StringConversion.idToSlimefunItem(id.toUpperCase()));
+		return stack.asItemStack();
 	}
 
 
 
-	public static ItemStack itemStackFromString(String id) {
+	public static MixedItemStack mixedItemStackFromID(String id) {
+		
+		// Capitalise ID (both normal and slimefun IDs are always capital)
+		id = id.toUpperCase();
 
-		if (!stackExists(id)) {
-			return null;
-		}
+		// Convert to both material and slimefun item
+		Material material = StringConversion.idToMaterial(id);
+		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
 
-		MixedItemStack stack = new MixedItemStack(StringConversion.idToMaterial(id), StringConversion.idToSlimefunItem(id));
-
-		return stack.asItemStack();
+		// If either are not null, create MixedItemStack
+		if (material != null) 		return new MixedItemStack(material);
+		if (slimefun_item != null) 	return new MixedItemStack(slimefun_item);
+		else 						return null;
 	}
 }

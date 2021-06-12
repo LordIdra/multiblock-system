@@ -24,6 +24,6 @@ public class LARGEDUSTWASHER extends BaseWorldMultiblock {
 	
 	@Override
 	public void tick() {
-		handleRecipes();
+		// handleRecipes();
 	}
 }

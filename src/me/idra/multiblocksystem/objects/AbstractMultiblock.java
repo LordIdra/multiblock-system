@@ -18,11 +18,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import me.idra.multiblocksystem.helpers.ConfigHelper;
 import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
 
@@ -32,8 +32,12 @@ public class AbstractMultiblock {
 	public String description;
 	public StructureDescriptor structure;
 	
-	public List<String> position_tags = new ArrayList<> ();
 	public List<String> inventory_tags = new ArrayList<> ();
+	public List<String> fuel_tags = new ArrayList<> ();
+	public List<String> energy_tags = new ArrayList<> ();
+	public Map<String, List<MixedItemStack>> position_tags = new HashMap<> ();
+
+	public List<String> fuel_inventories = new ArrayList<> ();
 
 	public Map<String, Object> variables = new HashMap<> ();
 	public List<MultiblockRecipe> recipes = new ArrayList<> ();
@@ -51,7 +55,7 @@ public class AbstractMultiblock {
 	public void loadStructure() {
 		
 		/*
-		 * file handling
+		 * FILE HANDLING
 		 */
 		
 		// Open multiblock files
@@ -79,7 +83,7 @@ public class AbstractMultiblock {
 		
 		
 		/*
-		 * config handling
+		 * CONFIG LOADING
 		 */
 		
 		// Get config from multiblock file
@@ -89,72 +93,159 @@ public class AbstractMultiblock {
 		description = multiblock_config.getString("Description");
 		
 		// Get certain sections we need to read
-		List<String> position_tag_config = multiblock_config.getStringList("PositionTags");
-		List<String> inventory_tag_config = multiblock_config.getStringList("InventoryTags");
+		List<String> inventory_tag_list = multiblock_config.getStringList("InventoryTags");
+		List<String> fuel_tag_list = multiblock_config.getStringList("FuelTags");
+		List<String> energy_tag_list = multiblock_config.getStringList("EnergyTags");
+
+		ConfigurationSection position_tag_config = multiblock_config.getConfigurationSection("PositionTags");
 		ConfigurationSection variable_config = multiblock_config.getConfigurationSection("Variables");
 		ConfigurationSection fuel_config = multiblock_config.getConfigurationSection("Fuels");
 		ConfigurationSection recipe_config = multiblock_config.getConfigurationSection("Recipes");
 		
-		// Position tags
-		if (position_tag_config != null)
-			for (String tag : position_tag_config)
-				position_tags.add(tag);
-		
+
+
+		/*
+		 * TAG HANDLING
+		 */
+
 		// Inventory tags
-		if (inventory_tag_config != null)
-			for (String tag : inventory_tag_config)
+		if (inventory_tag_list != null) {
+			for (String tag : inventory_tag_list) {
 				inventory_tags.add(tag);
-		
-		// Get variables
-		if (variable_config != null)
-			for (String variable_name : variable_config.getKeys(false))
-				variables.put(variable_name, variable_config.get(variable_name));
-		
-		// Load fuels
-		if (fuel_config != null) {
-			for (String key : fuel_config.getKeys(false)) {
+			}
+		}	
+
+		// Fuel tags
+		if (fuel_tag_list != null) {
+			for (String tag : fuel_tag_list) {
+				fuel_tags.add(tag);
+			}
+		}	
+
+		// Energy tags
+		if (energy_tag_list != null) {
+			for (String tag : energy_tag_list) {
+				energy_tags.add(tag);
+			}
+		}
+
+		// Position tags
+		if (position_tag_config != null) {
+			for (String tag : position_tag_config.getKeys(false)) {
+
+				List<MixedItemStack> items = new ArrayList<> ();
 				
-				ConfigurationSection current_fuel = fuel_config.getConfigurationSection(key);
-				
-				fuels.add(new MultiblockFuel(fuelMixedItemStackFromConfigSection(multiblock_file, current_fuel), current_fuel.getInt("time")));
+				// For every position tag, get the items the tag can be, and add them to an array
+				for (String item : position_tag_config.getStringList(tag)) {
+					
+					MixedItemStack stack = StringConversion.mixedItemStackFromID(item);
+
+					if (stack == null) {
+						Logger.configError(Logger.OPTION_INVALID, multiblock_file, position_tag_config, tag);
+						continue;
+					}
+
+					items.add(stack);
+				}
+
+				// Create the position tag itself
+				position_tags.put(tag, items);
 			}
 		}
 		
+		// Get variables
+		if (variable_config != null) {
+			for (String variable_name : variable_config.getKeys(false)) {
+				variables.put(variable_name, variable_config.get(variable_name));
+			}
+		}
+		
+
+
+		/*
+		 * FUEL
+		 */
+
+		// Load fuels
+		if ((fuel_config != null) && (fuel_tag_list.size() != 0)) {
+
+			for (String key : fuel_config.getKeys(false)) {
+
+				// Seperate string into time and ID
+				String[] split_string = fuel_config.getString(key).split("\\s");
+
+				if (split_string.length != 2) {
+					Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
+					continue;
+				}
+
+				int time = Integer.parseInt(split_string[0]);
+				String id = split_string[1];
+
+				// Create MixedItemStack
+				MixedItemStack stack = StringConversion.mixedItemStackFromID(id);
+
+				if (stack == null) {
+					Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
+					continue;
+				}
+
+				// Finally, create the fuel
+				fuels.add(new MultiblockFuel(stack, time));
+			}
+		}
+		
+
+
+		/*
+		 * RECIPES
+		 */
+
 		// Load recipes
 		if (recipe_config != null) {
-			
 			for (String key : recipe_config.getKeys(false)) {
 				
-				// Get specific config sections
+				// Get config sections
 				ConfigurationSection current_recipe = recipe_config.getConfigurationSection(key);
-				ConfigurationSection config_item_in = current_recipe.getConfigurationSection("ItemIn");
-				ConfigurationSection config_item_out = current_recipe.getConfigurationSection("ItemOut");
-				
-				// ItemIn
-				List<MixedItemStack> item_in = new ArrayList<> ();
+				ConfigurationSection config_energy = current_recipe.getConfigurationSection("ENERGY");
+				ConfigurationSection config_inputs = current_recipe.getConfigurationSection("INPUT");
+				ConfigurationSection config_outputs = current_recipe.getConfigurationSection("OUTPUT");
 
-				for (String item : config_item_in.getKeys(false))
-					item_in.add(recipeMixedItemStackFromConfigSection(multiblock_file, config_item_in.getConfigurationSection(item)));
-					
-				// ItemOut
-				List<MixedItemStack> item_out = new ArrayList<> ();
+				// Initialize variables
+				int time = current_recipe.getInt("TIME");
+				Map<String, Integer> energy = null;
+				Map<String, List<MixedItemStack>> inputs = null;
+				Map<String, List<MixedItemStack>> outputs = null;
 
-				for (String item : config_item_out.getKeys(false))
-					item_out.add(recipeMixedItemStackFromConfigSection(multiblock_file, config_item_out.getConfigurationSection(item)));
-				
-				// Energy + time
-				int energy_in = current_recipe.getInt("EnergyIn");
-				int energy_out = current_recipe.getInt("EnergyOut");
-				int time = current_recipe.getInt("Time");
-				
-				// Generate final recipe
-				recipes.add(new MultiblockRecipe(item_in, item_out, energy_in, energy_out, time));
+				// Check recipe time is valid
+				if (time == 0) {
+					Logger.configError(Logger.OPTION_INVALID, multiblock_file, current_recipe, "TIME");
+				}
+
+				// ENERGY
+				if (config_energy != null) {
+					energy = ConfigHelper.getEnergyMap(multiblock_file, config_energy);
+				}
+
+				// INPUT
+				if (config_inputs != null) {
+					inputs = ConfigHelper.getInputMap(multiblock_file, config_inputs);
+				}
+
+
+				// OUTPUT
+				if (config_outputs != null) {
+					outputs = ConfigHelper.getOutputMap(multiblock_file, config_outputs);
+				}
+
+				// Combine all the above into a new recipe
+				recipes.add(new MultiblockRecipe(inputs, outputs, energy, time));
 			}
 		}
 
 		
 		/*
-		 * structure handling
+		 * STRUCTURE LOADING
 		 */
 
 		// Dimensions
@@ -207,8 +298,14 @@ public class AbstractMultiblock {
 		} catch (Exception e) {
 			return;
 		}
-			
-		// Convert the data from the structure arrays to item-infos
+		
+
+
+		/*
+		 * CREATE DESCRIPTOR
+		 */
+
+		// Convert the data from the structure arrays to AbstractMixedItemStacks
 		List<List<List<AbstractMixedItemStack>>> block_array = new ArrayList<> ();
 		
 		for (int y = 0; y < structure_array.size(); y++) {
@@ -247,89 +344,6 @@ public class AbstractMultiblock {
 	/*
 	 * STATIC METHODS
 	 */
-		
-	private MixedItemStack recipeMixedItemStackFromConfigSection(File recipe_file, ConfigurationSection recipe_config_section) {
-		
-		// Get attributes from config section
-		String type = recipe_config_section.getString("type").toUpperCase(); 
-		String id = recipe_config_section.getString("id").toUpperCase(); 
-		int amount = recipe_config_section.getInt("amount");
-		
-		if (type.equals("NORMAL")) {
-			
-			// Convert ID to material
-			Material material = StringConversion.idToMaterial(id);
-			
-			if (material == null) {
-				Logger.configError(Logger.OPTION_NOT_FOUND, recipe_file, recipe_config_section, "id");
-				return null;
-			}
-			
-			// Convert attributes to MixedItemStack
-			return new MixedItemStack(material, amount);
-			
-					
-		} else if (type.equals("SLIMEFUN")) {
-			
-			// Convert ID to slimefun item
-			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
-			
-			if (slimefun_item == null) {
-				Logger.configError(Logger.OPTION_INVALID, recipe_file, recipe_config_section, "id");
-				return null;
-			}
-						
-			// Convert attributes to MixedItemStack
-			return new MixedItemStack(slimefun_item, amount);
-			
-			
-		} else {
-			Logger.configError(Logger.OPTION_INVALID, recipe_file, recipe_config_section, "type");
-			return null;
-		}
-	}
-	
-	private MixedItemStack fuelMixedItemStackFromConfigSection(File file, ConfigurationSection fuel_config_section) {
-		
-		// Get attributes from config section
-		String type = fuel_config_section.getString("type").toUpperCase(); 
-		String id = fuel_config_section.getString("id").toUpperCase(); 
-		
-		if (type.equals("NORMAL")) {
-			
-			// Convert ID to material
-			Material material = StringConversion.idToMaterial(id);
-			
-			if (material == null) {
-				Logger.configError(Logger.OPTION_INVALID, file, fuel_config_section, "id");
-				return null;
-			}
-			
-			// Convert attributes to MixedItemStack
-			return new MixedItemStack(material, 1);
-			
-					
-		} else if (type.equals("SLIMEFUN")) {
-			
-			// Convert ID to slimefun item
-			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(id);
-			
-			if (slimefun_item == null) {
-				Logger.configError(Logger.OPTION_INVALID, file, fuel_config_section, "id");
-				return null;
-			}
-						
-			// Convert attributes to MixedItemStack
-			return new MixedItemStack(slimefun_item, 1);
-			
-			
-		} else {
-			Logger.log(Logger.getWarning("invalid-itemstack-type")
-					   .replace(ConstantPlaceholders.MULTIBLOCK, name),
-					   true);
-			return null;
-		}
-	}
 		
 	
 	public static Map<WorldMixedItemStack, AbstractMixedItemStack> getStructureFromStartingPoint(
