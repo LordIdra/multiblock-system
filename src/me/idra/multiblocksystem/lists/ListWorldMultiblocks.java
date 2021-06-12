@@ -44,7 +44,7 @@ public class ListWorldMultiblocks {
 
 
 
-	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
+	private static BaseWorldMultiblock createMultiblockFromName(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
 		// Initialize the class, checking for a large number of potential problems
 		BaseWorldMultiblock world_multiblock = null;
@@ -78,7 +78,7 @@ public class ListWorldMultiblocks {
 	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID) {
 		
 		// Create multiblock
-		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, block_map, player, ID);
 
 		if (world_multiblock == null) {
 			return;
@@ -93,7 +93,7 @@ public class ListWorldMultiblocks {
 	public static void instantiateWorldMultiblock(AbstractMultiblock abstract_multiblock, String name, Map<BlockPosition, String[]> block_map, UUID player, int ID, int in_fuel_ticks, int recipe_index, int recipe_time) {
 		
 		// Create multiblock
-		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, name, block_map, player, ID);
+		BaseWorldMultiblock world_multiblock = createMultiblockFromName(abstract_multiblock, block_map, player, ID);
 		
 		if (world_multiblock == null) {
 			return;
