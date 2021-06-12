@@ -36,30 +36,32 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		UserInterfaceColorAdjuster unresolved_particle_color_adjuster = color_adjusters.get(UNRESOLVED_PARTICLE_COLOR);
 		if (unresolved_particle_color_adjuster != null) {
-			settings.unresolved_error_r = unresolved_particle_color_adjuster.r;
-			settings.unresolved_error_g = unresolved_particle_color_adjuster.g;
-			settings.unresolved_error_b = unresolved_particle_color_adjuster.b;
+			
+			settings.setContainerValue("unresolved_error_r", unresolved_particle_color_adjuster.r);
+			settings.setContainerValue("unresolved_error_g", unresolved_particle_color_adjuster.g);
+			settings.setContainerValue("unresolved_error_b", unresolved_particle_color_adjuster.b);
+	
 		}
 		
 		UserInterfaceColorAdjuster resolved_particle_color_adjuster = color_adjusters.get(RESOLVED_PARTICLE_COLOR);
 		if (resolved_particle_color_adjuster != null) {
-			settings.resolved_error_r = resolved_particle_color_adjuster.r;
-			settings.resolved_error_g = resolved_particle_color_adjuster.g;
-			settings.resolved_error_b = resolved_particle_color_adjuster.b;
+			settings.setContainerValue("uresolved_error_r", resolved_particle_color_adjuster.r);
+			settings.setContainerValue("uresolved_error_g", resolved_particle_color_adjuster.g);
+			settings.setContainerValue("uresolved_error_b", resolved_particle_color_adjuster.b);
 		}
 		
 		UserInterfaceColorAdjuster location_particle_color_adjuster = color_adjusters.get(LOCATION_PARTICLE_COLOR);
 		if (location_particle_color_adjuster != null) {
-			settings.location_r = location_particle_color_adjuster.r;
-			settings.location_g = location_particle_color_adjuster.g;
-			settings.location_b = location_particle_color_adjuster.b;
+			settings.setContainerValue("location_r", location_particle_color_adjuster.r);
+			settings.setContainerValue("location_g", location_particle_color_adjuster.g);
+			settings.setContainerValue("location_b", location_particle_color_adjuster.b);
 		}
 		
 		UserInterfaceVectorAdjuster error_offset_adjuster = vector_adjusters.get("error-particle-offset");
 		if (error_offset_adjuster != null) {
-			settings.error_offset_x = error_offset_adjuster.x;
-			settings.error_offset_y = error_offset_adjuster.y;
-			settings.error_offset_z = error_offset_adjuster.z;
+			settings.setContainerValue("error_offset_x", error_offset_adjuster.x);
+			settings.setContainerValue("error_offset_y", error_offset_adjuster.y);
+			settings.setContainerValue("error_offset_z", error_offset_adjuster.z);
 		}
 		
 		// Save settings permanently
@@ -246,35 +248,7 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		}
 		
 		// Bound checking
-		if (settings.unresolved_error_time < 4)
-			settings.unresolved_error_time = 4;
-		else if (settings.unresolved_error_time > 30)
-			settings.unresolved_error_time = 30;
-		
-		if (settings.resolved_error_time < 0)
-			settings.resolved_error_time = 0;
-		else if (settings.resolved_error_time > 5)
-			settings.resolved_error_time = 5;
-		
-		if (settings.error_particle_amount < 20)
-			settings.error_particle_amount = 20;
-		else if (settings.error_particle_amount > 100)
-			settings.error_particle_amount = 100;
-		
-		if (settings.location_particle_time < 2)
-			settings.location_particle_time = 2;
-		else if (settings.location_particle_time > 10)
-			settings.location_particle_time = 10;
-		
-		if (settings.location_particle_amount < 2)
-			settings.location_particle_amount = 2;
-		else if (settings.location_particle_amount > 10)
-			settings.location_particle_amount = 10;
-		
-		if (settings.list_items_per_page < 3)
-			settings.list_items_per_page = 3;
-		else if (settings.list_items_per_page > 15)
-			settings.list_items_per_page = 15;
+		settings.setBounds();
 
 		// Reset our items, as settings have been changed
 		initializeItems();
