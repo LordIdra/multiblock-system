@@ -350,16 +350,38 @@ public abstract class BaseWorldMultiblock {
 				for (Inventory inv : tags_inventory.get(tag)) {
 					
 					// Check that the target items exist within the inventory
-					for (MixedItemStack stack : stacks) {
-						Map<Integer, ? extends ItemStack> items = inv.all(stack.asItemStack().getType());
+					for (MixedItemStack recipe_stack : stacks) {
+						Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
 
 						// If there's no match
 						if (items.isEmpty()) {
 							continue;
 						}
+
+						for (ItemStack inventory_stack : items.values()) {
+
+							// Slimefun item check
+							if (SlimefunItem.getByItem(inventory_stack) != null) {
+
+								if (!recipe_stack.isSlimefunItem()) {
+									continue;
+								}
+								
+								if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+									continue;
+								}
+							}
+
+							// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
+							recipe_stack -= 
+						}
 					}
 				}
 			}
+
+			
+			// 
+			
 
 			// Check if we can add this recipe
 			if (!recipe_valid) {
