@@ -196,7 +196,7 @@ public class AbstractMultiblock {
 		 */
 
 		// Load fuels
-		if ((fuel_config != null) && (fuel_tag_list.size() != 0)) {
+		if ((fuel_config != null) && (!fuel_tag_list.isEmpty())) {
 
 			for (String key : fuel_config.getKeys(false)) {
 
