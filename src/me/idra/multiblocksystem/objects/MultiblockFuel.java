@@ -4,13 +4,13 @@ package me.idra.multiblocksystem.objects;
 
 public class MultiblockFuel {
 	
-	public MixedItemStack fuel_stack = null;
+	public MixedItemStack stack = null;
 	public int ticks = 0;
 	
 	
 	
-	public MultiblockFuel(MixedItemStack fuel_stack, int ticks) {
-		this.fuel_stack = fuel_stack;
+	public MultiblockFuel(MixedItemStack stack, int ticks) {
+		this.stack = stack;
 		this.ticks = ticks;
 	}
 }

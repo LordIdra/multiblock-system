@@ -7,18 +7,27 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.slimefun4.implementation.items.electric.Capacitor;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
+import me.idra.multiblocksystem.objects.MultiblockFuel;
 import me.idra.multiblocksystem.objects.MultiblockRecipe;
 import me.idra.multiblocksystem.tasks.TaskTickMultiblock;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
@@ -34,14 +43,14 @@ public abstract class BaseWorldMultiblock {
 	public Map<BlockPosition, String[]> original_tags 		= new HashMap<> ();
 	
 	public Map<String, List<Inventory>> tags_inventory 		= new HashMap<> ();
+	public Map<String, List<Inventory>> tags_fuel 			= new HashMap<> ();
 	public Map<String, List<BlockPosition>> tags_energy 	= new HashMap<> ();
 	public Map<String, List<BlockPosition>> tags_position 	= new HashMap<> ();
 	
 	public MultiblockRecipe active_recipe = null;
 	public TaskTickMultiblock tick_task = null;
-	
-	public String machine_status = RUNNING;		// is the machine running the tick() function?
-	public String recipe_status = RUNNING;		// is the machine currently processing a recipe?
+
+	public String status = RUNNING;		// is the machine currently processing a recipe?
 
 	public int fuel_ticks = 0;
 	
@@ -104,6 +113,10 @@ public abstract class BaseWorldMultiblock {
 			tags_inventory.put(tag, inventoriesWithTag(blocks, tag));	
 		}
 
+		for (String tag : abstract_multiblock.fuel_tags) {
+			tags_fuel.put(tag, inventoriesWithTag(blocks, tag));
+		}
+
 		for (String tag : abstract_multiblock.energy_tags) {
 			tags_energy.put(tag, positionsWithTag(blocks, tag));
 		}
@@ -153,14 +166,212 @@ public abstract class BaseWorldMultiblock {
 
 
 
-	public void handleFuel() {
+	private void processFuels() {
+
+		/* Add new fuel ticks */
+		// For every fuel inventory
+		for (List<Inventory> inv_list : tags_fuel.values()) {
+			for (Inventory inv : inv_list) {
+
+				// Skip the inventory if it's empty
+				if (inv.isEmpty()) {
+					continue;
+				}
+
+				// For every possible fuel
+				for (MultiblockFuel fuel : abstract_multiblock.fuels) {
+					
+					// Get an array of all the materials that match the fuel's Material
+					Map<Integer, ? extends ItemStack> inv_stacks = inv.all(fuel.stack.asItemStack().getType());
+
+					for (int index : inv_stacks.keySet()) {
+						
+						ItemStack stack = inv_stacks.get(index);
+
+						// Slimefun item check
+						if (SlimefunItem.getByItem(stack) != null) {
+							if (SlimefunItem.getByItem(stack) != fuel.stack.slimefun_itemstack.getItem()) {
+								continue;
+							}
+						}
+
+						// Add fuel ticks and remove the item
+						inv.clear(index);
+						fuel_ticks += fuel.ticks * stack.getAmount();
+					}
+				}
+			}
+		}
+
+
+		/* Set machine status */
+		if (fuel_ticks <= 0) {
+			status = PAUSED_NO_FUEL;
+		} else {
+			status = RUNNING;
+		}
+	}
+
+
+
+	private boolean canTickEnergy() {
+
+		for (String tag : active_recipe.energy.keySet()) { 
+
+			int energy = active_recipe.energy.get(tag);
+
+			// We need to remove charge
+			if (energy > 0) {
+
+				int available_charge = 0;
+				
+				// Check each capacitor assigned to the tag, and add the available charge
+				for (BlockPosition position : tags_energy.get(tag)) {
+					Capacitor capacitor = (Capacitor) BlockStorage.check(position.toLocation());
+					available_charge += capacitor.getCharge(position.toLocation());
+				}
+
+				// Check there's enough energy overall
+				if (available_charge < energy) {
+					return false;
+				}
+
+
+			// We need to add charge
+			} else if (energy < 0) {
+
+				int available_capacity = 0;
+				
+				// Check each capacitor assigned to the tag, and add the available capacity
+				for (BlockPosition position : tags_energy.get(tag)) {
+					Capacitor capacitor = (Capacitor) BlockStorage.check(position.toLocation());
+					available_capacity += capacitor.getCapacity() - capacitor.getCharge(position.toLocation());
+				}
+
+				// Check there's enough energy overall
+				if (available_capacity < energy) {
+					return false;
+				}
+			}
+		}
+
+		// If false has not been returned at this point, we should be fine
+		return true;
+	}
+
+
+
+	private boolean tickEnergy() {
+
+		for (String tag : active_recipe.energy.keySet()) { 
+
+			int energy = active_recipe.energy.get(tag);
+
+			// We need to remove charge
+			if (energy > 0) {
+				
+				// Check each capacitor assigned to the tag, and remove charge until we've removed as much as has been specified
+				for (BlockPosition position : tags_energy.get(tag)) {
+					Capacitor capacitor = (Capacitor) BlockStorage.check(position.toLocation());
+					int charge = capacitor.getCharge(position.toLocation());
+
+					// We should remove only some of the capacitor's charge
+					if (energy < charge) {
+						capacitor.removeCharge(position.toLocation(), charge - energy);
+						energy -= (charge - energy);
+					
+					// We should remove all of the capacitor's charge
+					} else {
+						capacitor.removeCharge(position.toLocation(), charge);
+						energy -= charge;
+					}
+
+					// Have we removed enough energy yet?
+					if (energy <= 0) {
+						break;
+					}
+				}
+
+
+			// We need to add charge
+			} else if (energy < 0) {
+
+				// Check each capacitor assigned to the tag, and add charge until we've added as much as has been specified
+				for (BlockPosition position : tags_energy.get(tag)) {
+					Capacitor capacitor = (Capacitor) BlockStorage.check(position.toLocation());
+					int capacity = capacitor.getCapacity() - capacitor.getCharge(position.toLocation());
+
+					// We should add only some of the capacitor's capacity
+					if (energy < capacity) {
+						capacitor.addCharge(position.toLocation(), capacity - energy);
+						energy += (capacity energy);
+					
+					// We should add all of the capacitor's charge
+					} else {
+						capacitor.addeCharge(position.toLocation(), charge);
+						energy -= charge;
+					}
+
+					// Have we removed enough energy yet?
+					if (energy <= 0) {
+						break;
+					}
+				}
+			}
+		}
+
+		// If false has not been returned at this point, we should be fine
+		return true;
+	}
+
+
+
+	private void tickRecipeOutputs() {
+
+	}
+
+
+
+	private void tickRecipe() {
+		
+		// Check that fuel hasn't run out
+		if (status.equals(PAUSED_NO_FUEL)) {
+			return;
+		}
+
+		// Check if the recipe has been finished
+		if (active_recipe.time <= 0) {
+			tickRecipeOutputs();
+			startNewRecipe();
+			return;
+		}
+
+		// If the above checks haven't triggered, a recipe must still be running
+		// Handle energy
+		if (active_recipe.hasEnergy()) {
+	
+			// Check that we are able to handle energy input/output
+			if (!canTickEnergy()) {
+				return;
+			}
+
+			// Handle energy input/output
+			tickEnergy();
+		}
+
+		// Decrement time
+	}
+
+
+
+	private void startNewRecipe() {
 		
 	}
 
 
 
-	public void handleRecipes() {
-		
+	protected void handleProcessing() {
+		processFuels();
 	}
 	
 	
@@ -178,10 +389,10 @@ public abstract class BaseWorldMultiblock {
 	 */
 
 	public static final String RUNNING = "RUNNING";
-	public static final String PAUSED_ENERGY_OUTPUT_FULL = "PAUSED_ENERGY_OUTPUT_FULL";
-	public static final String PAUSED_NOT_ENOUGH_ENERGY = "PAUSED_NOT_ENOUGH_ENERGY";
-	public static final String PAUSED_ITEM_OUTPUT_FULL = "PAUSED_ITEM_OUTPUT_FULL";
-	public static final String PAUSED_NOT_ENOUGH_ITEMS = "PAUSED_NOT_ENOUGH_ITEMS";
+	public static final String PAUSED_ENERGY_OUTPUT_FULL = "PAUSED_ENERGY_FULL";
+	public static final String PAUSED_NOT_ENOUGH_ENERGY = "PAUSED_NO_ENERGY";
+	public static final String PAUSED_ITEM_OUTPUT_FULL = "PAUSED_OUTPUT_FULL";
+	public static final String PAUSED_NOT_ENOUGH_ITEMS = "PAUSED_NO_INPUT";
 	public static final String PAUSED_NO_FUEL = "PAUSED_NO_FUEL";
 	
 	
