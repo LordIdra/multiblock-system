@@ -7,11 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
@@ -23,6 +19,7 @@ import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
+import me.idra.multiblocksystem.objects.MixedItemStack;
 import me.idra.multiblocksystem.objects.MultiblockFuel;
 import me.idra.multiblocksystem.objects.MultiblockRecipe;
 import me.idra.multiblocksystem.tasks.TaskTickMultiblock;
@@ -233,6 +230,7 @@ public abstract class BaseWorldMultiblock {
 
 				// Check there's enough energy overall
 				if (available_charge < energy) {
+					status = PAUSED_NOT_ENOUGH_ENERGY;
 					return false;
 				}
 
@@ -250,6 +248,7 @@ public abstract class BaseWorldMultiblock {
 
 				// Check there's enough energy overall
 				if (available_capacity < energy) {
+					status = PAUSED_ENERGY_OUTPUT_FULL;
 					return false;
 				}
 			}
@@ -265,7 +264,7 @@ public abstract class BaseWorldMultiblock {
 
 		for (String tag : active_recipe.energy.keySet()) { 
 
-			int energy = active_recipe.energy.get(tag);
+			int energy = Math.abs(active_recipe.energy.get(tag));
 
 			// We need to remove charge
 			if (energy > 0) {
@@ -304,12 +303,12 @@ public abstract class BaseWorldMultiblock {
 					// We should add only some of the capacitor's capacity
 					if (energy < capacity) {
 						capacitor.addCharge(position.toLocation(), capacity - energy);
-						energy += (capacity energy);
+						energy -= (capacity - energy);
 					
 					// We should add all of the capacitor's charge
 					} else {
-						capacitor.addeCharge(position.toLocation(), charge);
-						energy -= charge;
+						capacitor.addCharge(position.toLocation(), capacity);
+						energy -= capacity;
 					}
 
 					// Have we removed enough energy yet?
@@ -332,15 +331,50 @@ public abstract class BaseWorldMultiblock {
 
 
 
-	private void tickRecipe() {
+	private void startNewRecipe() {
 		
+		// For each recipe
+		for (MultiblockRecipe recipe : abstract_multiblock.recipes) {
+
+			// Are inputs missing?
+			boolean recipe_valid = true;
+
+			// For each input tag
+			for (String tag : recipe.inputs.keySet()) {
+
+				// Items that should be in the tag
+				List<MixedItemStack> stack = recipe.inputs.get(tag);
+
+				// For each inventory in the tag
+				for (Inventory inv : tags_inventory.get(tag)) {
+					
+					// Check that the target items exist within the inventory
+					
+				}
+			}
+
+			// Check if we can add this recipe
+			if (!recipe_valid) {
+				active_recipe = new MultiblockRecipe(recipe);
+				return;
+			}
+		}
+	}
+
+
+
+	public void tickRecipes() {
+		
+		// Handle any new fuel items
+		processFuels();
+
 		// Check that fuel hasn't run out
 		if (status.equals(PAUSED_NO_FUEL)) {
 			return;
 		}
 
 		// Check if the recipe has been finished
-		if (active_recipe.time <= 0) {
+		if (active_recipe == null || active_recipe.time <= 0) {
 			tickRecipeOutputs();
 			startNewRecipe();
 			return;
@@ -360,18 +394,8 @@ public abstract class BaseWorldMultiblock {
 		}
 
 		// Decrement time
-	}
-
-
-
-	private void startNewRecipe() {
-		
-	}
-
-
-
-	protected void handleProcessing() {
-		processFuels();
+		active_recipe.time--;
+		fuel_ticks--;
 	}
 	
 	

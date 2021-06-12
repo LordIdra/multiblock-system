@@ -7,8 +7,6 @@ import java.util.UUID;
 public class PlayerSettings {
 	
 	public UUID player;
-	
-	
 	public boolean auto_build_enabled = true;
 	
 	public int unresolved_error_time = 15;
@@ -20,11 +18,9 @@ public class PlayerSettings {
 	
 	public int list_items_per_page = 8;
 	
-	
 	public int error_offset_x = 8;
 	public int error_offset_y = 8;
 	public int error_offset_z = 8;
-	
 	
 	public int unresolved_error_r = 10;
 	public int unresolved_error_g = 0;

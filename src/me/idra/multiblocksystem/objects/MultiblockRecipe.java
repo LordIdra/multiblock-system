@@ -18,7 +18,7 @@ public class MultiblockRecipe {
 	
 	public MultiblockRecipe(
 			Map<String, List<MixedItemStack>> inputs,		// Input  items
-			Map<String, List<MixedItemStack>> outputs,	// Output items
+			Map<String, List<MixedItemStack>> outputs,		// Output items
 			Map<String, Integer> energy,					// Energy
 			int time										// Time
 	) {
@@ -26,6 +26,15 @@ public class MultiblockRecipe {
 		this.outputs = outputs;
 		this.energy = energy;
 		this.time = time;
+	}
+
+
+
+	public MultiblockRecipe(MultiblockRecipe recipe) {
+		this.inputs = recipe.inputs;
+		this.outputs = recipe.outputs;
+		this.energy = recipe.energy;
+		this.time = recipe.time;
 	}
 	
 

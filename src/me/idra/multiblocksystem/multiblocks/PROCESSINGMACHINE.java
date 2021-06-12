@@ -24,6 +24,6 @@ public class PROCESSINGMACHINE extends BaseWorldMultiblock {
 	
 	@Override
 	public void tick() {
-		handleProcessing();
+		tickRecipes();
 	}
 }
