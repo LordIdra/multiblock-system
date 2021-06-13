@@ -22,7 +22,7 @@ public class PlayerSettings {
 			value = new_value;
 			lower_band = new_lower_band;
 			upper_band = new_upper_band;
-		};
+		}
 		
 		public int getValue() {
 			return value;
