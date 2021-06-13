@@ -51,7 +51,7 @@ public class PlayerSettings {
 	
 	public PlayerSettings() {
 		
-		settingContainerMap =  new HashMap<String, SettingContainer>(); 
+		settingContainerMap =  new HashMap<>(); 
 		
 		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_TIME, new SettingContainer(15,4,30));
 		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_TIME, new SettingContainer(1,0,5));
