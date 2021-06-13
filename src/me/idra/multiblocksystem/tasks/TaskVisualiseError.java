@@ -37,10 +37,10 @@ public class TaskVisualiseError extends BukkitRunnable{
 		settings = ListPlayerSettings.getPlayerSettings(error.player.getUniqueId());
 		
 		offset = new Vector(
-				 settings.error_offset_x,
-				 settings.error_offset_y,
-				 settings.error_offset_z);
-		amount = settings.error_particle_amount;
+				settings.getContainerValueAsInt("error_offset_x"),
+				settings.getContainerValueAsInt("error_offset_y"),
+				settings.getContainerValueAsInt("error_offset_z"));
+		amount = settings.getContainerValueAsInt("error_particle_amount");
 		
 		// Generate main/sub titles
 		String main_title = error.getErrorTitle(false);
@@ -60,7 +60,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 		error.player.sendTitle(
 				main_title, sub_title, 
 				2, 
-				settings.unresolved_error_time * 20, 
+				settings.getContainerValueAsInt("unresolved_error_time") * 20, 
 				2);
 	}
 	
@@ -126,9 +126,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 			
 				// Create particles
 				visualise(
-					settings.unresolved_error_r * 25,
-					settings.unresolved_error_g * 25,
-					settings.unresolved_error_b * 25);
+					settings.getContainerValueAsInt("unresolved_error_r") * 25,
+					settings.getContainerValueAsInt("unresolved_error_g") * 25,
+					settings.getContainerValueAsInt("unresolved_error_b") * 25);
 	
 			
 			// If the error has been resolved
@@ -152,14 +152,14 @@ public class TaskVisualiseError extends BukkitRunnable{
 				error.player.sendTitle(
 						main_title, sub_title, 
 						2, 
-						settings.resolved_error_time * 20, 
+						settings.getContainerValueAsInt("resolved_error_time") * 20, 
 						2);
 				
 				// Generate particles
 				visualise(
-						settings.resolved_error_r * 25,
-						settings.resolved_error_g * 25,
-						settings.resolved_error_b * 25);
+						settings.getContainerValueAsInt("resolved_error_r") * 25,
+						settings.getContainerValueAsInt("resolved_error_g") * 25,
+						settings.getContainerValueAsInt("resolved_error_b") * 25);
 				
 				// Schedule a new task to visualise the next error if auto-build is enabled
 				if (ListPlayerSettings.getPlayerSettings(error.player.getUniqueId()).auto_build_enabled) {

@@ -54,7 +54,7 @@ public class ManagerSlimefunItems {
 		RECIPE_TYPES.put("MOB_DROP", RecipeType.MOB_DROP);
 		RECIPE_TYPES.put("MULTIBLOCK", RecipeType.MULTIBLOCK);
 		RECIPE_TYPES.put("NUCLEAR_REACTOR", RecipeType.NUCLEAR_REACTOR);
-		RECIPE_TYPES.put("NULL", RecipeType.NULL);
+		RECIPE_TYPES.put("NULL", RecipeType.ENHANCED_CRAFTING_TABLE);
 		RECIPE_TYPES.put("ORE_CRUSHER", RecipeType.ORE_CRUSHER);
 		RECIPE_TYPES.put("ORE_WASHER", RecipeType.ORE_WASHER);
 		RECIPE_TYPES.put("PRESSURE_CHAMBER", RecipeType.PRESSURE_CHAMBER);
@@ -138,10 +138,10 @@ public class ManagerSlimefunItems {
 			}
 
 			// Generate research
-			NamespacedKey research_key = new NamespacedKey(ManagerPlugin.plugin, key);
+			NamespacedKey research_key = new NamespacedKey(ManagerPlugin.plugin, key.toUpperCase());
 			Research research = new Research(research_key, number, name, xp);
 
-			researches.put(key, research);
+			researches.put(key.toUpperCase(), research);
 		}
 		
 
@@ -153,8 +153,8 @@ public class ManagerSlimefunItems {
 
 			// Sections
 			ConfigurationSection section = item_config.getConfigurationSection(key);
-			ConfigurationSection display_item_section = section.getConfigurationSection("item");
-			ConfigurationSection recipe_section = section.getConfigurationSection("recipe");
+			ConfigurationSection display_item_section = section.getConfigurationSection("Item");
+			ConfigurationSection recipe_section = section.getConfigurationSection("Recipe");
 
 			if (display_item_section == null) {
 				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
@@ -165,23 +165,16 @@ public class ManagerSlimefunItems {
 				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
 				continue;
 			}
-			
-			ConfigurationSection recipe_items_section = recipe_section.getConfigurationSection("items");
-
-			if (recipe_items_section == null) {
-				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_items_section, null);
-				continue;
-			}
 
 			// Variables
-			String name 				= section.getString("name");
+			String name 				= section.getString("Name");
 			String display_item_type 	= display_item_section.getString("type").toUpperCase();
 			String display_item_id 		= display_item_section.getString("id");
 			int amount 			 		= recipe_section.getInt("amount");
 			RecipeType recipe_type		= RECIPE_TYPES.get(recipe_section.getString("type"));
 
 			if (name == null) {
-				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "name");
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "Name");
 				continue;
 			}
 
@@ -205,6 +198,11 @@ public class ManagerSlimefunItems {
 				continue;
 			}
 
+			if (recipe_type == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "type");
+				continue;
+			}
+
 
 			// Get recipe items + amount
 			ItemStack[] recipe = new ItemStack[] {
@@ -213,28 +211,40 @@ public class ManagerSlimefunItems {
 				null, null, null
 			};
 
-			for (String recipe_key : recipe_items_section.getKeys(false)) {
+			ConfigurationSection recipe_items_section = recipe_section.getConfigurationSection("items");
+
+			if (recipe_items_section != null) {
+
+				for (String recipe_key : recipe_items_section.getKeys(false)) {
 				
-				int index = Integer.parseInt(recipe_key);
-				String id = recipe_items_section.getString(recipe_key);
-
-				recipe[index] = StringConversion.itemStackFromString(id);
-
-				if (recipe[index] == null) {
-					Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, recipe_items_section, recipe_key);
+					int index = Integer.parseInt(recipe_key);
+					String id = recipe_items_section.getString(recipe_key);
+	
+					recipe[index] = StringConversion.itemStackFromString(id);
+	
+					if (recipe[index] == null) {
+						Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, recipe_items_section, recipe_key);
+					}
 				}
 			}
 
 			// Get lore
-			String[] lore = (String[]) section.getStringList("lore").toArray(new String[section.getStringList("lore").size()]);
+			String[] lore = (String[]) section.getStringList("Lore").toArray(new String[section.getStringList("Lore").size()]);
 
 			// Register item
 			SlimefunItemStack slimefun_itemstack = null;
 			if (display_item_type.equals("NORMAL")) {
+
+				Material display_item_material = Material.getMaterial(display_item_id.toUpperCase());
+
+				if (display_item_material == null) {
+					Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, display_item_section, "id");
+					continue;
+				}
 				
 				slimefun_itemstack = new SlimefunItemStack(
 					key,
-					Material.getMaterial(display_item_id.toUpperCase()), 
+					display_item_material, 
 					name, 
 					lore);
 
@@ -249,6 +259,19 @@ public class ManagerSlimefunItems {
 
 			SlimefunItem slimefun_item = new SlimefunItem(multiblock_category, slimefun_itemstack, recipe_type, recipe);
 			slimefun_item.register(ManagerPlugin.plugin);
+
+			String research_name = section.getString("Research");
+			
+			if (research_name != null) {
+
+				Research research = researches.get(research_name.toUpperCase());
+
+				if (research == null) {
+					Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, section, "Research");
+				}
+
+				research.addItems(slimefun_itemstack);
+			}
 		}
 
 

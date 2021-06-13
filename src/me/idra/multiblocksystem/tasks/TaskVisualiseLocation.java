@@ -30,13 +30,16 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 		player_settings = ListPlayerSettings.getPlayerSettings(player.getUniqueId());
 		
 		// Time we should display this for
-		visual_time = player_settings.location_particle_time;
+		visual_time = player_settings.getContainerValueAsInt("location_particle_time");
 		
 		// Where we should display it
 		loc = in_loc.add(new Location(in_loc.getWorld(), 0.5, 0.5, 0.5));
 		
 		// What colour we'll visualise the block with
-		color = new Color(player_settings.location_r * 25, player_settings.location_g * 25, player_settings.location_b * 25);
+		color = new Color(
+			player_settings.getContainerValueAsInt("location_r") * 25, 
+			player_settings.getContainerValueAsInt("location_g") * 25, 
+			player_settings.getContainerValueAsInt("location_b") * 25);
 	}
 	
 
@@ -58,7 +61,7 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 			ParticleBuilder particle = new ParticleBuilder(ParticleEffect.REDSTONE, loc);
 
 			// Load amount of particles from config, and set colour of particles
-			particle.setAmount(player_settings.location_particle_amount);
+			particle.setAmount(player_settings.getContainerValueAsInt("location_particle_amount"));
 	        particle.setColor(color);
 	        
 	        // Display particles

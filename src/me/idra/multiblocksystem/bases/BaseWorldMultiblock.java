@@ -325,6 +325,135 @@ public abstract class BaseWorldMultiblock {
 
 
 
+	private boolean stacksExistInTag(List<RecipeMixedItemStack> stacks, String tag) {
+
+		// For each inventory in the tag
+		Map<RecipeMixedItemStack, Integer> amount_map = new HashMap<> ();
+
+		for (RecipeMixedItemStack stack : stacks) {
+			amount_map.put(stack, stack.amount);
+		}
+
+		for (Inventory inv : tags_inventory.get(tag)) {
+
+			// Check that the target items exist within the inventory
+			for (RecipeMixedItemStack recipe_stack : stacks) {
+
+				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
+
+				// If there's no match
+				if (items.isEmpty()) {
+					continue;
+				}
+
+				for (ItemStack inventory_stack : items.values()) {
+
+					// Slimefun item check
+					if (SlimefunItem.getByItem(inventory_stack) != null) {
+
+						if (!recipe_stack.isSlimefunItem()) {
+							continue;
+						}
+						
+						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+							continue;
+						}
+					}
+
+					// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
+					Logger.log("subtracting...", true);
+					Logger.log(String.valueOf(recipe_stack.amount), true);
+
+					int amount = amount_map.get(recipe_stack);
+					amount -= inventory_stack.getAmount();
+					amount_map.put(recipe_stack, amount);
+
+					if (amount_map.get(recipe_stack) <= 0) {
+						break;
+					}
+				}
+
+				// Check if the threshold has been met for that item - if so, remove it from the input list
+				if (amount_map.get(recipe_stack) <= 0) {
+					amount_map.remove(recipe_stack);
+				}
+			}
+		}
+
+
+		// If any stack's quantity is below target by now, we don't have enough items to start the recipe
+		if (amount_map.size() > 0) {
+			return false;
+		}
+
+		// No stack does not exist in the inventory
+		return true;
+	}
+
+
+
+	private void takeStacksFromTag(List<RecipeMixedItemStack> stacks, String tag) {
+
+		// Map to store how many items we've removed already
+		Map<RecipeMixedItemStack, Integer> amount_map = new HashMap<> ();
+
+		for (RecipeMixedItemStack stack : stacks) {
+			amount_map.put(stack, 0);
+		}
+
+		// For each inventory in the tag
+		for (Inventory inv : tags_inventory.get(tag)) {
+
+			// For each itemstack we need to remove from this tag
+			for (RecipeMixedItemStack recipe_stack : stacks) {
+
+				// Get the items within the inventory that match target materials
+				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
+
+				// If there's no match
+				if (items.isEmpty()) {
+					continue;
+				}
+
+				for (int stack_index : items.keySet()) {
+
+					ItemStack inventory_stack = items.get(stack_index);
+
+					// Slimefun item check
+					if (SlimefunItem.getByItem(inventory_stack) != null) {
+
+						if (!recipe_stack.isSlimefunItem()) {
+							continue;
+						}
+						
+						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+							continue;
+						}
+					}
+
+					// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
+					recipe_stack.amount -= inventory_stack.getAmount();
+					inv.clear(stack_index);
+
+					// We took away too many items, add back the relevant number
+					if (recipe_stack.amount < 0) {
+
+						ItemStack stack_to_add = inventory_stack;
+						stack_to_add.setAmount(-recipe_stack.amount);
+						inv.setItem(stack_index, stack_to_add);
+					}
+
+					// We've taken away enough items
+					if (recipe_stack.amount <= 0) {
+						break;
+					}
+				}
+			}
+		}
+	}
+
+
+
 	private void tickRecipeOutputs() {
 
 	}
@@ -332,73 +461,18 @@ public abstract class BaseWorldMultiblock {
 
 
 	private void startNewRecipe() {
-
-		Logger.log("terence 1", true);
 		
 		// For each recipe
 		for (MultiblockRecipe recipe : abstract_multiblock.recipes) {
 
-			Logger.log("terence 2", true);
-
-			// Are inputs missing?
 			boolean recipe_valid = true;
 
 			// For each input tag
 			for (String tag : recipe.inputs.keySet()) {
 
-				Logger.log("terence 3" + recipe.inputs.size(), true);
-
 				// Items that should be in the tag
 				List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
-
-				// For each inventory in the tag
-				for (Inventory inv : tags_inventory.get(tag)) {
-
-					Logger.log("terence 4", true);
-					
-					// Check that the target items exist within the inventory
-					for (RecipeMixedItemStack recipe_stack : stacks) {
-						Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
-
-						Logger.log("terence 5", true);
-
-						// If there's no match
-						if (items.isEmpty()) {
-							continue;
-						}
-
-						for (ItemStack inventory_stack : items.values()) {
-
-							Logger.log("terence 6", true);
-
-							// Slimefun item check
-							if (SlimefunItem.getByItem(inventory_stack) != null) {
-
-								Logger.log("terence 7", true);
-
-								if (!recipe_stack.isSlimefunItem()) {
-									continue;
-								}
-								
-								if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
-									continue;
-								}
-							}
-
-							// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
-							recipe_stack.amount -= inventory_stack.getAmount();
-						}
-					}
-				}
-				
-
-				// If any stack is not below 0 by now, we don't have enough items to start the recipe
-				for (RecipeMixedItemStack stack : stacks) {
-					if (!(stack.amount <= 0)) {
-						recipe_valid = false;
-						break;
-					}
-				}
+				recipe_valid = stacksExistInTag(stacks, tag);
 
 				if (!recipe_valid) {
 					break;
@@ -407,10 +481,29 @@ public abstract class BaseWorldMultiblock {
 			
 			// Check if we can add this recipe
 			if (recipe_valid) {
-				Logger.log("terence is disaster", true);
 				active_recipe = new MultiblockRecipe(recipe);
 				break;
 			}
+		}
+
+
+		// If we've found a recipe
+		if (active_recipe == null) {
+			status = PAUSED_NOT_ENOUGH_ITEMS;
+		
+		} else {
+
+			// Take inputs
+			// For each input tag
+			for (String tag : active_recipe.inputs.keySet()) {
+
+				// Items that should be in the tag
+				List<RecipeMixedItemStack> stacks = active_recipe.inputs.get(tag);
+
+				takeStacksFromTag(stacks, tag);
+			}
+
+			status = RUNNING;
 		}
 	}
 

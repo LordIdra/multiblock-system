@@ -44,7 +44,7 @@ public class ChatLister {
 		// Set remaining variables
 		nothing_to_display_error = ChatColor.translateAlternateColorCodes('&', in_nothing_to_display_error);
 		player = in_player;
-		entries_per_page = ListPlayerSettings.getPlayerSettings(((Player) player).getUniqueId()).list_items_per_page;
+		entries_per_page = ListPlayerSettings.getPlayerSettings(((Player) player).getUniqueId()).getContainerValueAsInt("list-items-per-page");
 		max_pages = 1 + Math.floorDiv(list_text.length - 1, entries_per_page);
 	}
 	
