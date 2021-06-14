@@ -22,5 +22,11 @@ public class ListInformationScoreBoards {
     	playerScoreBoard.forEach((key, value) -> value.update());
     	
     }
+    
+    public static void toggleScoreBoards(Player player) {
+    	
+    	playerScoreBoard.remove(player);
+    	
+    }
 
 }
