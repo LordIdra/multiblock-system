@@ -26,8 +26,10 @@ public class ListInformationScoreBoards {
     
     public static void toggleScoreBoards(Player player, BaseWorldMultiblock baseWorldMultiblock) {
     	
-    	// If the player has Information Scoreboard, remove it, if not, then add it
-    	if (playerScoreBoard.remove(player) == null) {
+    	if (playerScoreBoard.containsKey(player)) {
+    		playerScoreBoard.get(player).hide();
+    		playerScoreBoard.remove(player);
+    	} else {
     		playerScoreBoard.put(player, new InformationScoreboard(player, baseWorldMultiblock));
     	}
     	
