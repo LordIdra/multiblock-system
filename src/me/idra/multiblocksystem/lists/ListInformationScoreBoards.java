@@ -17,7 +17,7 @@ public class ListInformationScoreBoards {
 	// Map
     public static Map<Player, InformationScoreboard> playerScoreBoard = new HashMap<>();
 	
-    public void updateScoreboard() {
+    public static void updateScoreboard() {
     	
     	playerScoreBoard.forEach((key, value) -> value.update());
     	
