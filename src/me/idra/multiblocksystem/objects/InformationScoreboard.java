@@ -13,7 +13,7 @@ public class InformationScoreboard {
 
 
 
-	InformationScoreboard(Player player, BaseWorldMultiblock multiblock) {
+	public InformationScoreboard(Player player, BaseWorldMultiblock multiblock) {
 		board = new FastBoard(player);
 		update();
 	}
@@ -21,7 +21,10 @@ public class InformationScoreboard {
 
 
 	public void update() {
-
+		board.updateLines(
+			"terence is a disaster",
+			"test"
+		);
 	}
 
 

@@ -2,6 +2,8 @@ package me.idra.multiblocksystem.tasks;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import me.idra.multiblocksystem.lists.ListInformationScoreBoards;
+
 
 
 public class TaskTickScoreboards extends BukkitRunnable{
@@ -14,6 +16,6 @@ public class TaskTickScoreboards extends BukkitRunnable{
 
 	@Override
 	public void run() {
-		ListInformationScoreboards.updateScoreboard();
+		ListInformationScoreBoards.updateScoreboard();
 	}
 }
