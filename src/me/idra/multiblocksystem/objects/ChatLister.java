@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import me.idra.multiblocksystem.helpers.ConstantSettingNames;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListPlayerSettings;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -44,7 +45,7 @@ public class ChatLister {
 		// Set remaining variables
 		nothing_to_display_error = ChatColor.translateAlternateColorCodes('&', in_nothing_to_display_error);
 		player = in_player;
-		entries_per_page = ListPlayerSettings.getPlayerSettings(((Player) player).getUniqueId()).getContainerValueAsInt("list-items-per-page");
+		entries_per_page = ListPlayerSettings.getPlayerSettings(((Player) player).getUniqueId()).getContainerValueAsInt(ConstantSettingNames.LIST_ITEMS_PER_PAGE);
 		max_pages = 1 + Math.floorDiv(list_text.length - 1, entries_per_page);
 	}
 	

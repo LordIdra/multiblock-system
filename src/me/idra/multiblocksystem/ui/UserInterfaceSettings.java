@@ -27,6 +27,8 @@ public class UserInterfaceSettings extends BaseUserInterface {
 	private static final String RESOLVED_PARTICLE_COLOR = "resolved-particle-color";
 	private static final String LOCATION_PARTICLE_COLOR = "location-particle-color";
 	
+	private static final String ERROR_PARTICLE_OFFSET = "error-particle-offset";
+	
 	private PlayerSettings settings = null;
 	private Map<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<> ();
 	private Map<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<> ();
@@ -58,11 +60,11 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			settings.setContainerValue(ConstantSettingNames.LOCATION_B, location_particle_color_adjuster.b);
 		}
 		
-		UserInterfaceVectorAdjuster error_offset_adjuster = vector_adjusters.get("error-particle-offset");
+		UserInterfaceVectorAdjuster error_offset_adjuster = vector_adjusters.get(ERROR_PARTICLE_OFFSET);
 		if (error_offset_adjuster != null) {
-			settings.setContainerValue("error_offset_x", error_offset_adjuster.x);
-			settings.setContainerValue("error_offset_y", error_offset_adjuster.y);
-			settings.setContainerValue("error_offset_z", error_offset_adjuster.z);
+			settings.setContainerValue(ConstantSettingNames.ERROR_OFFSET_X, error_offset_adjuster.x);
+			settings.setContainerValue(ConstantSettingNames.ERROR_OFFSET_Y, error_offset_adjuster.y);
+			settings.setContainerValue(ConstantSettingNames.ERROR_OFFSET_Z, error_offset_adjuster.z);
 		}
 		
 		// Save settings permanently
@@ -84,37 +86,37 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		setItem(9, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (4-30)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("unresolved_error_time"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_TIME),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
 		setItem(10, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Display Time" + ChatColor.RESET + ChatColor.YELLOW + " (0-5)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("resolved_error_time"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_TIME),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
 		setItem(11, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (20-100)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("error_particle_amount"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.ERROR_PARTICLE_AMOUNT),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
 		setItem(12, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Time" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("location_particle_time"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.LOCATION_PARTICLE_TIME),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
 		setItem(13, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Multiblock Location Particle Amount" + ChatColor.RESET + ChatColor.YELLOW + " (2-10)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("location_particle_amount"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.LOCATION_PARTICLE_AMOUNT),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
 		setItem(14, Material.YELLOW_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "List Items Per Page" + ChatColor.RESET + ChatColor.YELLOW + " (3-15)", 
-				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue("llist_items_per_page"),
+				CURRENT_VALUE + ChatColor.AQUA + settings.getContainerValue(ConstantSettingNames.LIST_ITEMS_PER_PAGE),
 				DECREASE_TEXT,
 				INCREASE_TEXT);
 		
@@ -122,34 +124,34 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		setItem(18, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Unresolved Error Particle Color", 
 				CURRENT_VALUE 
-						+ ChatColor.RED + settings.getContainerValue("unresolved_error_r") + " " 
-						+ ChatColor.GREEN + settings.getContainerValue("unresolved_error_g") + " " 
-						+ ChatColor.BLUE + settings.getContainerValue("unresolved_error_b"),
+						+ ChatColor.RED + settings.getContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_R) + " " 
+						+ ChatColor.GREEN + settings.getContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_G) + " " 
+						+ ChatColor.BLUE + settings.getContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_B),
 				ChatColor.GRAY + ADJUST_TEXT);
 		
 		setItem(19, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Resolved Error Particle Color", 
 				CURRENT_VALUE 
-						+ ChatColor.RED + settings.getContainerValue("resolved_error_r") + " " 
-						+ ChatColor.GREEN + settings.getContainerValue("resolved_error_g") + " " 
-						+ ChatColor.BLUE + settings.getContainerValue("resolved_error_b"),
+						+ ChatColor.RED + settings.getContainerValue(ConstantSettingNames.RESOLVED_ERROR_R) + " " 
+						+ ChatColor.GREEN + settings.getContainerValue(ConstantSettingNames.RESOLVED_ERROR_G) + " " 
+						+ ChatColor.BLUE + settings.getContainerValue(ConstantSettingNames.RESOLVED_ERROR_B),
 				ChatColor.GRAY + ADJUST_TEXT);
 		
 		setItem(20, Material.BLUE_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Location Particle Color", 
 				CURRENT_VALUE 
-						+ ChatColor.RED + settings.getContainerValue("location_r") + " " 
-						+ ChatColor.GREEN + settings.getContainerValue("location_g") + " " 
-						+ ChatColor.BLUE + settings.getContainerValue("location_b"),
+						+ ChatColor.RED + settings.getContainerValue(ConstantSettingNames.LOCATION_R) + " " 
+						+ ChatColor.GREEN + settings.getContainerValue(ConstantSettingNames.LOCATION_G) + " " 
+						+ ChatColor.BLUE + settings.getContainerValue(ConstantSettingNames.LOCATION_B),
 				ChatColor.GRAY + ADJUST_TEXT);
 		
 		
 		setItem(27, Material.LIGHT_GRAY_CONCRETE,
 				ChatColor.GOLD + "" + ChatColor.BOLD + "Error Particle Length", 
 				CURRENT_VALUE 
-						+ ChatColor.WHITE + settings.getContainerValue("error_offset_x") + " " 
-						+ ChatColor.WHITE + settings.getContainerValue("error_offset_y") + " " 
-						+ ChatColor.WHITE + settings.getContainerValue("error_offset_z"),
+						+ ChatColor.WHITE + settings.getContainerValue(ConstantSettingNames.ERROR_OFFSET_X) + " " 
+						+ ChatColor.WHITE + settings.getContainerValue(ConstantSettingNames.ERROR_OFFSET_Y) + " " 
+						+ ChatColor.WHITE + settings.getContainerValue(ConstantSettingNames.ERROR_OFFSET_Z),
 				ChatColor.GRAY + ADJUST_TEXT);
 	}
 	
@@ -180,27 +182,27 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			
 		
 		case 9:
-			settings.handleClick("unresolved_error_time", click);
+			settings.handleClick(ConstantSettingNames.UNRESOLVED_ERROR_TIME, click);
 			break;
 			
 		case 10:
-			settings.handleClick("resolved_error_time", click);
+			settings.handleClick(ConstantSettingNames.RESOLVED_ERROR_TIME, click);
 			break;
 			
 		case 11:
-			settings.handleClick("error_particle_amount", click);
+			settings.handleClick(ConstantSettingNames.ERROR_PARTICLE_AMOUNT, click);
 			break;
 			
 		case 12:
-			settings.handleClick("location_particle_time", click);
+			settings.handleClick(ConstantSettingNames.LOCATION_PARTICLE_TIME, click);
 			break;
 			
 		case 13:
-			settings.handleClick("location_particle_amount", click);
+			settings.handleClick(ConstantSettingNames.LOCATION_PARTICLE_AMOUNT, click);
 			break;
 			
 		case 14:
-			settings.handleClick("list_items_per_page", click);
+			settings.handleClick(ConstantSettingNames.LIST_ITEMS_PER_PAGE, click);
 			break;
 			
 			
@@ -208,9 +210,9 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			color_adjusters.put(UNRESOLVED_PARTICLE_COLOR, 
 					            new UserInterfaceColorAdjuster(player, 
                                                                this, 
-                                                               settings.getContainerValueAsInt("unresolved_error_r"),
-                                                               settings.getContainerValueAsInt("unresolved_error_g"), 
-                                                    		   settings.getContainerValueAsInt("unresolved_error_b")));
+                                                               settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_R),
+                                                               settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_G), 
+                                                    		   settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_B)));
 			color_adjusters.get(UNRESOLVED_PARTICLE_COLOR).display();
 			break;
 
@@ -218,29 +220,29 @@ public class UserInterfaceSettings extends BaseUserInterface {
 			color_adjusters.put(RESOLVED_PARTICLE_COLOR, 
 								new UserInterfaceColorAdjuster(player, 
 															 this, 
-															 settings.getContainerValueAsInt("resolved_error_r"), 
-															 settings.getContainerValueAsInt("resolved_error_g"),
-															 settings.getContainerValueAsInt("resolved_error_b")));
+															 settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_R), 
+															 settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_G),
+															 settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_B)));
 			color_adjusters.get(RESOLVED_PARTICLE_COLOR).display();
 			break;
 			
 		case 20:
 			color_adjusters.put(LOCATION_PARTICLE_COLOR, new UserInterfaceColorAdjuster(player, 
 					                                                                    this, 
-					                                                                    settings.getContainerValueAsInt("location_r"), 
-					                                                                    settings.getContainerValueAsInt("settings.location_g"), 
-					                                                                    settings.getContainerValueAsInt("settings.location_b")));
+					                                                                    settings.getContainerValueAsInt(ConstantSettingNames.LOCATION_R), 
+					                                                                    settings.getContainerValueAsInt(ConstantSettingNames.LOCATION_G), 
+					                                                                    settings.getContainerValueAsInt(ConstantSettingNames.LOCATION_B)));
 			color_adjusters.get(LOCATION_PARTICLE_COLOR).display();
 			break;
 
 			
 		case 27:
-			vector_adjusters.put("error-particle-offset", new UserInterfaceVectorAdjuster(player, 
+			vector_adjusters.put(ERROR_PARTICLE_OFFSET, new UserInterfaceVectorAdjuster(player, 
 					                                      this, 
-					                                      settings.getContainerValueAsInt("error_offset_x"),
-					                                      settings.getContainerValueAsInt("settings.error_offset_y"), 
-					                                      settings.getContainerValueAsInt("error_offset_z")));
-			vector_adjusters.get("error-particle-offset").display();
+					                                      settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_X),
+					                                      settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_Y), 
+					                                      settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_Z)));
+			vector_adjusters.get(ERROR_PARTICLE_OFFSET).display();
 			break;
 		
 

@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import me.idra.multiblocksystem.helpers.ConstantSettingNames;
 import me.idra.multiblocksystem.lists.ListBlockErrors;
 import me.idra.multiblocksystem.lists.ListPlayerSettings;
 import me.idra.multiblocksystem.managers.ManagerBlockErrorVisualisation;
@@ -37,10 +38,10 @@ public class TaskVisualiseError extends BukkitRunnable{
 		settings = ListPlayerSettings.getPlayerSettings(error.player.getUniqueId());
 		
 		offset = new Vector(
-				settings.getContainerValueAsInt("error_offset_x"),
-				settings.getContainerValueAsInt("error_offset_y"),
-				settings.getContainerValueAsInt("error_offset_z"));
-		amount = settings.getContainerValueAsInt("error_particle_amount");
+				settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_X),
+				settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_Y),
+				settings.getContainerValueAsInt(ConstantSettingNames.ERROR_OFFSET_Z));
+		amount = settings.getContainerValueAsInt(ConstantSettingNames.ERROR_PARTICLE_AMOUNT);
 		
 		// Generate main/sub titles
 		String main_title = error.getErrorTitle(false);
@@ -60,7 +61,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 		error.player.sendTitle(
 				main_title, sub_title, 
 				2, 
-				settings.getContainerValueAsInt("unresolved_error_time") * 20, 
+				settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_TIME) * 20, 
 				2);
 	}
 	
@@ -126,9 +127,9 @@ public class TaskVisualiseError extends BukkitRunnable{
 			
 				// Create particles
 				visualise(
-					settings.getContainerValueAsInt("unresolved_error_r") * 25,
-					settings.getContainerValueAsInt("unresolved_error_g") * 25,
-					settings.getContainerValueAsInt("unresolved_error_b") * 25);
+					settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_R) * 25,
+					settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_G) * 25,
+					settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_B) * 25);
 	
 			
 			// If the error has been resolved
@@ -152,14 +153,14 @@ public class TaskVisualiseError extends BukkitRunnable{
 				error.player.sendTitle(
 						main_title, sub_title, 
 						2, 
-						settings.getContainerValueAsInt("resolved_error_time") * 20, 
+						settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_TIME) * 20, 
 						2);
-				
+			
 				// Generate particles
 				visualise(
-						settings.getContainerValueAsInt("resolved_error_r") * 25,
-						settings.getContainerValueAsInt("resolved_error_g") * 25,
-						settings.getContainerValueAsInt("resolved_error_b") * 25);
+						settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_R) * 25,
+						settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_G) * 25,
+						settings.getContainerValueAsInt(ConstantSettingNames.RESOLVED_ERROR_B) * 25);
 				
 				// Schedule a new task to visualise the next error if auto-build is enabled
 				if (ListPlayerSettings.getPlayerSettings(error.player.getUniqueId()).auto_build_enabled) {
