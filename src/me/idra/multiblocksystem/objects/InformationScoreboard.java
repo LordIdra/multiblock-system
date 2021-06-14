@@ -10,11 +10,13 @@ import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 public class InformationScoreboard {
 	
 	FastBoard board;
+	BaseWorldMultiblock multiblock = null;
 
 
 
 	public InformationScoreboard(Player player, BaseWorldMultiblock multiblock) {
 		board = new FastBoard(player);
+		this.multiblock = multiblock;
 		update();
 	}
 
@@ -22,7 +24,7 @@ public class InformationScoreboard {
 
 	public void update() {
 		board.updateLines(
-			"terence is a disaster",
+			multiblock.abstract_multiblock.name,
 			"test"
 		);
 	}
