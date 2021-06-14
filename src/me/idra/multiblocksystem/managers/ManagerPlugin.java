@@ -11,6 +11,7 @@ import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
 import me.idra.multiblocksystem.lists.ListVariantPrefixes;
 import me.idra.multiblocksystem.tasks.TaskIncrementTick;
+import me.idra.multiblocksystem.tasks.TaskTickScoreboards;
 
 
 
@@ -32,6 +33,7 @@ public class ManagerPlugin {
 	public static long tick;
 	public static int tick_interval;
 	public static TaskIncrementTick task_increment_tick;
+	public static TaskTickScoreboards task_tick_scoreboards;
 	
 	
 	
@@ -68,10 +70,14 @@ public class ManagerPlugin {
 		task_increment_tick = new TaskIncrementTick();
 		task_increment_tick.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
 
+		// Handle scoreboards
+		task_tick_scoreboards = new TaskTickScoreboards();
+		task_tick_scoreboards.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
+
     	// Initialize classes
+		ManagerSlimefunItems.initialize();
 		ListVariantPrefixes.initialize();
     	ListAbstractMultiblocks.initialize();
     	ManagerPermissions.initialize();
-		ManagerSlimefunItems.initialize();
 	}
 }
