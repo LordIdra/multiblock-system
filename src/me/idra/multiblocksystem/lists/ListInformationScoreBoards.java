@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.entity.Player;
 
+import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.objects.InformationScoreboard;
 
 
@@ -23,9 +24,12 @@ public class ListInformationScoreBoards {
     	
     }
     
-    public static void toggleScoreBoards(Player player) {
+    public static void toggleScoreBoards(Player player, BaseWorldMultiblock baseWorldMultiblock) {
     	
-    	playerScoreBoard.remove(player);
+    	// If the player has Information Scoreboard, remove it, if not, then add it
+    	if (playerScoreBoard.remove(player) == null) {
+    		playerScoreBoard.put(player, new InformationScoreboard(player, baseWorldMultiblock));
+    	}
     	
     }
 
