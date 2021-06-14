@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.bukkit.event.inventory.ClickType;
 
+import me.idra.multiblocksystem.helpers.ConstantSettingNames;
+
 public class PlayerSettings {
 	
 	public UUID player;
@@ -20,7 +22,7 @@ public class PlayerSettings {
 			value = new_value;
 			lower_band = new_lower_band;
 			upper_band = new_upper_band;
-		};
+		}
 		
 		public int getValue() {
 			return value;
@@ -49,30 +51,30 @@ public class PlayerSettings {
 	
 	public PlayerSettings() {
 		
-		settingContainerMap =  new HashMap<String, SettingContainer>(); 
+		settingContainerMap =  new HashMap<>(); 
 		
-		settingContainerMap.put("unresolved_error_time", new SettingContainer(15,4,30));
-		settingContainerMap.put("resolved_error_time", new SettingContainer(1,0,5));
-		settingContainerMap.put("error_particle_amount", new SettingContainer(1,20,100));
-		settingContainerMap.put("location_particle_time", new SettingContainer(5,2,10));	
-		settingContainerMap.put("location_particle_amount", new SettingContainer(5,2,10));	
-		settingContainerMap.put("list_items_per_page", new SettingContainer(8,3,15));	
+		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_TIME, new SettingContainer(15,4,30));
+		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_TIME, new SettingContainer(1,0,5));
+		settingContainerMap.put(ConstantSettingNames.ERROR_PARTICLE_AMOUNT, new SettingContainer(1,20,100));
+		settingContainerMap.put(ConstantSettingNames.LOCATION_PARTICLE_TIME, new SettingContainer(5,2,10));	
+		settingContainerMap.put(ConstantSettingNames.LOCATION_PARTICLE_AMOUNT, new SettingContainer(5,2,10));	
+		settingContainerMap.put(ConstantSettingNames.LIST_ITEMS_PER_PAGE, new SettingContainer(8,3,15));	
 		
-		settingContainerMap.put("error_offset_x", new SettingContainer(8,3,15));
-		settingContainerMap.put("error_offset_y", new SettingContainer(8,3,15));
-		settingContainerMap.put("error_offset_z", new SettingContainer(8,3,15));
+		settingContainerMap.put(ConstantSettingNames.ERROR_OFFSET_X, new SettingContainer(8,3,15));
+		settingContainerMap.put(ConstantSettingNames.ERROR_OFFSET_Y, new SettingContainer(8,3,15));
+		settingContainerMap.put(ConstantSettingNames.ERROR_OFFSET_Z, new SettingContainer(8,3,15));
 		
-		settingContainerMap.put("unresolved_error_r", new SettingContainer(10,0,10));
-		settingContainerMap.put("unresolved_error_g", new SettingContainer(0,0,10));
-		settingContainerMap.put("unresolved_error_b", new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_R, new SettingContainer(10,0,10));
+		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_G, new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_B, new SettingContainer(0,0,10));
 		
-		settingContainerMap.put("resolved_error_r", new SettingContainer(0,0,10));
-		settingContainerMap.put("resolved_error_g", new SettingContainer(10,0,10));
-		settingContainerMap.put("resolved_error_b", new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_R, new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_G, new SettingContainer(10,0,10));
+		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_B, new SettingContainer(0,0,10));
 		
-		settingContainerMap.put("location_r", new SettingContainer(0,0,10));
-		settingContainerMap.put("location_g", new SettingContainer(0,0,10));
-		settingContainerMap.put("location_b", new SettingContainer(10,0,10));
+		settingContainerMap.put(ConstantSettingNames.LOCATION_R, new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.LOCATION_G, new SettingContainer(0,0,10));
+		settingContainerMap.put(ConstantSettingNames.LOCATION_B, new SettingContainer(10,0,10));
 	
 	}
 	

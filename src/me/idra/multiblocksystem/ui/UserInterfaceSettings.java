@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.ClickType;
 
 import me.idra.multiblocksystem.bases.BaseUserInterface;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
+import me.idra.multiblocksystem.helpers.ConstantSettingNames;
 import me.idra.multiblocksystem.lists.ListPlayerSettings;
 import me.idra.multiblocksystem.objects.PlayerSettings;
 import net.md_5.bungee.api.ChatColor;
@@ -37,24 +38,24 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		UserInterfaceColorAdjuster unresolved_particle_color_adjuster = color_adjusters.get(UNRESOLVED_PARTICLE_COLOR);
 		if (unresolved_particle_color_adjuster != null) {
 			
-			settings.setContainerValue("unresolved_error_r", unresolved_particle_color_adjuster.r);
-			settings.setContainerValue("unresolved_error_g", unresolved_particle_color_adjuster.g);
-			settings.setContainerValue("unresolved_error_b", unresolved_particle_color_adjuster.b);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_R, unresolved_particle_color_adjuster.r);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_G, unresolved_particle_color_adjuster.g);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_B, unresolved_particle_color_adjuster.b);
 	
 		}
 		
 		UserInterfaceColorAdjuster resolved_particle_color_adjuster = color_adjusters.get(RESOLVED_PARTICLE_COLOR);
 		if (resolved_particle_color_adjuster != null) {
-			settings.setContainerValue("uresolved_error_r", resolved_particle_color_adjuster.r);
-			settings.setContainerValue("uresolved_error_g", resolved_particle_color_adjuster.g);
-			settings.setContainerValue("uresolved_error_b", resolved_particle_color_adjuster.b);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_R, resolved_particle_color_adjuster.r);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_G, resolved_particle_color_adjuster.g);
+			settings.setContainerValue(ConstantSettingNames.UNRESOLVED_ERROR_B, resolved_particle_color_adjuster.b);
 		}
 		
 		UserInterfaceColorAdjuster location_particle_color_adjuster = color_adjusters.get(LOCATION_PARTICLE_COLOR);
 		if (location_particle_color_adjuster != null) {
-			settings.setContainerValue("location_r", location_particle_color_adjuster.r);
-			settings.setContainerValue("location_g", location_particle_color_adjuster.g);
-			settings.setContainerValue("location_b", location_particle_color_adjuster.b);
+			settings.setContainerValue(ConstantSettingNames.LOCATION_R, location_particle_color_adjuster.r);
+			settings.setContainerValue(ConstantSettingNames.LOCATION_G, location_particle_color_adjuster.g);
+			settings.setContainerValue(ConstantSettingNames.LOCATION_B, location_particle_color_adjuster.b);
 		}
 		
 		UserInterfaceVectorAdjuster error_offset_adjuster = vector_adjusters.get("error-particle-offset");
