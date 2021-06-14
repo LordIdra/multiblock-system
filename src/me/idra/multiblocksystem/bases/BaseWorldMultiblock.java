@@ -213,16 +213,12 @@ public abstract class BaseWorldMultiblock {
 
 	private boolean canTickEnergy() {
 
-		Logger.log(active_recipe.energy.toString(), false);
-
 		for (String tag : active_recipe.energy.keySet()) { 
 
 			int energy = active_recipe.energy.get(tag);
 
 			// We need to remove charge
 			if (energy > 0) {
-
-				Logger.log("remove charge check", false);
 
 				int available_charge = 0;
 				
@@ -241,8 +237,6 @@ public abstract class BaseWorldMultiblock {
 
 			// We need to add charge
 			} else if (energy < 0) {
-
-				Logger.log("add charge check", false);
 
 				int available_capacity = 0;
 				
@@ -281,7 +275,6 @@ public abstract class BaseWorldMultiblock {
 					int charge = capacitor.getCharge(position.toLocation());
 
 					// We should remove only some of the capacitor's charge
-					Logger.log(String.valueOf(energy) + " " + String.valueOf(charge), false);
 					if (energy < charge) {
 						capacitor.removeCharge(position.toLocation(), energy);
 						energy -= energy; // yes, set it to 0
@@ -453,8 +446,156 @@ public abstract class BaseWorldMultiblock {
 
 
 
+	private boolean spaceExistsInTag(List<RecipeMixedItemStack> stacks, String tag) {
+
+		// Map to show how much of each item we have stored already
+		Map<RecipeMixedItemStack, Integer> space_for_items = new HashMap<> ();
+
+		for (RecipeMixedItemStack stack : stacks) {
+			space_for_items.put(stack, 0);
+		}
+
+
+		// Figure out how many items we can fit into each existing itemstack
+		for (Inventory inv : tags_inventory.get(tag)) {
+			for (RecipeMixedItemStack recipe_stack : stacks) {
+
+				HashMap<Integer, ? extends ItemStack> inventory_stacks = inv.all(recipe_stack.asItemStack().getType());
+
+				for (int inventory_stack_key : inventory_stacks.keySet()) {
+
+					// Get inventory stack from key
+					ItemStack inventory_stack = inventory_stacks.get(inventory_stack_key);
+					
+					// Slimefun item check
+					if (SlimefunItem.getByItem(inventory_stack) != null) {
+
+						if (!recipe_stack.isSlimefunItem()) {
+							continue;
+						}
+						
+						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+							continue;
+						}
+					}
+
+					// Find out how much space is left in the itemstack, add that to the map
+					int space_left_in_stack = inventory_stack.getMaxStackSize() - inventory_stack.getAmount();
+					space_for_items.put(recipe_stack, space_for_items.get(recipe_stack) + space_left_in_stack);
+				}
+			}
+		}
+
+
+		// Figure out how many more free stacks we need
+		int extra_slots_needed = 0;
+
+		for (RecipeMixedItemStack stack : stacks) {
+			
+			int extra_space_needed = stack.amount - space_for_items.get(stack);
+
+			if (extra_space_needed > 0) {
+				extra_slots_needed += 1 + Math.floorDiv(extra_space_needed, stack.asItemStack().getMaxStackSize());
+			}
+		}
+
+
+		// Figure out how many free stacks we currently have
+		int current_slots = 0;
+
+		for (Inventory inventory : tags_inventory.get(tag)) {
+			for (ItemStack stack : inventory.getContents()) {
+				if (stack == null) {
+					current_slots++;
+				}
+			}
+		}
+
+
+		// Figure out if we have enough free stacks
+		return extra_slots_needed <= current_slots;
+	}
+
+	
+
+	private void addItemsToTag(List<RecipeMixedItemStack> stacks, String tag) {
+
+		// Map to show how much of each item we still need to add
+		Map<RecipeMixedItemStack, Integer> items_to_add = new HashMap<> ();
+
+		for (RecipeMixedItemStack stack : stacks) {
+			items_to_add.put(stack, stack.amount);
+		}
+
+		Logger.log("hi 1", true);
+
+		// For each inventory
+		for (Inventory inventory : tags_inventory.get(tag)) {
+
+			Logger.log("hi 2", true);
+
+			// For each recipe stack
+			for (RecipeMixedItemStack recipe_stack : stacks) {
+
+				Logger.log("hi 3", true);
+
+				// Get the recipe stacks in the inventory
+				Map<Integer, ? extends ItemStack> items_in_inventory = inventory.all(recipe_stack.asItemStack().getType());
+
+				// For every recipe stack in the inventory
+				for (Integer inventory_slot : items_in_inventory.keySet()) {
+
+					Logger.log("hi 4", true);
+					
+					// Get the inventory stack and figure how much space is 
+					ItemStack inventory_stack = items_in_inventory.get(inventory_slot);
+					int to_add = items_to_add.get(recipe_stack);
+					int space_in_stack = inventory_stack.getMaxStackSize() - inventory_stack.getAmount();
+
+					// Add only some capacity
+					if (to_add <= space_in_stack) {
+
+						Logger.log("hi 5", true);
+
+						ItemStack stack = recipe_stack.asItemStack();
+						stack.setAmount(to_add);
+						inventory.addItem(stack);
+
+						items_to_add.put(recipe_stack, to_add);
+					}
+
+					// Add all items
+					else {
+						Logger.log("hi 6", true);
+
+						ItemStack stack = recipe_stack.asItemStack();
+						stack.setAmount(space_in_stack);
+						inventory.addItem(stack);
+
+						items_to_add.put(recipe_stack, to_add - space_in_stack);
+					}
+				}
+			}
+		}
+
+
+		// Add any remaining ItemStacks
+		// for (Inventory inventory : )
+	}
+
+
+
 	private void tickRecipeOutputs() {
 
+		for (String stack_key : active_recipe.outputs.keySet()) {
+
+			if (!spaceExistsInTag(active_recipe.outputs.get(stack_key), stack_key)) {
+				status = PAUSED_ITEM_OUTPUT_FULL;
+				return;
+			}
+
+			addItemsToTag(active_recipe.outputs.get(stack_key), stack_key);
+		}
 	}
 
 
@@ -520,30 +661,37 @@ public abstract class BaseWorldMultiblock {
 			return;
 		}
 
-		// Check if the recipe has been finished
-		if (active_recipe == null || active_recipe.time <= 0) {
-			active_recipe = null;
-			tickRecipeOutputs();
+		// Start a new recipe if nothing is active
+		if (active_recipe == null) {
 			startNewRecipe();
-			return;
 		}
 
-		// If the above checks haven't triggered, a recipe must still be running
-		// Handle energy
-		if (active_recipe.hasEnergy()) {
-
-			// Check that we are able to handle energy input/output
-			if (!canTickEnergy()) {
+		// If a recipe is active, tick it
+		if (active_recipe != null) {
+			
+			if (active_recipe.time <= 0) {
+				tickRecipeOutputs();
+				active_recipe = null;
 				return;
 			}
 
-			// Handle energy input/output
-			tickEnergy();
-		}
+			// Tick the active recipe (providing it exists)
+			// Handle energy
+			if (active_recipe.hasEnergy()) {
 
-		// Decrement time
-		active_recipe.time--;
-		fuel_ticks--;
+				// Check that we are able to handle energy input/output
+				if (!canTickEnergy()) {
+					return;
+				}
+
+				// Handle energy input/output
+				tickEnergy();
+			}
+
+			// Decrement time
+			active_recipe.time--;
+			fuel_ticks--;
+		}
 	}
 	
 	
