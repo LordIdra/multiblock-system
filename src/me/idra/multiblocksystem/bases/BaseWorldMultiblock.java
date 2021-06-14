@@ -527,25 +527,17 @@ public abstract class BaseWorldMultiblock {
 			items_to_add.put(stack, stack.amount);
 		}
 
-		Logger.log("hi 1", true);
-
 		// For each inventory
 		for (Inventory inventory : tags_inventory.get(tag)) {
 
-			Logger.log("hi 2", true);
-
 			// For each recipe stack
-			for (RecipeMixedItemStack recipe_stack : stacks) {
-
-				Logger.log("hi 3", true);
+			for (RecipeMixedItemStack recipe_stack : items_to_add.keySet()) {
 
 				// Get the recipe stacks in the inventory
 				Map<Integer, ? extends ItemStack> items_in_inventory = inventory.all(recipe_stack.asItemStack().getType());
 
 				// For every recipe stack in the inventory
 				for (Integer inventory_slot : items_in_inventory.keySet()) {
-
-					Logger.log("hi 4", true);
 					
 					// Get the inventory stack and figure how much space is 
 					ItemStack inventory_stack = items_in_inventory.get(inventory_slot);
@@ -555,18 +547,15 @@ public abstract class BaseWorldMultiblock {
 					// Add only some capacity
 					if (to_add <= space_in_stack) {
 
-						Logger.log("hi 5", true);
-
 						ItemStack stack = recipe_stack.asItemStack();
 						stack.setAmount(to_add);
 						inventory.addItem(stack);
 
-						items_to_add.put(recipe_stack, to_add);
+						items_to_add.put(recipe_stack, 0);
 					}
 
 					// Add all items
 					else {
-						Logger.log("hi 6", true);
 
 						ItemStack stack = recipe_stack.asItemStack();
 						stack.setAmount(space_in_stack);
@@ -574,13 +563,38 @@ public abstract class BaseWorldMultiblock {
 
 						items_to_add.put(recipe_stack, to_add - space_in_stack);
 					}
+
+					// Remove the value if it's now below 0
+					if (items_to_add.get(recipe_stack) <= 0) {
+						items_to_add.remove(recipe_stack);
+						break;
+					}
 				}
 			}
 		}
 
 
 		// Add any remaining ItemStacks
-		// for (Inventory inventory : )
+		for (Inventory inventory : tags_inventory.get(tag)) {
+			for (RecipeMixedItemStack recipe_stack : items_to_add.keySet()) {
+
+				Logger.log("hi 7", true);
+				
+				if (inventory.firstEmpty() == -1) {
+					break;
+				}
+
+				int amount_to_add = items_to_add.get(recipe_stack);
+				ItemStack item_to_add = recipe_stack.asItemStack();
+
+				int amount_can_add = amount_to_add % item_to_add.getMaxStackSize();
+
+				items_to_add.put(recipe_stack, amount_to_add - amount_can_add);
+				
+				item_to_add.setAmount(amount_can_add);
+				inventory.addItem(item_to_add);
+			}
+		}
 	}
 
 
