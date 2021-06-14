@@ -213,12 +213,16 @@ public abstract class BaseWorldMultiblock {
 
 	private boolean canTickEnergy() {
 
+		Logger.log(active_recipe.energy.toString(), false);
+
 		for (String tag : active_recipe.energy.keySet()) { 
 
 			int energy = active_recipe.energy.get(tag);
 
 			// We need to remove charge
 			if (energy > 0) {
+
+				Logger.log("remove charge check", false);
 
 				int available_charge = 0;
 				
@@ -237,6 +241,8 @@ public abstract class BaseWorldMultiblock {
 
 			// We need to add charge
 			} else if (energy < 0) {
+
+				Logger.log("add charge check", false);
 
 				int available_capacity = 0;
 				
@@ -275,9 +281,10 @@ public abstract class BaseWorldMultiblock {
 					int charge = capacitor.getCharge(position.toLocation());
 
 					// We should remove only some of the capacitor's charge
+					Logger.log(String.valueOf(energy) + " " + String.valueOf(charge), false);
 					if (energy < charge) {
-						capacitor.removeCharge(position.toLocation(), charge - energy);
-						energy -= (charge - energy);
+						capacitor.removeCharge(position.toLocation(), energy);
+						energy -= energy; // yes, set it to 0
 					
 					// We should remove all of the capacitor's charge
 					} else {
@@ -302,10 +309,10 @@ public abstract class BaseWorldMultiblock {
 
 					// We should add only some of the capacitor's capacity
 					if (energy < capacity) {
-						capacitor.addCharge(position.toLocation(), capacity - energy);
-						energy -= (capacity - energy);
+						capacitor.addCharge(position.toLocation(), energy);
+						energy -= energy;
 					
-					// We should add all of the capacitor's charge
+					// We should add all of the capacitor's capacity
 					} else {
 						capacitor.addCharge(position.toLocation(), capacity);
 						energy -= capacity;
@@ -361,9 +368,6 @@ public abstract class BaseWorldMultiblock {
 					}
 
 					// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
-					Logger.log("subtracting...", true);
-					Logger.log(String.valueOf(recipe_stack.amount), true);
-
 					int amount = amount_map.get(recipe_stack);
 					amount -= inventory_stack.getAmount();
 					amount_map.put(recipe_stack, amount);
@@ -382,12 +386,7 @@ public abstract class BaseWorldMultiblock {
 
 
 		// If any stack's quantity is below target by now, we don't have enough items to start the recipe
-		if (amount_map.size() > 0) {
-			return false;
-		}
-
-		// No stack does not exist in the inventory
-		return true;
+		return amount_map.size() <= 0;
 	}
 
 
@@ -398,14 +397,14 @@ public abstract class BaseWorldMultiblock {
 		Map<RecipeMixedItemStack, Integer> amount_map = new HashMap<> ();
 
 		for (RecipeMixedItemStack stack : stacks) {
-			amount_map.put(stack, 0);
+			amount_map.put(stack, stack.amount);
 		}
 
 		// For each inventory in the tag
 		for (Inventory inv : tags_inventory.get(tag)) {
 
 			// For each itemstack we need to remove from this tag
-			for (RecipeMixedItemStack recipe_stack : stacks) {
+			for (RecipeMixedItemStack recipe_stack : amount_map.keySet()) {
 
 				// Get the items within the inventory that match target materials
 				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
@@ -432,19 +431,19 @@ public abstract class BaseWorldMultiblock {
 					}
 
 					// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
-					recipe_stack.amount -= inventory_stack.getAmount();
+					amount_map.put(recipe_stack, amount_map.get(recipe_stack) - inventory_stack.getAmount());
 					inv.clear(stack_index);
 
 					// We took away too many items, add back the relevant number
-					if (recipe_stack.amount < 0) {
+					if (amount_map.get(recipe_stack) < 0) {
 
 						ItemStack stack_to_add = inventory_stack;
-						stack_to_add.setAmount(-recipe_stack.amount);
+						stack_to_add.setAmount(-amount_map.get(recipe_stack));
 						inv.setItem(stack_index, stack_to_add);
 					}
 
 					// We've taken away enough items
-					if (recipe_stack.amount <= 0) {
+					if (amount_map.get(recipe_stack) <= 0) {
 						break;
 					}
 				}
@@ -468,21 +467,23 @@ public abstract class BaseWorldMultiblock {
 			boolean recipe_valid = true;
 
 			// For each input tag
-			for (String tag : recipe.inputs.keySet()) {
+			if (recipe.hasInputs()) {
+				for (String tag : recipe.inputs.keySet()) {
 
-				// Items that should be in the tag
-				List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
-				recipe_valid = stacksExistInTag(stacks, tag);
+					// Items that should be in the tag
+					List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
+					recipe_valid = stacksExistInTag(stacks, tag);
 
-				if (!recipe_valid) {
+					if (!recipe_valid) {
+						break;
+					}
+				}
+				
+				// Check if we can add this recipe
+				if (recipe_valid) {
+					active_recipe = new MultiblockRecipe(recipe);
 					break;
 				}
-			}
-			
-			// Check if we can add this recipe
-			if (recipe_valid) {
-				active_recipe = new MultiblockRecipe(recipe);
-				break;
 			}
 		}
 
@@ -521,6 +522,7 @@ public abstract class BaseWorldMultiblock {
 
 		// Check if the recipe has been finished
 		if (active_recipe == null || active_recipe.time <= 0) {
+			active_recipe = null;
 			tickRecipeOutputs();
 			startNewRecipe();
 			return;
@@ -529,7 +531,7 @@ public abstract class BaseWorldMultiblock {
 		// If the above checks haven't triggered, a recipe must still be running
 		// Handle energy
 		if (active_recipe.hasEnergy()) {
-	
+
 			// Check that we are able to handle energy input/output
 			if (!canTickEnergy()) {
 				return;

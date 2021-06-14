@@ -18,9 +18,9 @@ public class MultiblockRecipe {
 	
 	public MultiblockRecipe(
 			Map<String, List<RecipeMixedItemStack>> inputs,		// Input  items
-			Map<String, List<RecipeMixedItemStack>> outputs,		// Output items
-			Map<String, Integer> energy,					// Energy
-			int time										// Time
+			Map<String, List<RecipeMixedItemStack>> outputs,	// Output items
+			Map<String, Integer> energy,						// Energy
+			int time											// Time
 	) {
 		this.inputs = inputs;
 		this.outputs = outputs;
@@ -40,14 +40,14 @@ public class MultiblockRecipe {
 
 	
 	public boolean hasEnergy() {
-		return energy == null;
+		return energy != null;
 	}
 
 	public boolean hasInputs() {
-		return inputs == null;
+		return inputs != null;
 	}
 	
 	public boolean hasOutputs() {
-		return outputs == null;
+		return outputs != null;
 	}
 }
