@@ -45,10 +45,10 @@ public abstract class BaseWorldMultiblock {
 	public Map<String, List<BlockPosition>> tags_position 	= new HashMap<> ();
 	
 	public MultiblockRecipe active_recipe = null;
+	public int recipe_ticks_remaining = 0;
+
 	public TaskTickMultiblock tick_task = null;
-
 	public String status = RUNNING;		// is the machine currently processing a recipe?
-
 	public int fuel_ticks = 0;
 	
 	
@@ -637,6 +637,7 @@ public abstract class BaseWorldMultiblock {
 				// Check if we can add this recipe
 				if (recipe_valid) {
 					active_recipe = new MultiblockRecipe(recipe);
+					recipe_ticks_remaining = active_recipe.time;
 					break;
 				}
 			}
@@ -683,7 +684,7 @@ public abstract class BaseWorldMultiblock {
 		// If a recipe is active, tick it
 		if (active_recipe != null) {
 			
-			if (active_recipe.time <= 0) {
+			if (recipe_ticks_remaining <= 0) {
 				tickRecipeOutputs();
 				active_recipe = null;
 				return;
@@ -703,7 +704,7 @@ public abstract class BaseWorldMultiblock {
 			}
 
 			// Decrement time
-			active_recipe.time--;
+			recipe_ticks_remaining--;
 			fuel_ticks--;
 		}
 	}

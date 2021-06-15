@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.lists;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
@@ -16,23 +17,24 @@ public class ListInformationScoreBoards {
 	}
 
 	// Map
-    public static Map<Player, InformationScoreboard> playerScoreBoard = new HashMap<>();
+    public static Map<UUID, InformationScoreboard> playerScoreBoard = new HashMap<>();
 	
     public static void updateScoreboard() {
     	
     	playerScoreBoard.forEach((key, value) -> value.update());
     	
     }
-    
-    public static void toggleScoreBoards(Player player, BaseWorldMultiblock baseWorldMultiblock) {
-    	
-    	if (playerScoreBoard.containsKey(player)) {
-    		playerScoreBoard.get(player).hide();
-    		playerScoreBoard.remove(player);
-    	} else {
-    		playerScoreBoard.put(player, new InformationScoreboard(player, baseWorldMultiblock));
-    	}
-    	
-    }
 
+	
+    
+    public static void toggleScoreBoard(Player player, BaseWorldMultiblock baseWorldMultiblock) {
+    	
+    	if (playerScoreBoard.containsKey(player.getUniqueId())) {
+    		playerScoreBoard.get(player.getUniqueId()).hide();
+    		playerScoreBoard.remove(player.getUniqueId());
+
+    	} else {
+    		playerScoreBoard.put(player.getUniqueId(), new InformationScoreboard(player, baseWorldMultiblock));
+    	}
+    }
 }

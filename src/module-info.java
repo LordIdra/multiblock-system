@@ -3,5 +3,4 @@ module multiblocks {
 	requires Slimefun;
 	requires java.desktop;
 	requires ParticleLib.Plugin;
-	requires fastboard;
 }

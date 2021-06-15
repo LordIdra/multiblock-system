@@ -10,6 +10,7 @@ import me.idra.multiblocksystem.managers.ManagerCommands;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.JoinListener;
 import me.idra.multiblocksystem.objects.MultiblockListener;
+import me.idra.multiblocksystem.objects.PlayerInteractListener;
 import me.idra.multiblocksystem.objects.TabHandler;
 
 
@@ -30,6 +31,7 @@ public final class MultiblockSystem extends JavaPlugin implements SlimefunAddon 
     	// Set up listeners
     	getServer().getPluginManager().registerEvents(new MultiblockListener(), this);
     	getServer().getPluginManager().registerEvents(new JoinListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
     	
     	// Load world multiblocks
     	FileHandlerWorldMultiblocks.loadMultiblocks();
