@@ -9,11 +9,12 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
-import me.idra.multiblocksystem.lists.ListVariantPrefixes;
+import me.idra.multiblocksystem.lists.ListMaterialGroups;
 import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
 import me.idra.multiblocksystem.objects.MixedItemStack;
 import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
@@ -145,10 +146,10 @@ public class StringConversion {
 		for (String tag : tag_data) {
 			
 			// If the tag specifies a prefix group
-			if (ListVariantPrefixes.prefix_groups.containsKey(tag.toUpperCase())) {
+			if (ListMaterialGroups.prefix_groups.containsKey(tag.toUpperCase())) {
 				
 				// For every prefix in the group, add prefix + "_" +  suffix
-				for (String prefix : ListVariantPrefixes.prefix_groups.get(tag.toUpperCase())) {
+				for (String prefix : ListMaterialGroups.prefix_groups.get(tag.toUpperCase())) {
 					
 					String prefix_material_name = prefix + "_" + block_data.toUpperCase();
 					Material prefix_material = Material.getMaterial(prefix_material_name);
@@ -228,5 +229,27 @@ public class StringConversion {
 		if (material != null) 		return new RecipeMixedItemStack(material);
 		if (slimefun_item != null) 	return new RecipeMixedItemStack(slimefun_item);
 		else 						return null;
+	}
+
+
+
+	public static String formatTime(ChatColor primary, ChatColor secondary, int seconds) {
+
+		int minutes = Math.floorDiv(seconds, 60);
+		int hours =   Math.floorDiv(minutes, 60);
+
+		if (hours != 0) {
+			return "" + primary + hours   		   + secondary + "h" +
+				   "" + primary + (minutes % 60)   + secondary + "m" +
+				   "" + primary + (seconds % 3600) + secondary + "s";
+
+		} else if (minutes != 0) {
+			return "" + primary + minutes 		 + secondary + "m" +
+				   "" + primary + (seconds % 60) + secondary + "s";
+		
+		} else {
+			return "" + primary + seconds + secondary + "s";
+
+		}
 	}
 }

@@ -8,21 +8,28 @@ import org.bukkit.event.inventory.ClickType;
 
 import me.idra.multiblocksystem.helpers.ConstantSettingNames;
 
+
+
 public class PlayerSettings {
 	
 	public UUID player;
 	public boolean auto_build_enabled = true;
 	
+
+
 	public class SettingContainer {
+
 		private int value;
-		private int lower_band;
-		private int upper_band;
+		private int lower_bound;
+		private int upper_bound;
 		
-		private SettingContainer(int new_value, int new_lower_band, int new_upper_band) {
+
+		private SettingContainer(int new_value, int new_lower_bound, int new_upper_bound) {
 			value = new_value;
-			lower_band = new_lower_band;
-			upper_band = new_upper_band;
+			lower_bound = new_lower_bound;
+			upper_bound = new_upper_bound;
 		}
+
 		
 		public int getValue() {
 			return value;
@@ -31,22 +38,24 @@ public class PlayerSettings {
 			this.value = value;
 		}
 		
-		public int getLower_band() {
-			return lower_band;
+		public int getLower_bound() {
+			return lower_bound;
 		}
-		public void setLower_band(int lower_band) {
-			this.lower_band = lower_band;
+		public void setLowerBoand(int lower_bound) {
+			this.lower_bound = lower_bound;
 		}
 		
-		public int getUpper_band() {
-			return upper_band;
+		public int getUpperBoand() {
+			return upper_bound;
 		}
-		public void setUpper_band(int upper_band) {
-			this.upper_band = upper_band;
+		public void setUpperBoand(int upper_bound) {
+			this.upper_bound = upper_bound;
 		}
 		
 	}
 	
+
+
 	public Map<String,SettingContainer> settingContainerMap;
 	
 	public PlayerSettings() {
@@ -78,15 +87,16 @@ public class PlayerSettings {
 	
 	}
 	
-	public void setBounds() {
+	public void checkBounds() {
 		
-		settingContainerMap.forEach((key, value) -> settingContainerMap.put(key, 
-				new SettingContainer(value.value, 
-						             value.value < value.lower_band ? value.lower_band : value.value, 
-				            		 value.value > value.upper_band ? value.upper_band : value.value)));
-		
+		for (SettingContainer container : settingContainerMap.values()) {
+
+			if (container.value < container.lower_bound) container.value = container.lower_bound;
+			if (container.value > container.upper_bound) container.value = container.upper_bound;
+		}
 	}
 	
+
 	public void setContainerValue(String settingContainerKey, int new_value) {
 		
 		SettingContainer updatedSettingContainer = settingContainerMap.get(settingContainerKey);
@@ -104,12 +114,14 @@ public class PlayerSettings {
 		SettingContainer settingContainer = settingContainerMap.get(settingContainerKey);
 		return settingContainer.value;
 	}
+
 	
 	public void changeValue(String settingContainerKey, int increment_value) {
 		SettingContainer settingContainer = settingContainerMap.get(settingContainerKey);
 		settingContainer.value += increment_value;
 		settingContainerMap.put(settingContainerKey, settingContainer);	
 	}
+
 	
 	public void handleClick(String settingContainerKey, ClickType click) {
 		
@@ -119,5 +131,10 @@ public class PlayerSettings {
 			this.changeValue(settingContainerKey, -1);
 		
 	}
+
 	
+	public String formattedBounds(String key) {
+		SettingContainer container = settingContainerMap.get(key);
+		return " (" + container.lower_bound + "-" + container.upper_bound + ")";
+	}
 }

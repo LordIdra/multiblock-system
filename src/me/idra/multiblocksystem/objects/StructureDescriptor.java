@@ -25,7 +25,7 @@ public class StructureDescriptor {
 	
 	
 	
-	public StructureDescriptor(int dimension_x, int dimension_z, int dimension_y, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
+	public StructureDescriptor(String name, int dimension_x, int dimension_z, int dimension_y, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
 		
 		// Set direct variables
 		dimension.setX(dimension_x);
@@ -41,10 +41,10 @@ public class StructureDescriptor {
 			for (int x = 0; x < dimension.getX(); x++) {
 				for (int z = 0; z < dimension.getZ(); z++) {
 					
-					// Get the block's ItemInfo
+					// Get the block
 					AbstractMixedItemStack block = layer_blocks.get(y).get(x).get(z);
 					
-					// If it doesn't exist, just screw it and move on
+					// If it doesn't exist move on
 					if (block == null) {
 						continue;
 					}
@@ -71,7 +71,7 @@ public class StructureDescriptor {
 		if (!found_lectern) {
 			Logger.log(
 					Logger.getWarning("abstract-lectern-not-found")
-					.replace("%dimensions%", dimension.getX() + " " + dimension.getY()  + " " + dimension.getZ()),
+					.replace("%multiblock%", name),
 					true);
 		}
 		

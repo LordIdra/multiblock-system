@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import me.idra.multiblocksystem.helpers.StringConversion;
-import me.idra.multiblocksystem.lists.ListVariantPrefixes;
+import me.idra.multiblocksystem.lists.ListMaterialGroups;
 
 
 
@@ -43,7 +43,7 @@ public class BlockError {
 		for (int i = 0; i < should_be_items.items.size(); i++) {
 			
 			MixedItemStack item_stack = should_be_items.items.get(i);
-			should_be_array.add(ChatColor.WHITE + ListVariantPrefixes.removePrefix(item_stack.getDisplayName()));
+			should_be_array.add(ChatColor.WHITE + ListMaterialGroups.removePrefix(item_stack.getDisplayName()));
 		}
 		
 		// Remove duplicates (OAK_FENCE, BIRCH_FENCE) will have become (FENCE, FENCE)
@@ -88,7 +88,7 @@ public class BlockError {
 		for (int i = 0; i < should_be_items.items.size(); i++) {
 			
 			MixedItemStack item_stack = should_be_items.items.get(i);
-			should_be_array.add(ChatColor.WHITE + ListVariantPrefixes.removePrefix(item_stack.getDisplayName()));
+			should_be_array.add(ChatColor.WHITE + ListMaterialGroups.removePrefix(item_stack.getDisplayName()));
 		}
 		
 		// Remove duplicates (OAK_FENCE, BIRCH_FENCE) will have become (FENCE, FENCE)

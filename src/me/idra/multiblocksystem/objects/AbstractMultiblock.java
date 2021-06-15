@@ -37,7 +37,8 @@ public class AbstractMultiblock {
 	public String description;
 	public StructureDescriptor structure;
 
-	public String fuelname;
+	public String fuel_name;
+	public int max_fuel;
 	
 	public List<String> inventory_tags = new ArrayList<> ();
 	public List<String> fuel_tags = new ArrayList<> ();
@@ -87,10 +88,10 @@ public class AbstractMultiblock {
 
 		// Get class location, and from that the class itself
 		// Don't need to check if the files exist because that's already been done in loadStructure()
-		String classname = multiblock_config.getString("Classname");
+		String classname = multiblock_config.getString("ClassName");
 
 		if (classname == null) {
-			Logger.configError(Logger.OPTION_NOT_FOUND, multiblock_file, null, "Classname");
+			Logger.configError(Logger.OPTION_NOT_FOUND, multiblock_file, null, "ClassName");
 			return;
 		}
 
@@ -119,7 +120,8 @@ public class AbstractMultiblock {
 		
 		// Get parameters from config
 		description = multiblock_config.getString("Description");
-		fuelname = multiblock_config.getString("FuelName");
+		fuel_name = multiblock_config.getString("FuelName");
+		max_fuel = multiblock_config.getInt("MaxFuel");
 		
 		// Get certain sections we need to read
 		List<String> inventory_tag_list = multiblock_config.getStringList("InventoryTags");
@@ -362,6 +364,7 @@ public class AbstractMultiblock {
 		
 		// Use this to create a new structure descriptor
 		structure = new StructureDescriptor(
+				name,
 				dimension_x,
 				dimension_z,
 				structure_array.size(),

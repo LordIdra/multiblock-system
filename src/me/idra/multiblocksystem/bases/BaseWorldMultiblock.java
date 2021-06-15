@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
@@ -166,6 +167,13 @@ public abstract class BaseWorldMultiblock {
 	private void processFuels() {
 
 		/* Add new fuel ticks */
+		// Check we aren't close to the fuel limit
+		// Could be made more efficient by finding the shortest possible
+		// time that fuels could add, but that would be overly complex
+		if (abstract_multiblock.max_fuel <= (fuel_ticks + 20)) {
+			return;
+		}
+
 		// For every fuel inventory
 		for (List<Inventory> inv_list : tags_fuel.values()) {
 			for (Inventory inv : inv_list) {
@@ -192,9 +200,23 @@ public abstract class BaseWorldMultiblock {
 							}
 						}
 
-						// Add fuel ticks and remove the item
-						inv.clear(index);
-						fuel_ticks += fuel.ticks * stack.getAmount();
+						// Number of fuel ticks can we add if we use the whole stack
+						int add_fuel = fuel.ticks * stack.getAmount();
+
+						// Add all of the stack as fuel
+						if (fuel_ticks + add_fuel < abstract_multiblock.max_fuel) {
+							inv.clear(index);
+							fuel_ticks += add_fuel;
+						
+						
+						// Just add some of the stack as fuel
+						} else if (fuel_ticks + fuel.ticks < abstract_multiblock.max_fuel) {
+							int add_limit = Math.floorDiv(abstract_multiblock.max_fuel - fuel_ticks, fuel.ticks);
+							inv.clear(index);
+							stack.setAmount(stack.getAmount() - add_limit);
+							inv.setItem(index, stack);
+							fuel_ticks += add_limit * fuel.ticks;
+						}
 					}
 				}
 			}
@@ -723,12 +745,12 @@ public abstract class BaseWorldMultiblock {
 	 * STATIC METHODS
 	 */
 
-	public static final String RUNNING = "RUNNING";
-	public static final String PAUSED_ENERGY_OUTPUT_FULL = "PAUSED_ENERGY_FULL";
-	public static final String PAUSED_NOT_ENOUGH_ENERGY = "PAUSED_NO_ENERGY";
-	public static final String PAUSED_ITEM_OUTPUT_FULL = "PAUSED_OUTPUT_FULL";
-	public static final String PAUSED_NOT_ENOUGH_ITEMS = "PAUSED_NO_INPUT";
-	public static final String PAUSED_NO_FUEL = "PAUSED_NO_FUEL";
+	public static final String RUNNING = ChatColor.GREEN + "RUNNING";
+	public static final String PAUSED_ENERGY_OUTPUT_FULL = ChatColor.RED + "Energy output full";
+	public static final String PAUSED_NOT_ENOUGH_ENERGY = ChatColor.RED + "No energy";
+	public static final String PAUSED_ITEM_OUTPUT_FULL = ChatColor.RED + "Item output full";
+	public static final String PAUSED_NOT_ENOUGH_ITEMS = ChatColor.RED + "No inputs";
+	public static final String PAUSED_NO_FUEL = ChatColor.RED + "No fuel";
 	
 	
 

@@ -82,6 +82,8 @@ public class FileHandlerPlayerData {
 		}
 
 		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
+
+		settings_section.set("auto_build_enabled", settings.auto_build_enabled);
 		
 		for (String container_key : settings.settingContainerMap.keySet()) {
 

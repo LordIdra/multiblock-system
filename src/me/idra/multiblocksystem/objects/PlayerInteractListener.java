@@ -16,6 +16,8 @@ import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 
 public class PlayerInteractListener implements Listener {
 
+
+	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		 
@@ -24,14 +26,11 @@ public class PlayerInteractListener implements Listener {
 
 			Block block = event.getClickedBlock();
 
-			if (block.getType() == Material.LECTERN) {
+			if ((block != null) && (block.getType() == Material.LECTERN)) {
 
 				Location location = event.getClickedBlock().getLocation();
 				BaseWorldMultiblock multiblock = ListWorldMultiblocks.getMultiblockFromLocation(location);
-
-				if (multiblock != null) {
-					ListInformationScoreBoards.toggleScoreBoard(event.getPlayer(), multiblock);
-				}
+				ListInformationScoreBoards.toggleScoreBoard(event.getPlayer(), multiblock);
 			}
 		}
 	}

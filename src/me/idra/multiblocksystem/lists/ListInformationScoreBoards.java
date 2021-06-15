@@ -27,14 +27,16 @@ public class ListInformationScoreBoards {
 
 	
     
-    public static void toggleScoreBoard(Player player, BaseWorldMultiblock baseWorldMultiblock) {
+    public static void toggleScoreBoard(Player player, BaseWorldMultiblock multiblock) {
     	
     	if (playerScoreBoard.containsKey(player.getUniqueId())) {
     		playerScoreBoard.get(player.getUniqueId()).hide();
     		playerScoreBoard.remove(player.getUniqueId());
 
     	} else {
-    		playerScoreBoard.put(player.getUniqueId(), new InformationScoreboard(player, baseWorldMultiblock));
+			if (multiblock != null) {
+    			playerScoreBoard.put(player.getUniqueId(), new InformationScoreboard(player, multiblock));
+			}
     	}
     }
 }
