@@ -1,2 +1,2 @@
-# multiblocksystem
-A custom plugin for creating multiblocks with slimefun integration.
+# MultiBlockSystem
+A custom plugin for creating MultiBlocks with SlimeFun integration.
