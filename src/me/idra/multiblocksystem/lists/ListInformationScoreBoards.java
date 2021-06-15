@@ -17,7 +17,7 @@ public class ListInformationScoreBoards {
 	}
 
 	// Map
-    public static Map<UUID, InformationScoreboard> playerScoreBoard = new HashMap<>();
+    private static Map<UUID, InformationScoreboard> playerScoreBoard = new HashMap<>();
 	
     public static void updateScoreboard() {
     	
