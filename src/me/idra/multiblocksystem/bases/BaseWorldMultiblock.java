@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.Capacitor;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -28,13 +29,13 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
-
-
 public abstract class BaseWorldMultiblock {
 	
 	public final int ID;
 	public final UUID owner;
 	
+	public static final String REQUIRED_TAG_NOT_FOUND = "required-tag-not-found";
+
 	public AbstractMultiblock abstract_multiblock = null; 
 	
 	public Map<BlockPosition, String[]> blocks;
@@ -130,9 +131,9 @@ public abstract class BaseWorldMultiblock {
 			if (tags_inventory.get(tag) == null) {
 
 				Logger.log(
-					Logger.getWarning("required-tag-not-found")
-					.replace("%tag%", tag)
-					.replace("%multiblock%", abstract_multiblock.name),
+					Logger.getWarning(REQUIRED_TAG_NOT_FOUND)
+					.replace(ConstantPlaceholders.TAG, tag)
+					.replace(ConstantPlaceholders.MULTIBLOCK, abstract_multiblock.name),
 					true);
 			}
 		}
@@ -142,9 +143,9 @@ public abstract class BaseWorldMultiblock {
 			if (tags_energy.get(tag) == null) {
 
 				Logger.log(
-					Logger.getWarning("required-tag-not-found")
-					.replace("%tag%", tag)
-					.replace("%multiblock%", abstract_multiblock.name),
+					Logger.getWarning(REQUIRED_TAG_NOT_FOUND)
+					.replace(ConstantPlaceholders.TAG, tag)
+					.replace(ConstantPlaceholders.MULTIBLOCK, abstract_multiblock.name),
 					true);
 			}
 		}
@@ -154,9 +155,9 @@ public abstract class BaseWorldMultiblock {
 				if (tags_position.get(tag) == null) {
 
 					Logger.log(
-						Logger.getWarning("required-tag-not-found")
-						.replace("%tag%", tag)
-						.replace("%multiblock%", abstract_multiblock.name),
+						Logger.getWarning(REQUIRED_TAG_NOT_FOUND)
+						.replace(ConstantPlaceholders.TAG, tag)
+						.replace(ConstantPlaceholders.MULTIBLOCK, abstract_multiblock.name),
 						true);
 			}
 		}

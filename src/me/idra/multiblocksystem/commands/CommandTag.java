@@ -18,6 +18,7 @@ import org.bukkit.util.BlockIterator;
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
@@ -25,7 +26,6 @@ import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
 public class CommandTag extends BaseCommand{
-	
 
 	public CommandTag() {
 		super();
@@ -95,8 +95,8 @@ public class CommandTag extends BaseCommand{
 			if (!multiblock.abstract_multiblock.inventory_tags.contains(args[1])) {
 				MessageHandler.send(player, 
 						MessageHandler.getError("invalid-inventory-tag")
-						.replace("%multiblock%", multiblock.abstract_multiblock.name)
-						.replace("%tag%", args[1]));
+						.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name)
+						.replace(ConstantPlaceholders.TAG, args[1]));
 				return false;
 			}
 			
@@ -136,8 +136,8 @@ public class CommandTag extends BaseCommand{
 		if (!multiblock.abstract_multiblock.position_tags.keySet().contains(args[1])) {
 			MessageHandler.send(player,
 					MessageHandler.getError("invalid-position-tag")
-					.replace("%multiblock%", multiblock.abstract_multiblock.name)
-					.replace("%tag%", args[1]));
+					.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name)
+					.replace(ConstantPlaceholders.TAG, args[1]));
 			return false;
 		}
 		
