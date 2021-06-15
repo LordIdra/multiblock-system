@@ -39,11 +39,18 @@ public class AbstractMixedItemStack {
 	
 	public AbstractMixedItemStack(SlimefunItem slimefun_item, String[] tags) {
 		
-		// For each material
+		// Add single slimefun item
 		items.add(new MixedItemStack(slimefun_item));
 		
 		// Set tags
 		this.tags = tags;
+
+	}
+
+	public AbstractMixedItemStack(List<MixedItemStack> stacks) {
+		
+		// Set MixedItemStack list
+		this.items = stacks;
 	}
 	
 	
