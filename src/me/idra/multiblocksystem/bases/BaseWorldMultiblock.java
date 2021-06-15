@@ -190,15 +190,14 @@ public abstract class BaseWorldMultiblock {
 					// Get an array of all the materials that match the fuel's Material
 					Map<Integer, ? extends ItemStack> inv_stacks = inv.all(fuel.stack.asItemStack().getType());
 
-					for (int index : inv_stacks.keySet()) {
+					for (Map.Entry<Integer, ? extends ItemStack> entry : inv_stacks.entrySet()) {
 						
-						ItemStack stack = inv_stacks.get(index);
+						ItemStack stack = entry.getValue();
 
 						// Slimefun item check
-						if (SlimefunItem.getByItem(stack) != null) {
-							if (SlimefunItem.getByItem(stack) != fuel.stack.slimefun_itemstack.getItem()) {
+						if (SlimefunItem.getByItem(stack) != null &&
+							SlimefunItem.getByItem(stack) != fuel.stack.slimefun_itemstack.getItem()) {
 								continue;
-							}
 						}
 
 						// Number of fuel ticks can we add if we use the whole stack
@@ -206,16 +205,16 @@ public abstract class BaseWorldMultiblock {
 
 						// Add all of the stack as fuel
 						if (fuel_ticks + add_fuel < abstract_multiblock.max_fuel) {
-							inv.clear(index);
+							inv.clear(entry.getKey());
 							fuel_ticks += add_fuel;
 						
 						
 						// Just add some of the stack as fuel
 						} else if (fuel_ticks + fuel.ticks < abstract_multiblock.max_fuel) {
 							int add_limit = Math.floorDiv(abstract_multiblock.max_fuel - fuel_ticks, fuel.ticks);
-							inv.clear(index);
+							inv.clear(entry.getKey());
 							stack.setAmount(stack.getAmount() - add_limit);
-							inv.setItem(index, stack);
+							inv.setItem(entry.getKey(), stack);
 							fuel_ticks += add_limit * fuel.ticks;
 						}
 					}
@@ -429,10 +428,10 @@ public abstract class BaseWorldMultiblock {
 				if (items.isEmpty()) {
 					continue;
 				}
+				
+				for (Map.Entry<Integer, ? extends ItemStack> stack : items.entrySet()) {
 
-				for (int stack_index : items.keySet()) {
-
-					ItemStack inventory_stack = items.get(stack_index);
+					ItemStack inventory_stack = stack.getValue();
 
 					// Slimefun item check
 					if (SlimefunItem.getByItem(inventory_stack) != null) {
@@ -448,14 +447,14 @@ public abstract class BaseWorldMultiblock {
 
 					// If there is a match, subtract the number of items from the relevant RecipeMixedItemStack
 					amount_map.put(recipe_stack, amount_map.get(recipe_stack) - inventory_stack.getAmount());
-					inv.clear(stack_index);
+					inv.clear(stack.getKey());
 
 					// We took away too many items, add back the relevant number
 					if (amount_map.get(recipe_stack) < 0) {
 
 						ItemStack stack_to_add = inventory_stack;
 						stack_to_add.setAmount(-amount_map.get(recipe_stack));
-						inv.setItem(stack_index, stack_to_add);
+						inv.setItem(stack.getKey(), stack_to_add);
 					}
 
 					// We've taken away enough items
@@ -485,10 +484,10 @@ public abstract class BaseWorldMultiblock {
 
 				HashMap<Integer, ? extends ItemStack> inventory_stacks = inv.all(recipe_stack.asItemStack().getType());
 
-				for (int inventory_stack_key : inventory_stacks.keySet()) {
+				for (Map.Entry<Integer, ? extends ItemStack> stack : inventory_stacks.entrySet()) {
 
 					// Get inventory stack from key
-					ItemStack inventory_stack = inventory_stacks.get(inventory_stack_key);
+					ItemStack inventory_stack = stack.getValue();
 					
 					// Slimefun item check
 					if (SlimefunItem.getByItem(inventory_stack) != null) {
@@ -560,10 +559,10 @@ public abstract class BaseWorldMultiblock {
 				Map<Integer, ? extends ItemStack> items_in_inventory = inventory.all(recipe_stack.asItemStack().getType());
 
 				// For every recipe stack in the inventory
-				for (Integer inventory_slot : items_in_inventory.keySet()) {
+				for (Map.Entry<Integer, ? extends ItemStack> inventory_slot : items_in_inventory.entrySet()) {
 					
 					// Get the inventory stack and figure how much space is 
-					ItemStack inventory_stack = items_in_inventory.get(inventory_slot);
+					ItemStack inventory_stack = items_in_inventory.get(inventory_slot.getKey());
 					int to_add = items_to_add.get(recipe_stack);
 					int space_in_stack = inventory_stack.getMaxStackSize() - inventory_stack.getAmount();
 
