@@ -15,4 +15,5 @@ public class ConstantPlaceholders {
     public static final String TYPE = "%type%";
     public static final String FILE = "%file%";
     public static final String PATH = "%path%";
+    public static final String TAG = "%tag%";
 }
