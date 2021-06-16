@@ -23,10 +23,11 @@ import java.util.List;
 
 public class ListMaterialGroups {
 
+	public static final String ITEM_GROUPS = "itemGroups";
+	
 	private ListMaterialGroups() {
 		// Empty constructor
 	}
-
 
 
 	private static Map<String, AbstractMixedItemStack> material_groups = new HashMap<> ();
@@ -45,11 +46,11 @@ public class ListMaterialGroups {
 
 		// Verify config is valid
 		FileConfiguration item_group_config = YamlConfiguration.loadConfiguration(item_group_file);
-		ConfigurationSection config_section = item_group_config.getConfigurationSection("ItemGroups");
+		ConfigurationSection config_section = item_group_config.getConfigurationSection(ITEM_GROUPS);
 
 		if (config_section == null) {
-			item_group_config.createSection("ItemGroups");
-			config_section = item_group_config.getConfigurationSection("ItemGroups");
+			item_group_config.createSection(ITEM_GROUPS);
+			config_section = item_group_config.getConfigurationSection(ITEM_GROUPS);
 		}
 
 		// Get each group and add it to the map

@@ -18,8 +18,9 @@ import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
-
 public class ConfigHelper {
+	
+	public static final String ITEM_GROUPS = "itemGroups";
 	
 	private ConfigHelper() {}
     
@@ -172,7 +173,7 @@ public class ConfigHelper {
 
 		// Load config
 		FileConfiguration group_config = YamlConfiguration.loadConfiguration(group_file);
-		ConfigurationSection group_section = group_config.getConfigurationSection("ItemGroups");
+		ConfigurationSection group_section = group_config.getConfigurationSection(ITEM_GROUPS);
         List<String> item_names = group_section.getStringList(name.toLowerCase());
 
         // Convert names to MixedItemStacks
