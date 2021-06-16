@@ -1,2 +1,6 @@
 # MultiBlockSystem
-A custom plugin for creating MultiBlocks with SlimeFun 4 integration.
+A custom plugin for creating Customized MultiBlocks with SlimeFun 4 integration.
+
+Multiblocks Can be Setup to allow for interchangable materials within the multiblock to allow it to nicely intergrate within player's builds.
+
+To install ensure you have the plugin within your Server's plugins folder and have the correct version of Slimefun 4 installed.
