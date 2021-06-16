@@ -9,7 +9,7 @@ import me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
-import me.idra.multiblocksystem.lists.ListMaterialGroups;
+import me.idra.multiblocksystem.lists.ListItemGroups;
 import me.idra.multiblocksystem.tasks.TaskIncrementTick;
 import me.idra.multiblocksystem.tasks.TaskTickScoreboards;
 
@@ -76,7 +76,7 @@ public class ManagerPlugin {
 
     	// Initialize classes
 		ManagerSlimefunItems.initialize();
-		ListMaterialGroups.initialize();
+		ListItemGroups.initialize();
     	ListAbstractMultiblocks.initialize();
     	ManagerPermissions.initialize();
 	}
