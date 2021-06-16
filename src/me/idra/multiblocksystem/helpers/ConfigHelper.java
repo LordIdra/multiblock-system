@@ -168,7 +168,7 @@ public class ConfigHelper {
 
 		if (!group_file.exists()) {
             Logger.fileNotFoundError(group_file);
-			return null;
+			return new ArrayList<MixedItemStack> ();
 		}
 
 		// Load config
