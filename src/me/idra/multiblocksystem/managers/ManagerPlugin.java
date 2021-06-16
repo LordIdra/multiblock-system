@@ -32,8 +32,8 @@ public class ManagerPlugin {
 	
 	public static long tick;
 	public static int tick_interval;
-	public static TaskIncrementTick task_increment_tick;
-	public static TaskTickScoreboards task_tick_scoreboards;
+	private static TaskIncrementTick task_increment_tick;
+	private static TaskTickScoreboards task_tick_scoreboards;
 	
 	
 	

@@ -27,24 +27,24 @@ public class InformationScoreboard {
 
 	public void update() {
 
-		String completion = ChatColor.GRAY + "[" + ChatColor.RED + "||||||||||||||||||||" + ChatColor.GRAY + "]";
+		StringBuilder completion = new StringBuilder(ChatColor.GRAY + "[" + ChatColor.RED + "||||||||||||||||||||" + ChatColor.GRAY + "]");
 
 		if (multiblock.active_recipe != null) {
 
-			completion = ChatColor.GRAY + "[" + ChatColor.GREEN;
+			completion.append(ChatColor.GRAY + "[" + ChatColor.GREEN);
 			int percentage_complete_20 = ((multiblock.recipe_ticks_remaining * 20) / multiblock.active_recipe.time);
 			
 			for (int i = 0; i < 20 - percentage_complete_20; i++) {
-				completion += "|";
+				completion.append("|");
 			}
 
-			completion += ChatColor.DARK_GRAY;
+			completion.append(ChatColor.DARK_GRAY);
 
 			for (int i = 0; i < percentage_complete_20; i++) {
-				completion += "|";
+				completion.append("|");
 			}
 
-			completion += ChatColor.GRAY + "]" + ChatColor.GREEN;
+			completion.append(ChatColor.GRAY + "]" + ChatColor.GREEN);
 		}
 
 		int seconds_remaining = Math.floorDiv(multiblock.fuel_ticks, 20);

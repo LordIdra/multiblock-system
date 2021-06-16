@@ -168,7 +168,7 @@ public class ConfigHelper {
 
 		if (!group_file.exists()) {
             Logger.fileNotFoundError(group_file);
-			return new ArrayList<MixedItemStack> ();
+			return new ArrayList<> ();
 		}
 
 		// Load config
@@ -177,7 +177,7 @@ public class ConfigHelper {
         List<String> item_names = group_section.getStringList(name.toLowerCase());
 
         // Convert names to MixedItemStacks
-        List<MixedItemStack> item_stacks = new ArrayList<MixedItemStack> ();
+        List<MixedItemStack> item_stacks = new ArrayList<> ();
 
         for (String item_name : item_names) {
         
