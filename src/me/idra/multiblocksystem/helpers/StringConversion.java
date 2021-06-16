@@ -105,11 +105,11 @@ public class StringConversion {
 		Material material = idToMaterial(ID);
 		SlimefunItem slimefun_item = idToSlimefunItem(ID);
 
-		if (material != null) {
-			return new MixedItemStack(material);
+		if (slimefun_item != null) {
+		return new MixedItemStack(slimefun_item);
 
-		} else if (slimefun_item != null) {
-			return new MixedItemStack(slimefun_item);
+		} else if (material != null) {
+			return new MixedItemStack(material);
 
 		} else {
 			Logger.configError(Logger.OPTION_INVALID, file, section, ID);
@@ -126,11 +126,12 @@ public class StringConversion {
 		Material material = idToMaterial(ID);
 		SlimefunItem slimefun_item = idToSlimefunItem(ID);
 
-		if (material != null) {
-			return new RecipeMixedItemStack(material);
-
-		} else if (slimefun_item != null) {
+		
+		if (slimefun_item != null) {
 			return new RecipeMixedItemStack(slimefun_item);
+
+		} else if (material != null) {
+			return new RecipeMixedItemStack(material);
 
 		} else {
 			Logger.configError(Logger.OPTION_INVALID, file, section, ID);
