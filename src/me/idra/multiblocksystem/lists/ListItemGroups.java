@@ -21,9 +21,9 @@ import java.util.List;
 
 
 
-public class ListMaterialGroups {
+public class ListItemGroups {
 
-	private ListMaterialGroups() {
+	private ListItemGroups() {
 		// Empty constructor
 	}
 
@@ -53,9 +53,9 @@ public class ListMaterialGroups {
 		}
 
 		// Get each group and add it to the map
-		for (String group_name : item_group_config.getKeys(false)) {
+		for (String group_name : config_section.getKeys(false)) {
 
-			List<String> group_item_names = item_group_config.getStringList(group_name);
+			List<String> group_item_names = config_section.getStringList(group_name);
 			List<MixedItemStack> group_item_stacks = new ArrayList<> ();
 
 			// Convert the item names to MixedItemStacks
