@@ -43,11 +43,8 @@ public class FileHandlerPlayerData {
 	
 		// Check the PlayerData.yml file exists
 		if (!data_file.exists()) {
-			try {
-				data_file.createNewFile();
-			} catch (IOException e) {
-				// This should never happen - if it does, we have much bigger problems to worry about
-			}
+			Logger.fileNotFoundError(data_file);
+			return;
 		}
 		
 		// Load the config

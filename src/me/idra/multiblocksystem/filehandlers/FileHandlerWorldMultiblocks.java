@@ -2,8 +2,6 @@ package me.idra.multiblocksystem.filehandlers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -46,11 +44,8 @@ public class FileHandlerWorldMultiblocks {
 	
 		// Check the WorldMultiblocks.yml file exists
 		if (!world_multiblock_file.exists()) {
-			try {
-				world_multiblock_file.createNewFile();
-			} catch (IOException e) {
-				// This should never happen - if it does, we have much bigger problems to worry about
-			}
+			Logger.fileNotFoundError(world_multiblock_file);
+			return;
 		}
 		
 		// Load the config
@@ -85,7 +80,7 @@ public class FileHandlerWorldMultiblocks {
 		try {
 			world_multiblock_config.save(world_multiblock_file);
 		} catch (IOException e) {
-			// This should never happen - if it does, we have much bigger problems to worry about
+			e.printStackTrace();
 		}
 	}
 	
@@ -139,15 +134,23 @@ public class FileHandlerWorldMultiblocks {
 			}
 			
 			// Store blocks and their respective tags
-			for (BlockPosition position : multiblock.blocks.keySet())
-				position_section.set(String.valueOf(position.getPosition()), multiblock.blocks.get(position));	// x/y/z : String
+			for (BlockPosition position : multiblock.blocks.keySet()) {
+				String tag = multiblock.blocks.get(position);
+
+				// Null values won't be stored, so we have to set this to an empty string
+				if (tag == null) {
+					tag = "";
+				}
+
+				position_section.set(String.valueOf(position.getPosition()), tag);	// x/y/z : String
+			}
 		}
 		
 		// Save the new config
 		try {
 			world_multiblock_config.save(world_multiblock_file);
 		} catch (IOException e) {
-			// This should never happen - if it does, we have much bigger problems to worry about
+			e.printStackTrace();
 		}
 	}
 	
@@ -175,17 +178,17 @@ public class FileHandlerWorldMultiblocks {
 			AbstractMultiblock abstract_multiblock = ListAbstractMultiblocks.structures.get(name);
 					
 			// Get block positions
-			Map<BlockPosition, String[]> blocks = new HashMap<> ();
+			Map<BlockPosition, String> blocks = new HashMap<> ();
 			
 			// Store blocks and their respective tags
 			for (String position_as_string : position_section.getKeys(false)) {
 				
 				// Convert string to position
 				BlockPosition position = new BlockPosition(Bukkit.getWorld(multiblock_section.getString("World")), Long.valueOf(position_as_string));
-				List<String> tags =  (ArrayList<String>) position_section.getStringList(position_as_string);	// Long : String
+				String tag = position_section.getString(position_as_string);	// Long : String
 				
 				// Add to block position map
-				blocks.put(position, tags.toArray(new String[tags.size()]));
+				blocks.put(position, tag);
 			}
 			
 			// Get current recipe information

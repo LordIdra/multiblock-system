@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Scanner;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -169,7 +168,7 @@ public class AbstractMultiblock {
 				// For every position tag, get the items the tag can be, and add them to an array
 				for (String item : position_tag_config.getStringList(tag)) {
 					
-					MixedItemStack stack = StringConversion.mixedItemStackFromID(item);
+					MixedItemStack stack = StringConversion.mixedItemStackFromID(multiblock_file, position_tag_config, item);
 
 					if (stack == null) {
 						Logger.configError(Logger.OPTION_INVALID, multiblock_file, position_tag_config, tag);
@@ -214,7 +213,7 @@ public class AbstractMultiblock {
 				String id = split_string[1];
 
 				// Create MixedItemStack
-				MixedItemStack stack = StringConversion.mixedItemStackFromID(id);
+				MixedItemStack stack = StringConversion.mixedItemStackFromID(multiblock_file, fuel_config, id);
 
 				if (stack == null) {
 					Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
@@ -279,96 +278,34 @@ public class AbstractMultiblock {
 		 * STRUCTURE LOADING
 		 */
 
-		// Dimensions
-		int dimension_x = 0;
-		int dimension_z = 0;
-
-		// Generate empty array which will store the block data strings for each layer
-		List<List<String>> structure_array = new ArrayList<> ();
-
-		try {
-			try (Scanner structure_file_scanner = new Scanner(structure_file).useDelimiter("\\s+")) {
-					
-				// Get dimension X
-				if (!structure_file_scanner.next().equalsIgnoreCase("DIMENSION-X:")) {
-					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-X");
-					return;
-					
-				} else {
-					dimension_x = structure_file_scanner.nextInt();
-				}
-				
-				// Get dimension Z
-				if (!structure_file_scanner.next().equalsIgnoreCase("DIMENSION-Z:")) {
-					Logger.configError(Logger.OPTION_NOT_FOUND, structure_file, null, "DIMENSION-Z");
-					return;
-					
-				} else {
-					dimension_z = structure_file_scanner.nextInt();
-				}
-				
-				// For each block data string in the file
-				while (structure_file_scanner.hasNext()) {
-					
-					// Get block data string
-					String word = structure_file_scanner.next();
-					
-					// If we're beginning a new layer
-					if (word.equals("LAYER:")) {
-						
-						// Add a new array to store block data strings for this layer
-						structure_array.add(new ArrayList<>());
-						continue;
-					}
-					
-					// If we're not beginning a new layer, add the block data string to the layer's array
-					List<String> current_array_list = structure_array.get(structure_array.size()-1);
-					current_array_list.add(word);
-				}
-			}
-		} catch (Exception e) {
-			return;
-		}
-		
-
-
-		/*
-		 * CREATE DESCRIPTOR
-		 */
-
-		// Convert the data from the structure arrays to AbstractMixedItemStacks
 		List<List<List<AbstractMixedItemStack>>> block_array = new ArrayList<> ();
 		
-		for (int y = 0; y < structure_array.size(); y++) {
-			block_array.add(new ArrayList<> ());
-			
-			for (int x = 0; x < dimension_x; x++) {
-				block_array.get(y).add(new ArrayList<> ());
-				
-				for (int z = 0; z < dimension_z; z++) {
-					
-					// Get the array we're dealing with
-					List<List<AbstractMixedItemStack>> block_array_y = block_array.get(y);
-					List<AbstractMixedItemStack> block_array_x = block_array_y.get(x);
-					
-					// Convert item info string to abstract mixed item stack
-					AbstractMixedItemStack block = StringConversion.stringToAbstractMixedItemStack(structure_file, y, structure_array.get(y).get((z * dimension_x) + x));
-					block_array_x.add(block);
-					
-					// Set the arrays again (not 100% sure if this is necessary)
-					block_array_y.set(x, block_array_x);
-					block_array.set(y, block_array_y);
+		ConfigurationSection structure_section = YamlConfiguration.loadConfiguration(structure_file);
+
+		for (String name_y : structure_section.getKeys(false)) {
+
+			ConfigurationSection section_y = structure_section.getConfigurationSection(name_y);
+			List<List<AbstractMixedItemStack>> block_array_y = new ArrayList<> ();
+
+			for (String name_x : section_y.getKeys(false)) {
+
+				ConfigurationSection section_x = section_y.getConfigurationSection(name_x);
+				List<AbstractMixedItemStack> block_array_x = new ArrayList<> ();
+
+				for (String name_z : section_x.getKeys(false)) {
+
+					String string_z = section_x.getString(name_z);
+					block_array_x.add(StringConversion.stringToAbstractMixedItemStack(structure_file, section_x, string_z));
 				}
+
+				block_array_y.add(block_array_x);
 			}
+
+			block_array.add(block_array_y);
 		}
 		
 		// Use this to create a new structure descriptor
-		structure = new StructureDescriptor(
-				name,
-				dimension_x,
-				dimension_z,
-				structure_array.size(),
-				block_array);
+		structure = new StructureDescriptor(name, block_array);
 	}
 
 

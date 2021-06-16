@@ -10,6 +10,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime; 
 
 
@@ -102,5 +103,16 @@ public class Logger {
 		}
 
 		log(error_message, true);
+	}
+
+
+
+	public static void fileNotFoundError(File file) {
+		Logger.log(getWarning("file-not-found").replace(ConstantPlaceholders.FILE, file.getPath()), true);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

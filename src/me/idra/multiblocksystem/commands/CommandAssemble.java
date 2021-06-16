@@ -140,7 +140,7 @@ public class CommandAssemble extends BaseCommand{
 		if (percentage == 100) {
 			
 			// Multiblock complete, let's assemble it. Start by creating a map of locations to tags
-			Map<BlockPosition, String[]> location_to_tag_map = new HashMap<> ();
+			Map<BlockPosition, String> location_to_tag_map = new HashMap<> ();
 			
 			// For every BlockInfo in the structure
 			for (WorldMixedItemStack world_block: world_to_abstract_map.keySet()) {
@@ -149,12 +149,12 @@ public class CommandAssemble extends BaseCommand{
 				BlockPosition block_position = new BlockPosition(world_block.location);
 				
 				// If the block doesn't have any tag, value = null
-				if (world_to_abstract_map.get(world_block).tags == null) {
+				if (world_to_abstract_map.get(world_block).tag == null) {
 					location_to_tag_map.put(block_position, null);
 				
 				// If the block does have any tags, value = tags
 				} else {
-					location_to_tag_map.put(block_position, world_to_abstract_map.get(world_block).tags);
+					location_to_tag_map.put(block_position, world_to_abstract_map.get(world_block).tag);
 				}
 			}
 			

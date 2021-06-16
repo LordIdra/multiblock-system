@@ -68,7 +68,7 @@ public class MixedItemStack {
 
 	
 	public boolean isSlimefunItem() {
-		
+
 		// Returns true only if slimefun item is not null
 		return slimefun_itemstack != null;
 	}
@@ -92,7 +92,7 @@ public class MixedItemStack {
 		if (isSlimefunItem())
 			return slimefun_itemstack.getItem().getItemName();
 		else
-			return StringConversion.materialToString(itemstack.getType());
+			return StringConversion.formatItemName(itemstack.getType().toString());
 	}
 	
 	

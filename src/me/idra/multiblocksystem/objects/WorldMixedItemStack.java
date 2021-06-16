@@ -15,8 +15,7 @@ public class WorldMixedItemStack extends MixedItemStack {
 	
 	public WorldMixedItemStack(Block block) {
 		super(block.getType(), BlockStorage.check(block));
-		
-		location = block.getLocation();
+		this.location = block.getLocation();
 	}
 	
 	public WorldMixedItemStack(SlimefunItem slimefun_item, Location location) {

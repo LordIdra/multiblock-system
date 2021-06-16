@@ -3,7 +3,6 @@ package me.idra.multiblocksystem.bases;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -29,6 +28,8 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
+
+
 public abstract class BaseWorldMultiblock {
 	
 	public final int ID;
@@ -36,10 +37,8 @@ public abstract class BaseWorldMultiblock {
 	
 	public static final String REQUIRED_TAG_NOT_FOUND = "required-tag-not-found";
 
-	public AbstractMultiblock abstract_multiblock = null; 
-	
-	public Map<BlockPosition, String[]> blocks;
-	public Map<BlockPosition, String[]> original_tags 		= new HashMap<> ();
+	public AbstractMultiblock abstract_multiblock = null;
+	public Map<BlockPosition, String> blocks;
 	
 	public Map<String, List<Inventory>> tags_inventory 		= new HashMap<> ();
 	public Map<String, List<Inventory>> tags_fuel 			= new HashMap<> ();
@@ -55,7 +54,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	protected BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String[]> blocks, UUID owner, int ID) {
+	protected BaseWorldMultiblock(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String> blocks, UUID owner, int ID) {
 		
 		// Set default variables
 		this.blocks = blocks;
@@ -599,8 +598,6 @@ public abstract class BaseWorldMultiblock {
 		// Add any remaining ItemStacks
 		for (Inventory inventory : tags_inventory.get(tag)) {
 			for (RecipeMixedItemStack recipe_stack : items_to_add.keySet()) {
-
-				Logger.log("hi 7", true);
 				
 				if (inventory.firstEmpty() == -1) {
 					break;
@@ -754,7 +751,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 
-	public static List<Inventory> inventoriesWithTag(Map<BlockPosition, String[]> position_map, String tag) {
+	public static List<Inventory> inventoriesWithTag(Map<BlockPosition, String> position_map, String tag) {
 		
 		// Array to store all matches
 		List<Inventory> tag_matches = new ArrayList<> ();
@@ -768,7 +765,7 @@ public abstract class BaseWorldMultiblock {
 				Inventory inventory = ((Chest) position.getBlock().getState()).getBlockInventory();
 			
 				// Compare the tag for that section - if it matches, check that the inventory doesn't already exist, then add the inventory to our array
-				if ((Arrays.asList(position_map.get(position)).contains(tag)) && (!tag_matches.contains(inventory))) {
+				if (position_map.get(position).equalsIgnoreCase(tag) && (!tag_matches.contains(inventory))) {
 					tag_matches.add(inventory);
 				}
 			}
@@ -780,7 +777,7 @@ public abstract class BaseWorldMultiblock {
 	
 	
 	
-	public static List<BlockPosition> positionsWithTag(Map<BlockPosition, String[]> position_map, String tag) {
+	public static List<BlockPosition> positionsWithTag(Map<BlockPosition, String> position_map, String tag) {
 		
 		// Array to store all matches
 		List<BlockPosition> tag_matches = new ArrayList<> ();
@@ -789,7 +786,7 @@ public abstract class BaseWorldMultiblock {
 		for (BlockPosition position : position_map.keySet()) {
 			
 			// Compare the tag for that section - if it matches, add the position to our array
-			if (Arrays.asList(position_map.get(position)).contains(tag)) {
+			if (position_map.get(position) != null && position_map.get(position).equalsIgnoreCase(tag)) {
 				tag_matches.add(position);
 			}
 		}

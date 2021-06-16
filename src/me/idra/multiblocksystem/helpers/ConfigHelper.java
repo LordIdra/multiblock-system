@@ -7,8 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import me.idra.multiblocksystem.managers.ManagerPlugin;
+import me.idra.multiblocksystem.objects.MixedItemStack;
 import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
 
@@ -74,7 +81,7 @@ public class ConfigHelper {
                 // Get amount and ID from the resulting two strings
                 int amount = Integer.parseInt(split_string[0]);
                 String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(file, config_inputs, id);
 
                 // Check the stack is valid
                 if (stack == null) {
@@ -131,7 +138,7 @@ public class ConfigHelper {
                 // Get amount and ID from the resulting two strings
                 int amount = Integer.parseInt(split_string[0]);
                 String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(id);
+                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(file, config_outputs, id);
 
                 // Check the stack is valid
                 if (stack == null) {
@@ -150,4 +157,37 @@ public class ConfigHelper {
 
         return outputs;
     }
+
+
+    
+	public static List<MixedItemStack> loadGroup(String name) {
+
+		// Load file
+		File group_file = new File(ManagerPlugin.plugin.getDataFolder(), "itemgroups.yml");
+
+		if (!group_file.exists()) {
+            Logger.fileNotFoundError(group_file);
+			return null;
+		}
+
+		// Load config
+		FileConfiguration group_config = YamlConfiguration.loadConfiguration(group_file);
+		ConfigurationSection group_section = group_config.getConfigurationSection("ItemGroups");
+        List<String> item_names = group_section.getStringList(name.toLowerCase());
+
+        // Convert names to MixedItemStacks
+        List<MixedItemStack> item_stacks = new ArrayList<MixedItemStack> ();
+
+        for (String item_name : item_names) {
+        
+			Material material = StringConversion.idToMaterial(item_name);
+			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(item_name);
+
+			if 		(material != null) 		item_stacks.add(new MixedItemStack(material));
+			else if (slimefun_item != null)	item_stacks.add(new MixedItemStack(slimefun_item));
+			else 							Logger.configError(Logger.OPTION_INVALID, group_file, group_section, name + "." + item_name);
+        }
+
+        return item_stacks;
+	}
 }

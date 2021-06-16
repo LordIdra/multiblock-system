@@ -25,12 +25,12 @@ public class StructureDescriptor {
 	
 	
 	
-	public StructureDescriptor(String name, int dimension_x, int dimension_z, int dimension_y, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
+	public StructureDescriptor(String name, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
 		
 		// Set direct variables
-		dimension.setX(dimension_x);
-		dimension.setZ(dimension_z);
-		dimension.setY(dimension_y);
+		dimension.setY(layer_blocks.size());
+		dimension.setX(layer_blocks.get(0).size());
+		dimension.setZ(layer_blocks.get(0).get(0).size());
 		blocks = layer_blocks;
 		
 		// Figure out if the structure contains a lectern (and if so, where it is)

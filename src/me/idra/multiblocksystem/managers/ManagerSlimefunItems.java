@@ -1,7 +1,6 @@
 package me.idra.multiblocksystem.managers;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,19 +76,13 @@ public class ManagerSlimefunItems {
 		File slimefun_item_file = new File(slimefun_folder, ITEM_FILE_NAME);
 
 		if (!slimefun_research_file.exists()) {
-			try {
-				slimefun_research_file.createNewFile();
-			} catch (IOException e) {
-				// This should never happen - if it does, we have much bigger problems to worry about
-			}
+			Logger.fileNotFoundError(slimefun_research_file);
+			return;
 		}
 
 		if (!slimefun_item_file.exists()) {
-			try {
-				slimefun_item_file.createNewFile();
-			} catch (IOException e) {
-				// This should never happen - if it does, we have much bigger problems to worry about
-			}
+			Logger.fileNotFoundError(slimefun_item_file);
+			return;
 		}
 
 		// Load configs
@@ -220,7 +213,7 @@ public class ManagerSlimefunItems {
 					int index = Integer.parseInt(recipe_key);
 					String id = recipe_items_section.getString(recipe_key);
 	
-					recipe[index] = StringConversion.itemStackFromString(id);
+					recipe[index] = StringConversion.mixedItemStackFromID(slimefun_item_file, recipe_items_section, id).asItemStack();
 	
 					if (recipe[index] == null) {
 						Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, recipe_items_section, recipe_key);

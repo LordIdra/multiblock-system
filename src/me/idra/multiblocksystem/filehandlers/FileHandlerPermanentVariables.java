@@ -33,11 +33,8 @@ public class FileHandlerPermanentVariables {
 	
 		// Check the PermanentVariables.yml file exists
 		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// This should never happen - if it does, we have much larger problems to worry about
-			}
+			Logger.fileNotFoundError(file);
+			return;
 		}
 		
 		// Load the config

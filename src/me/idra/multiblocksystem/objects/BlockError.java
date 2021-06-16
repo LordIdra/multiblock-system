@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import me.idra.multiblocksystem.helpers.StringConversion;
-import me.idra.multiblocksystem.lists.ListMaterialGroups;
 
 
 
@@ -37,30 +36,8 @@ public class BlockError {
 		// Block that the location currently is
 		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + current_item.getDisplayName() + ChatColor.DARK_RED + "]";
 
-		// Block(s) that the location should be
-		List<String> should_be_array = new ArrayList<> ();
-		
-		for (int i = 0; i < should_be_items.items.size(); i++) {
-			
-			MixedItemStack item_stack = should_be_items.items.get(i);
-			should_be_array.add(ChatColor.WHITE + ListMaterialGroups.removePrefix(item_stack.getDisplayName()));
-		}
-		
-		// Remove duplicates (OAK_FENCE, BIRCH_FENCE) will have become (FENCE, FENCE)
-		should_be_array = StringConversion.removeDuplicates(should_be_array);
-		
-		// Convert array to single string	
-		StringBuilder should_be_string = new StringBuilder(ChatColor.DARK_RED + "[");
-		
-		for (int i = 0; i < should_be_array.size(); i++) {
-			
-			should_be_string.append(should_be_array.get(i));
-			
-			if (i != should_be_array.size() - 1)
-				should_be_string.append(ChatColor.DARK_RED + ", ");
-		}
-		
-		should_be_string.append(ChatColor.DARK_RED + "]");
+		// Block that the location should be
+		String should_be_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatItemName(should_be_items.identifier) + ChatColor.DARK_RED + "]";
 
 		// Generate the final error string
 		return 	ChatColor.DARK_RED +  "x" + ChatColor.YELLOW + location_vector.getBlockX() +
@@ -82,33 +59,8 @@ public class BlockError {
 		else
 			primary_color = ChatColor.DARK_RED;
 		
-		// Block(s) that the location should be
-		List<String> should_be_array = new ArrayList<> ();
-		
-		for (int i = 0; i < should_be_items.items.size(); i++) {
-			
-			MixedItemStack item_stack = should_be_items.items.get(i);
-			should_be_array.add(ChatColor.WHITE + ListMaterialGroups.removePrefix(item_stack.getDisplayName()));
-		}
-		
-		// Remove duplicates (OAK_FENCE, BIRCH_FENCE) will have become (FENCE, FENCE)
-		should_be_array = StringConversion.removeDuplicates(should_be_array);
-		
-		// Convert array to single string
-		StringBuilder should_be_string = new StringBuilder(primary_color + "[");
-		 
-		for (int i = 0; i < should_be_array.size(); i++) {
-			
-			should_be_string.append(should_be_array.get(i));
-			
-			if (i != should_be_array.size() - 1)
-				should_be_string.append(primary_color + ", ");
-		}
-		
-		should_be_string.append(primary_color + "]");
-		
 		// Generate the final error string
-		return should_be_string.toString();
+		return primary_color + "[" + ChatColor.WHITE + should_be_items.identifier + primary_color + "]";
 	}
 	
 	
@@ -147,7 +99,7 @@ public class BlockError {
 	 */
 	
 	public static BlockError getBlockError(WorldMixedItemStack block, AbstractMixedItemStack item, Player player) {
-		
+
 		// For every ItemStack the abstract mixed item stack could be
 		for (MixedItemStack abstract_itemstack : item.items) {
 			
