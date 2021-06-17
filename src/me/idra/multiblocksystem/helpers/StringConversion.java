@@ -8,12 +8,14 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.idra.multiblocksystem.objects.ItemGroup;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 
 
@@ -26,41 +28,18 @@ public class StringConversion {
 
 	public static final String LABEL_LAYER = "layer-";
 	
-
-	public static String formatItemName(String name) {
-		
-		// Remove underscores
-		name = name.toLowerCase().replace("_", " ");
-		
-		// Capitalise each word
-		StringBuilder final_name = new StringBuilder();
-		String[] words = name.split("\\s");
-		
-		for (int i = 0; i < words.length; i++) {
-			 
-			final_name.append(words[i].substring(0, 1).toUpperCase() + words[i].substring(1, words[i].length()));
-			
-			if (i != words.length - 1)
-				final_name.append(" ");
-		}
-		
-		// Return the final name
-		return final_name.toString();
-	}
-
 	
-	
+
 	public static Material idToMaterial(String name) {
 		return Material.getMaterial(name.toUpperCase().replace(" ", "_"));
 	}
-	
 	
 	public static SlimefunItem idToSlimefunItem(String ID) {
 		return SlimefunPlugin.getRegistry().getSlimefunItemIds().get(ID);
 	}
 	
 	
-	public static ItemGroup stringToGroup(File file, ConfigurationSection section, String data) {
+	public static ItemGroup groupFromName(File file, ConfigurationSection section, String data) {
 
 		// Capitalise the data (easier to deal with this way)
 		data = data.toUpperCase();
@@ -91,6 +70,49 @@ public class StringConversion {
 
 		// Create AbstractMixeditemStack
 		return new ItemGroup(identifier, tag, item_stack_list);
+	}
+
+
+
+	public static String formatItemName(String name) {
+		
+		// Remove underscores
+		name = name.toLowerCase().replace("_", " ");
+		
+		// Capitalise each word
+		StringBuilder final_name = new StringBuilder();
+		String[] words = name.split("\\s");
+		
+		for (int i = 0; i < words.length; i++) {
+			 
+			final_name.append(words[i].substring(0, 1).toUpperCase() + words[i].substring(1, words[i].length()));
+			
+			if (i != words.length - 1)
+				final_name.append(" ");
+		}
+		
+		// Return the final name
+		return final_name.toString();
+	}
+
+
+
+	public static String formatBlock(Block block) {
+		
+		// Get name
+		SlimefunItem slimefun_item = BlockStorage.check(block);
+		Material material = block.getType();
+		String name = "ERROR";
+
+		if (slimefun_item != null) {
+			name = slimefun_item.getId();
+			
+		} else if (material != null) {
+			name = material.name();
+		}
+
+		// Return the final name
+		return formatItemName(name);
 	}
 
 

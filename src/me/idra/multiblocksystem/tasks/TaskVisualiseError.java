@@ -3,6 +3,7 @@ package me.idra.multiblocksystem.tasks;
 import java.awt.Color;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -80,26 +81,27 @@ public class TaskVisualiseError extends BukkitRunnable{
 	
 	public void visualise(int r, int g, int b) {
 		
-		// Initialize particle
+		// Initialize particle and get location
 		ParticleBuilder particle;
 		Color dust_color = new Color(r, g, b);
+		Location location = error.block.getLocation();
 		
 		// X indicator
-		particle = new ParticleBuilder(ParticleEffect.REDSTONE, error.current_item.location);
+		particle = new ParticleBuilder(ParticleEffect.REDSTONE, location);
 		particle.setOffsetX(offset.getBlockX());
 		particle.setAmount(amount);
 		particle.setColor(dust_color);
         particle.display();
 
 		// Y indicator
-		particle = new ParticleBuilder(ParticleEffect.REDSTONE, error.current_item.location);
+		particle = new ParticleBuilder(ParticleEffect.REDSTONE, location);
 		particle.setOffsetY(offset.getBlockY());
 		particle.setAmount(amount);
 		particle.setColor(dust_color);
         particle.display();
         
 		// Z indicator
-		particle = new ParticleBuilder(ParticleEffect.REDSTONE, error.current_item.location);
+		particle = new ParticleBuilder(ParticleEffect.REDSTONE, location);
 		particle.setOffsetZ(offset.getBlockZ());
 		particle.setAmount(amount);
         particle.setColor(dust_color);

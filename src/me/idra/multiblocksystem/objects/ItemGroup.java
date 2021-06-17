@@ -34,7 +34,7 @@ public class ItemGroup {
 
 
 
-    String name;
-    String tag;
-    List<ItemStack> stacks;
+    public String name;
+    public String tag;
+    public List<ItemStack> stacks;
 }

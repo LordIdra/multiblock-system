@@ -39,7 +39,7 @@ public class BlockError {
 		Vector location_vector = block.getLocation().toVector();
 		
 		// Block that the location currently is
-		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatBlockName(block) + ChatColor.DARK_RED + "]";
+		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatBlock(block) + ChatColor.DARK_RED + "]";
 
 		// Block that the location should be
 		String should_be_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatItemName(group.name) + ChatColor.DARK_RED + "]";
@@ -75,9 +75,55 @@ public class BlockError {
 		// Update the current block
 		block = block.getLocation().getWorld().getBlockAt(block.getLocation());
 		
+		// Compare blocks
+		return compareBlockAndGroup(block, group);
+	}
+	
+	
+	
+	/*
+	 * STATIC METHODS
+	 */
+	
+	public static BlockError getBlockError(Block block, ItemGroup group, Player player) {
+			
+		// Compare block/group to see if there's still an error
+		if (compareBlockAndGroup(block, group)) {
+			return null;
+		} else {
+			return new BlockError(block, group, player);
+		}
+	}
+	
+	
+	
+	public static List<BlockError> getBlockErrorsFromInfoMap(Player player, Map<Block, ItemGroup> block_to_group_map) {
+		
+		// Initialize empty array of block errors
+		List<BlockError> block_errors = new ArrayList<> ();
+		
+		// For every BlockInfo in the structure
+		for (Block block : block_to_group_map.keySet()) {
+			
+			// Generate block error
+			ItemGroup group = block_to_group_map.get(block);
+			BlockError block_error = getBlockError(block, group, player);
+			
+			// If the error isn't null, add it to the block error array
+			if (block_error != null)
+				block_errors.add(block_error);
+		}
+		
+		// Literally what it says
+		return block_errors;
+	}
+
+
+	public static boolean compareBlockAndGroup(Block block, ItemGroup group) {
+
 		// For every stack the block could be
 		for (ItemStack stack : group.stacks) {
-			
+				
 			// Get material and slimefun item
 			Material material = block.getType();
 			SlimefunItem slimefun_item = BlockStorage.check(block);
@@ -89,63 +135,13 @@ public class BlockError {
 				}
 
 			} else {
-				if (stack.getType() == material)
+				if (stack.getType() == material) {
+					return true;
+				}
 			}
 		}
-		
+
 		// No match found
 		return false;
-	}
-	
-	
-	
-	/*
-	 * STATIC METHODS
-	 */
-	
-	public static BlockError getBlockError(WorldMixedItemStack block, AbstractMixedItemStack item, Player player) {
-
-		// For every ItemStack the abstract mixed item stack could be
-		for (MixedItemStack abstract_itemstack : item.items) {
-			
-			// Compare material-material
-			if (!abstract_itemstack.isSlimefunItem() && !block.isSlimefunItem()) {
-				if (block.itemstack.getType() == abstract_itemstack.itemstack.getType())
-					return null;
-			
-			// Compare slimefun-slimefun
-			} else if (
-				abstract_itemstack.isSlimefunItem() && block.isSlimefunItem()
-				&& block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId())
-			) {
-				return null;
-			}
-		}
-		
-		// If null hasn't been returned at this stage, there's an error
-		return new BlockError(block, item, player);
-	}
-	
-	
-	
-	public static List<BlockError> getBlockErrorsFromInfoMap(Player player, Map<WorldMixedItemStack, AbstractMixedItemStack> block_map) {
-		
-		// Initialize empty array of block errors
-		List<BlockError> block_errors = new ArrayList<> ();
-		
-		// For every BlockInfo in the structure
-		for (WorldMixedItemStack world_block : block_map.keySet()) {
-			
-			// Generate block error
-			AbstractMixedItemStack abstract_block = block_map.get(world_block);
-			BlockError block_error = getBlockError(world_block, abstract_block, player);
-			
-			// If the error isn't null, add it to the block error array
-			if (block_error != null)
-				block_errors.add(block_error);
-		}
-		
-		// Literally what it says
-		return block_errors;
 	}
 }

@@ -129,7 +129,7 @@ public class CommandAssemble extends BaseCommand{
 		
 		// Create structures to store errors, location->tag map, and item->block info map
 		Map<Block, ItemGroup> block_to_group_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
-		List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, world_to_abstract_map);
+		List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, block_to_group_map);
 		
 		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]
 		int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
@@ -142,18 +142,18 @@ public class CommandAssemble extends BaseCommand{
 			Map<BlockPosition, String> location_to_tag_map = new HashMap<> ();
 			
 			// For every BlockInfo in the structure
-			for (WorldMixedItemStack world_block: world_to_abstract_map.keySet()) {
+			for (Block block : block_to_group_map.keySet()) {
 				
 				// Convert location to block position
-				BlockPosition block_position = new BlockPosition(world_block.location);
+				BlockPosition block_position = new BlockPosition(block.getLocation());
 				
 				// If the block doesn't have any tag, value = null
-				if (world_to_abstract_map.get(world_block).tag == null) {
+				if (block_to_group_map.get(block).tag == null) {
 					location_to_tag_map.put(block_position, null);
 				
 				// If the block does have any tags, value = tags
 				} else {
-					location_to_tag_map.put(block_position, world_to_abstract_map.get(world_block).tag);
+					location_to_tag_map.put(block_position, block_to_group_map.get(block).tag);
 				}
 			}
 			
@@ -178,8 +178,8 @@ public class CommandAssemble extends BaseCommand{
 			ListBlockErrors.display(player);
 			
 			// Also display the location of each block, so it's clear where the multiblock is
-			for (WorldMixedItemStack world_block : world_to_abstract_map.keySet()) {
-				TaskVisualiseLocation task = new TaskVisualiseLocation(player, world_block.location);
+			for (Block block : block_to_group_map.keySet()) {
+				TaskVisualiseLocation task = new TaskVisualiseLocation(player, block.getLocation());
 	    		task.runTaskTimer(ManagerPlugin.plugin, 0, ManagerPlugin.config.getInt("LocationVisualisation.particle-interval"));
 			}
 		}

@@ -297,7 +297,7 @@ public class AbstractMultiblock {
 				for (String name_z : section_x.getKeys(false)) {
 
 					String string_z = section_x.getString(name_z);
-					block_array_x.add(StringConversion.stringToGroup(structure_file, section_x, string_z));
+					block_array_x.add(StringConversion.groupFromName(structure_file, section_x, string_z));
 				}
 
 				block_array_y.add(block_array_x);
