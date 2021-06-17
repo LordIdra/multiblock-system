@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.idra.multiblocksystem.helpers.StringConversion;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 
 
@@ -70,20 +75,21 @@ public class BlockError {
 		// Update the current block
 		block = block.getLocation().getWorld().getBlockAt(block.getLocation());
 		
-		// For every ItemStack the abstract mixed item stack could be
-		for (MixedItemStack abstract_itemstack : should_be_items.items) {
-					
-			// Compare material-material
-			if (!abstract_itemstack.isSlimefunItem() && !current_block.isSlimefunItem()) {
-				if (current_block.itemstack.getType() == abstract_itemstack.itemstack.getType())
+		// For every stack the block could be
+		for (ItemStack stack : group.stacks) {
+			
+			// Get material and slimefun item
+			Material material = block.getType();
+			SlimefunItem slimefun_item = BlockStorage.check(block);
+
+			// Compare the two stacks, return true if they match
+			if (slimefun_item != null) {
+				if (SlimefunUtils.isItemSimilar(stack, slimefun_item.getItem(), false)) {
 					return true;
-					
-			// Compare slimefun-slimefun
-			} else if (
-				abstract_itemstack.isSlimefunItem() && current_block.isSlimefunItem()
-				&& current_block.slimefun_itemstack.getItemId().equals(abstract_itemstack.slimefun_itemstack.getItemId())
-			) {
-				return true;
+				}
+
+			} else {
+				if (stack.getType() == material)
 			}
 		}
 		
