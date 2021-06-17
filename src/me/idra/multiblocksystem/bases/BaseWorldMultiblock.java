@@ -22,7 +22,6 @@ import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.idra.multiblocksystem.objects.MultiblockFuel;
 import me.idra.multiblocksystem.objects.MultiblockRecipe;
-import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
 import me.idra.multiblocksystem.tasks.TaskTickMultiblock;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
