@@ -632,4 +632,9 @@ questions:
   6051:
     question: 'When will Hyn finish his island?'
     answer: 
-      - 'Never'
+      - 'Sometime, Probably Post Reset'
+      
+  44001:
+    question: 'What is the effective range of a pillager when scaring a villager?'
+    answer:
+      - '15'
