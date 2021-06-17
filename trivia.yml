@@ -113,7 +113,7 @@ questions:
   24:
     question: 'What is the official name of update 1.13?'
     answer:
-      - 'Aquatic update'
+      - 'Update Aquatic'
   25:
     question: 'What is the official name of update 1.14?'
     answer:
@@ -393,248 +393,310 @@ questions:
     answer:
       - 'fetch decode execute cycle'
       - 'fetch decode execute'
- 
+
   6001:
     question: 'What was used in place of observers before they came out?'
-    answer: 
+    answer:
       - 'BUD'
-  
+
   6002:
     question: 'What is the state that blocks turn into when pushed by pistons?'
-    answer: 
+    answer:
       - 'Block 46'
 
   6003:
     question: 'How many game ticks does a redstone tick last?'
-    answer: 
+    answer:
       - '2'
 
   6004:
     question: 'How long is the delay between each activation for a dispenser in redstone ticks?'
-    answer: 
+    answer:
       - '4'
 
   6005:
     question: 'How many blocks can a piston push?'
-    answer: 
+    answer:
       - '12'
 
   6006:
     question: 'What does the redstone acronym BUD stand for?'
-    answer: 
+    answer:
       - 'Block Update Detector'
 
   6007:
     question: 'How long of a redstone signal does a stone button last for in redstone ticks?'
-    answer: 
+    answer:
       - '10'
 
   6008:
     question: 'What is an alternative name for the hopper clock?'
-    answer: 
+    answer:
       - 'Etho Clock'
 
   6010:
     question: 'What type of pressure plate(s) cannot be triggered by items?'
-    answer: 
+    answer:
       - 'Stone'
 
   6011:
     question: 'Can a comparator detect a composter and give a signal strength?'
-    answer: 
+    answer:
       - 'Yes'
 
   6012:
     question: 'Can bedrock be obtained in vanilla survival minecraft without the use of commands or creative mode?'
-    answer: 
+    answer:
       - 'Yes'
 
   6013:
     question: 'Can the Ender dragon be killed by 1 arrow?'
-    answer: 
+    answer:
       - 'Yes'
 
   6014:
     question: 'What do minecraft polar bears drop?'
-    answer: 
+    answer:
       - 'Raw cod'
 
   6015:
     question: 'Can a slime block be powered by redstone?'
-    answer: 
+    answer:
       - 'Yes'
 
   6016:
     question: 'Can a honey block be powered by redstone?'
-    answer: 
+    answer:
       - 'No'
 
   6017:
     question: 'Starting from the rail that it is powered, up to how many blocks does a powered rail extend its power?'
-    answer: 
+    answer:
       - '9'
 
   6018:
     question: 'What is the max effective level of the lure enchant?'
-    answer: 
+    answer:
       - '5'
 
   6019:
     question: 'What were sugarcane used to be called?'
-    answer: 
+    answer:
       - 'reeds'
 
   6020:
     question: 'What are the chances of a natural pink sheep spawning'
-    answer: 
+    answer:
       - '1%'
 
   6021:
     question: 'What is physically shorter, a carpet or a 2 layered snow block?'
-    answer: 
+    answer:
       - '2 layered snow block'
 
   6022:
     question: 'Can cats give you phantom membranes?'
-    answer: 
+    answer:
       - 'Yes'
 
   6023:
     question: 'Can cats give you diamonds?'
-    answer: 
+    answer:
       - 'No'
 
   6024:
     question: 'What is the minimum amount of iron ingots that an iron golem drops?'
-    answer: 
+    answer:
       - '3'
 
   6025:
     question: 'How many days without sleeping does it take before phantoms start to spawn?'
-    answer: 
+    answer:
       - '3'
 
   6026:
     question: 'Can you plant mushrooms on stone?'
-    answer: 
+    answer:
       - 'Yes'
 
   6027:
     question: 'How many firework stars can you add to a rocket?'
-    answer: 
+    answer:
       - '7'
 
   6028:
     question: 'What has the strongest explosion?'
-    answer: 
+    answer:
       - 'Wither'
 
   6029:
     question: 'Which is stronger, a charged creeper explosion or an end crystal?'
-    answer: 
+    answer:
       - 'Neither'
 
   6030:
     question: 'As of 1.17, what is the highest blast resistance value?'
-    asnwer: 
+    asnwer:
       - '360000.8'
 
   6031:
     question: 'Can TNT destroy beacons?'
-    answer: 
+    answer:
       - 'Yes'
 
   6032:
     question: 'How many items can be crafted with obsidian?'
-    answer: 
+    answer:
       - '3'
 
   6035:
     question: 'What block allows for instant downwards redstone?'
-    answer: 
+    answer:
       - 'Walls'
 
   6036:
     question: 'How many type of heads are there in vanilla?'
-    answer: 
+    answer:
       - '6'
 
   6037:
     question: 'What were emeralds used to be called?'
-    answer: 
+    answer:
       - 'Rubies'
 
   6038:
     question: 'Can you apply the power enchant on a crossbow?'
-    answer: 
+    answer:
       - 'No'
 
   6039:
     question: 'Can leaves trigger an observer?'
-    answer: 
+    answer:
       - 'Yes'
 
   6040:
     question: 'How long is a 0-tick pulse?'
-    answer: 
+    answer:
       - '1 tick'
 
   6041:
     question: 'What is the laggiest redstone component?'
-    answer: 
+    answer:
       - 'Redstone'
 
   6042:
     question: 'Can you break bedrock using pistons?'
-    answer: 
+    answer:
       - 'Yes'
 
   6043:
     question: 'Can mobs spawn on bedrock?'
-    answer: 
+    answer:
       - 'No'
 
   6044:
     question: 'What block, other than netherrack, can keep a fire going indefinitely?'
-    answer: 
+    answer:
       - 'Bedrock'
 
   6045:
     question: 'Can bone blocks generate naturally?'
-    answer: 
+    answer:
       - 'Yes'
 
   6046:
     question: 'Can an observer detect a cauldron being filled up?'
-    answer: 
+    answer:
       - 'Yes'
 
   6047:
     question: 'What is the most effective level of fire resistance?'
-    answer: 
+    answer:
       - '8'
 
   6048:
     question: 'What is the maximum damage reduction through enchantments?'
-    answer: 
+    answer:
       - '80%'
 
   6049:
     question: 'Can you fish up a feather?'
-    answer: 
+    answer:
       - 'No'
 
   6050:
     question: 'Do biomes affect fishing?'
-    answer: 
+    answer:
       - 'Yes'
 
   6051:
     question: 'When will Hyn finish his island?'
-    answer: 
+    answer:
       - 'Sometime, Probably Post Reset'
-      
+
   44001:
-    question: 'What is the effective range of a pillager when scaring a villager?'
+    question: 'What is the effective range of a Pillager when scaring a Villager?'
     answer:
       - '15'
+
+  44002:
+    question: 'Can a Snow Golem attack Phantoms?'
+    answer:
+      - 'Yes'
+
+  44003:
+    question: 'If you stich a left handed Möbius strip with a right handed one, What do you get?'
+    answer:
+      - 'A Klein bottle'
+
+  44004:
+    question: 'Name a mob thats effective at scaring Villagers besides a Zombie or Pillager'
+    answer:
+      - 'Husk'
+      - 'Zombie Villager'
+      - 'Drowned'
+      - 'Vex'
+      - 'Vindicator'
+      - 'Zoglin'
+      - 'Evoker'
+      - 'Illusioner'
+      - 'Ravager'
+
+  44005:
+    question: 'Given the chemical formula H2SO4, what is the common chemical?'
+    answer:
+      - 'Sulfuric Acid'
+
+  44006:
+    question: 'Name an element from the Alkali series that can explode on contact with H2O'
+    answer:
+      - 'Lithium'
+      - 'Sodium'
+      - 'Potassium'
+      - 'Rubidium'
+      - 'Cesium'
+      - 'Francium'
+
+  44007:
+    question: 'Who is a current contribiutor to LordIdra\multiblocksystem?'
+    answer:
+      - 'Idra'
+      - 'Anon'
+      - 'Hyn'
+
+  44008:
+    question: 'Which is stronger at close range, "The Strong Force", "The Electromgnetic Force", "The Weak Nuclear Force", or "The Gravitational Force"'
+    answer:
+      - 'The Strong Force'
+
+  44009:
+    question: 'In computer repair, if your computer turns off after a short peroid of time but still allows you to turn it on, What should you do?'
+    answer:
+      - 'Take it to a repair shop'
+      - 'Replace your thermal compound or cooler'
+
+  44010:
+    question: 'Assuming that Idra or Anon doesnt remember the answer to this question, what is on the mind of Hyn while writing this question?'
+    answer:
+      - 'If Idra gets this right I owe him 6000 of my balance'
+      - 'Hopefully Anon doesnt go crazy over my terrible use of capitalization'
