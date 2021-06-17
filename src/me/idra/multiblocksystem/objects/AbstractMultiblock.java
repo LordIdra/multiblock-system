@@ -44,7 +44,7 @@ public class AbstractMultiblock {
 	public List<String> inventory_tags = new ArrayList<> ();
 	public List<String> fuel_tags = new ArrayList<> ();
 	public List<String> energy_tags = new ArrayList<> ();
-	public Map<String, List<MixedItemStack>> position_tags = new HashMap<> ();
+	public Map<String, List<ItemStack>> position_tags = new HashMap<> ();
 
 	public List<String> fuel_inventories = new ArrayList<> ();
 
@@ -165,12 +165,12 @@ public class AbstractMultiblock {
 		if (position_tag_config != null) {
 			for (String tag : position_tag_config.getKeys(false)) {
 
-				List<MixedItemStack> items = new ArrayList<> ();
+				List<ItemStack> items = new ArrayList<> ();
 				
 				// For every position tag, get the items the tag can be, and add them to an array
 				for (String item : position_tag_config.getStringList(tag)) {
 					
-					MixedItemStack stack = StringConversion.mixedItemStackFromID(multiblock_file, position_tag_config, item);
+					ItemStack stack = StringConversion.itemStackFromID(multiblock_file, position_tag_config, item);
 
 					if (stack == null) {
 						Logger.configError(Logger.OPTION_INVALID, multiblock_file, position_tag_config, tag);
@@ -215,7 +215,7 @@ public class AbstractMultiblock {
 				String id = split_string[1];
 
 				// Create MixedItemStack
-				MixedItemStack stack = StringConversion.mixedItemStackFromID(multiblock_file, fuel_config, id);
+				ItemStack stack = StringConversion.itemStackFromID(multiblock_file, fuel_config, id);
 
 				if (stack == null) {
 					Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
@@ -246,8 +246,8 @@ public class AbstractMultiblock {
 				// Initialize variables
 				int time = current_recipe.getInt("TIME");
 				Map<String, Integer> energy = null;
-				Map<String, List<RecipeMixedItemStack>> inputs = null;
-				Map<String, List<RecipeMixedItemStack>> outputs = null;
+				Map<String, Map<ItemStack, Integer>> inputs = null;
+				Map<String, Map<ItemStack, Integer>> outputs = null;
 
 				// Check recipe time is valid
 				if (time == 0) {
@@ -280,24 +280,24 @@ public class AbstractMultiblock {
 		 * STRUCTURE LOADING
 		 */
 
-		List<List<List<AbstractMixedItemStack>>> block_array = new ArrayList<> ();
+		List<List<List<List<ItemStack>>>> block_array = new ArrayList<> ();	// y -> x -> z -> block
 		
 		ConfigurationSection structure_section = YamlConfiguration.loadConfiguration(structure_file);
 
 		for (String name_y : structure_section.getKeys(false)) {
 
 			ConfigurationSection section_y = structure_section.getConfigurationSection(name_y);
-			List<List<AbstractMixedItemStack>> block_array_y = new ArrayList<> ();
+			List<List<List<ItemStack>>> block_array_y = new ArrayList<> ();
 
 			for (String name_x : section_y.getKeys(false)) {
 
 				ConfigurationSection section_x = section_y.getConfigurationSection(name_x);
-				List<AbstractMixedItemStack> block_array_x = new ArrayList<> ();
+				List<List<ItemStack>> block_array_x = new ArrayList<> ();
 
 				for (String name_z : section_x.getKeys(false)) {
 
 					String string_z = section_x.getString(name_z);
-					block_array_x.add(StringConversion.stringToAbstractMixedItemStack(structure_file, section_x, string_z));
+					block_array_x.add(StringConversion.stringToItemStackList(structure_file, section_x, string_z));
 				}
 
 				block_array_y.add(block_array_x);
@@ -385,10 +385,10 @@ public class AbstractMultiblock {
 		
 		// Enter block checking loop
 		for (int y = 0; y < abstract_descriptor.dimension.getBlockY(); y++) {
-			List<List<ItemStack>> abstract_array_y = abstract_descriptor.blocks.get(y);
+			List<List<List<ItemStack>>> abstract_array_y = abstract_descriptor.blocks.get(y);
 			
 			for (int x = 0; x < abstract_descriptor.dimension.getBlockX(); x++) {
-				List<ItemStack> abstract_array_x = abstract_array_y.get(x);
+				List<List<ItemStack>> abstract_array_x = abstract_array_y.get(x);
 				
 				for (int z = 0; z < abstract_descriptor.dimension.getBlockZ(); z++) {
 					
@@ -407,11 +407,12 @@ public class AbstractMultiblock {
 					// Get the block itself, then generate ItemInfo and BlockInfo
 					Block block = player.getWorld().getBlockAt(block_location);
 					ItemStack world_block = ItemStackHelper.blockToItemStack(block);
-					ItemStack abstract_block = abstract_array_x.get(z);
+					List<ItemStack> abstract_block = abstract_array_x.get(z);
 					
 					// If the material is supposed to be air, don't bother checking it - it essentially isn't part of the multiblock
-					if (abstract_block.containsMaterial(Material.AIR))
+					if (abstract_block.contains(null)) {
 						continue;
+					}
 					
 					// If not, add the block/item pair to the map
 					world_to_abstract_map.put(world_block, abstract_block);

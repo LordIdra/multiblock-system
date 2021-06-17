@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
-import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
-import me.idra.multiblocksystem.objects.MixedItemStack;
-import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
+import me.idra.multiblocksystem.objects.ItemGroup;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 
 
@@ -61,7 +60,7 @@ public class StringConversion {
 	}
 	
 	
-	public static AbstractMixedItemStack stringToAbstractMixedItemStack(File file, ConfigurationSection section, String data) {
+	public static ItemGroup stringToGroup(File file, ConfigurationSection section, String data) {
 
 		// Capitalise the data (easier to deal with this way)
 		data = data.toUpperCase();
@@ -74,69 +73,24 @@ public class StringConversion {
 		}
 
 		// Check which type of item we're dealing with (normal or a group)
-		List<MixedItemStack> itemstack_list = new ArrayList<> ();
-
-		// Group name
+		List<ItemStack> item_stack_list = new ArrayList<> ();
 		String identifier;
 
 		// Group
 		if (data.contains("GROUP")) {
 			String group_name = data.substring(6, data.length());
 			identifier = group_name;
-			itemstack_list = ConfigHelper.loadGroup(group_name);
+			item_stack_list = ConfigHelper.loadGroup(group_name);
 
 
 		// Normal item
 		} else {
 			identifier = data;
-			itemstack_list.add(mixedItemStackFromID(file, section, data));
+			item_stack_list.add(ItemStackHelper.itemStackFromID(file, section, data));
 		}
 
 		// Create AbstractMixeditemStack
-		return new AbstractMixedItemStack(itemstack_list, tag, identifier);
-	}
-
-
-
-	public static MixedItemStack mixedItemStackFromID(File file, ConfigurationSection section, String ID) {
-
-		ID = ID.toUpperCase();
-
-		Material material = idToMaterial(ID);
-		SlimefunItem slimefun_item = idToSlimefunItem(ID);
-
-		if (slimefun_item != null) {
-		return new MixedItemStack(slimefun_item);
-
-		} else if (material != null) {
-			return new MixedItemStack(material);
-
-		} else {
-			Logger.configError(Logger.OPTION_INVALID, file, section, ID);
-			return null;
-		}
-	}
-
-
-
-	public static RecipeMixedItemStack recipeMixedItemStackFromID(File file, ConfigurationSection section, String ID) {
-
-		ID = ID.toUpperCase();
-
-		Material material = idToMaterial(ID);
-		SlimefunItem slimefun_item = idToSlimefunItem(ID);
-
-		
-		if (slimefun_item != null) {
-			return new RecipeMixedItemStack(slimefun_item);
-
-		} else if (material != null) {
-			return new RecipeMixedItemStack(material);
-
-		} else {
-			Logger.configError(Logger.OPTION_INVALID, file, section, ID);
-			return null;
-		}
+		return new ItemGroup(identifier, tag, item_stack_list);
 	}
 
 

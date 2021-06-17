@@ -6,16 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import me.idra.multiblocksystem.managers.ManagerPlugin;
-import me.idra.multiblocksystem.objects.MixedItemStack;
-import me.idra.multiblocksystem.objects.RecipeMixedItemStack;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+
 
 
 public class ConfigHelper {
@@ -47,10 +44,10 @@ public class ConfigHelper {
     }
 
 
-    public static Map<String, List<RecipeMixedItemStack>> getInputMap(File file, ConfigurationSection config_inputs) {
+    public static Map<String, Map<ItemStack, Integer>> getInputMap(File file, ConfigurationSection config_inputs) {
 
         // Create new input map
-        Map<String, List<RecipeMixedItemStack>> inputs = new HashMap<> ();
+        Map<String, Map<ItemStack, Integer>> inputs = new HashMap<> ();
 
         // Add each pair of tag to input items
         for (String input_tag : config_inputs.getKeys(false)) {
@@ -63,7 +60,7 @@ public class ConfigHelper {
                 continue;
             }
 
-            List<RecipeMixedItemStack> input_items = new ArrayList<> ();
+            Map<ItemStack, Integer> input_items = new HashMap<> ();
 
             // Convert each input value to a MixedItemStack
             for (String input_key : input_keys) {
@@ -82,7 +79,7 @@ public class ConfigHelper {
                 // Get amount and ID from the resulting two strings
                 int amount = Integer.parseInt(split_string[0]);
                 String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(file, config_inputs, id);
+                ItemStack stack = ItemStackHelper.itemStackFromID(file, config_inputs, id);
 
                 // Check the stack is valid
                 if (stack == null) {
@@ -90,9 +87,8 @@ public class ConfigHelper {
                     continue;
                 }
 
-                // Add stack to the array
-                stack.amount = amount;
-                input_items.add(stack);
+                // Add stack to the map
+                input_items.put(stack, amount);
             }
 
             // Add the resulting list of stacks to the map
@@ -104,10 +100,10 @@ public class ConfigHelper {
 
 
 
-    public static Map<String, List<RecipeMixedItemStack>> getOutputMap(File file, ConfigurationSection config_outputs) {
+    public static Map<String, Map<ItemStack, Integer>> getOutputMap(File file, ConfigurationSection config_outputs) {
 
         // Create new output map
-        Map<String, List<RecipeMixedItemStack>> outputs = new HashMap<> ();
+        Map<String, Map<ItemStack, Integer>> outputs = new HashMap<> ();
 
         // Add each pair of tag to output items
         for (String output_tag : config_outputs.getKeys(false)) {
@@ -120,7 +116,7 @@ public class ConfigHelper {
                 continue;
             }
 
-            List<RecipeMixedItemStack> output_items = new ArrayList<> ();
+            Map<ItemStack, Integer> output_items = new HashMap<> ();
 
             // Convert each output value to a MixedItemStack
             for (String output_key : output_keys) {
@@ -139,7 +135,7 @@ public class ConfigHelper {
                 // Get amount and ID from the resulting two strings
                 int amount = Integer.parseInt(split_string[0]);
                 String id = split_string[1];
-                RecipeMixedItemStack stack = StringConversion.recipeMixedItemStackFromID(file, config_outputs, id);
+                ItemStack stack = ItemStackHelper.itemStackFromID(file, config_outputs, id);
 
                 // Check the stack is valid
                 if (stack == null) {
@@ -147,9 +143,8 @@ public class ConfigHelper {
                     continue;
                 }
 
-                // Add stack to the array
-                stack.amount = amount;
-                output_items.add(stack);
+                // Add stack to the map
+                output_items.put(stack, amount);
             }
 
             // Add the resulting list of stacks to the map
@@ -161,7 +156,7 @@ public class ConfigHelper {
 
 
     
-	public static List<MixedItemStack> loadGroup(String name) {
+	public static List<ItemStack> loadGroup(String name) {
 
 		// Load file
 		File group_file = new File(ManagerPlugin.plugin.getDataFolder(), "itemgroups.yml");
@@ -177,16 +172,10 @@ public class ConfigHelper {
         List<String> item_names = group_section.getStringList(name.toLowerCase());
 
         // Convert names to MixedItemStacks
-        List<MixedItemStack> item_stacks = new ArrayList<> ();
+        List<ItemStack> item_stacks = new ArrayList<> ();
 
         for (String item_name : item_names) {
-        
-			Material material = StringConversion.idToMaterial(item_name);
-			SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(item_name);
-
-			if 		(material != null) 		item_stacks.add(new MixedItemStack(material));
-			else if (slimefun_item != null)	item_stacks.add(new MixedItemStack(slimefun_item));
-			else 							Logger.configError(Logger.OPTION_INVALID, group_file, group_section, name + "." + item_name);
+			item_stacks.add(ItemStackHelper.itemStackFromID(item_name));
         }
 
         return item_stacks;
