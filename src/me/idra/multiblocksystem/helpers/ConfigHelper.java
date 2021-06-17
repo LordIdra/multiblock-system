@@ -17,7 +17,7 @@ import me.idra.multiblocksystem.managers.ManagerPlugin;
 
 public class ConfigHelper {
 	
-	public static final String ITEM_GROUPS = "itemGroups";
+	public static final String ITEM_GROUPS = "ItemGroups";
 	
 	private ConfigHelper() {}
     
@@ -169,6 +169,7 @@ public class ConfigHelper {
 		// Load config
 		FileConfiguration group_config = YamlConfiguration.loadConfiguration(group_file);
 		ConfigurationSection group_section = group_config.getConfigurationSection(ITEM_GROUPS);
+        Logger.log(name, true);
         List<String> item_names = group_section.getStringList(name.toLowerCase());
 
         // Convert names to MixedItemStacks

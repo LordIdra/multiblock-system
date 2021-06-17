@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.implementation.items.electric.Capacitor;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
 import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
@@ -186,16 +187,15 @@ public abstract class BaseWorldMultiblock {
 				for (MultiblockFuel fuel : abstract_multiblock.fuels) {
 					
 					// Get an array of all the materials that match the fuel's Material
-					Map<Integer, ? extends ItemStack> inv_stacks = inv.all(fuel.stack.asItemStack().getType());
+					Map<Integer, ? extends ItemStack> inv_stacks = inv.all(fuel.stack.getType());
 
 					for (Map.Entry<Integer, ? extends ItemStack> entry : inv_stacks.entrySet()) {
 						
 						ItemStack stack = entry.getValue();
 
 						// Slimefun item check
-						if (SlimefunItem.getByItem(stack) != null &&
-							SlimefunItem.getByItem(stack) != fuel.stack.slimefun_itemstack.getItem()) {
-								continue;
+						if ((SlimefunItem.getByItem(stack) != null) && (!SlimefunUtils.isItemSimilar(stack, fuel.stack, false))) {
+							continue;
 						}
 
 						// Number of fuel ticks can we add if we use the whole stack
@@ -345,21 +345,21 @@ public abstract class BaseWorldMultiblock {
 
 
 
-	private boolean stacksExistInTag(List<RecipeMixedItemStack> stacks, String tag) {
+	private boolean stacksExistInTag(Map<ItemStack, Integer> recipe_stacks, String tag) {
 
 		// For each inventory in the tag
-		Map<RecipeMixedItemStack, Integer> amount_map = new HashMap<> ();
+		Map<ItemStack, Integer> amount_map = new HashMap<> ();
 
-		for (RecipeMixedItemStack stack : stacks) {
-			amount_map.put(stack, stack.amount);
+		for (ItemStack recipe_stack : recipe_stacks.keySet()) {
+			amount_map.put(recipe_stack, recipe_stacks.get(recipe_stack));
 		}
 
 		for (Inventory inv : tags_inventory.get(tag)) {
 
 			// Check that the target items exist within the inventory
-			for (RecipeMixedItemStack recipe_stack : stacks) {
+			for (ItemStack recipe_stack : recipe_stacks.keySet()) {
 
-				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
+				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.getType());
 
 				// If there's no match
 				if (items.isEmpty()) {
@@ -371,11 +371,11 @@ public abstract class BaseWorldMultiblock {
 					// Slimefun item check
 					if (SlimefunItem.getByItem(inventory_stack) != null) {
 
-						if (!recipe_stack.isSlimefunItem()) {
+						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
 						}
 						
-						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+						if (SlimefunItem.getByItem(inventory_stack) != SlimefunItem.getByItem(recipe_stack)) {
 							continue;
 						}
 					}
@@ -404,23 +404,23 @@ public abstract class BaseWorldMultiblock {
 
 
 
-	private void takeStacksFromTag(List<RecipeMixedItemStack> stacks, String tag) {
+	private void takeStacksFromTag(Map<ItemStack, Integer> recipe_stacks, String tag) {
 
 		// Map to store how many items we've removed already
-		Map<RecipeMixedItemStack, Integer> amount_map = new HashMap<> ();
+		Map<ItemStack, Integer> amount_map = new HashMap<> ();
 
-		for (RecipeMixedItemStack stack : stacks) {
-			amount_map.put(stack, stack.amount);
+		for (ItemStack recipe_stack : recipe_stacks.keySet()) {
+			amount_map.put(recipe_stack, recipe_stacks.get(recipe_stack));
 		}
 
 		// For each inventory in the tag
 		for (Inventory inv : tags_inventory.get(tag)) {
 
 			// For each itemstack we need to remove from this tag
-			for (RecipeMixedItemStack recipe_stack : amount_map.keySet()) {
+			for (ItemStack recipe_stack : amount_map.keySet()) {
 
 				// Get the items within the inventory that match target materials
-				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.asItemStack().getType());
+				Map<Integer, ? extends ItemStack> items = inv.all(recipe_stack.getType());
 
 				// If there's no match
 				if (items.isEmpty()) {
@@ -434,11 +434,11 @@ public abstract class BaseWorldMultiblock {
 					// Slimefun item check
 					if (SlimefunItem.getByItem(inventory_stack) != null) {
 
-						if (!recipe_stack.isSlimefunItem()) {
+						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
 						}
 						
-						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+						if (SlimefunItem.getByItem(inventory_stack) != SlimefunItem.getByItem(recipe_stack)) {
 							continue;
 						}
 					}
@@ -466,21 +466,21 @@ public abstract class BaseWorldMultiblock {
 
 
 
-	private boolean spaceExistsInTag(List<RecipeMixedItemStack> stacks, String tag) {
+	private boolean spaceExistsInTag(Map<ItemStack, Integer> recipe_stacks, String tag) {
 
 		// Map to show how much of each item we have stored already
-		Map<RecipeMixedItemStack, Integer> space_for_items = new HashMap<> ();
+		Map<ItemStack, Integer> space_for_items = new HashMap<> ();
 
-		for (RecipeMixedItemStack stack : stacks) {
+		for (ItemStack stack : recipe_stacks.keySet()) {
 			space_for_items.put(stack, 0);
 		}
 
 
 		// Figure out how many items we can fit into each existing itemstack
 		for (Inventory inv : tags_inventory.get(tag)) {
-			for (RecipeMixedItemStack recipe_stack : stacks) {
+			for (ItemStack recipe_stack : recipe_stacks.keySet()) {
 
-				HashMap<Integer, ? extends ItemStack> inventory_stacks = inv.all(recipe_stack.asItemStack().getType());
+				HashMap<Integer, ? extends ItemStack> inventory_stacks = inv.all(recipe_stack.getType());
 
 				for (Map.Entry<Integer, ? extends ItemStack> stack : inventory_stacks.entrySet()) {
 
@@ -490,11 +490,11 @@ public abstract class BaseWorldMultiblock {
 					// Slimefun item check
 					if (SlimefunItem.getByItem(inventory_stack) != null) {
 
-						if (!recipe_stack.isSlimefunItem()) {
+						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
 						}
 						
-						if (SlimefunItem.getByItem(inventory_stack) != recipe_stack.slimefun_itemstack.getItem()) {
+						if (SlimefunItem.getByItem(inventory_stack) != SlimefunItem.getByItem(recipe_stack)) {
 							continue;
 						}
 					}
@@ -510,12 +510,12 @@ public abstract class BaseWorldMultiblock {
 		// Figure out how many more free stacks we need
 		int extra_slots_needed = 0;
 
-		for (RecipeMixedItemStack stack : stacks) {
+		for (ItemStack recipe_stack : recipe_stacks.keySet()) {
 			
-			int extra_space_needed = stack.amount - space_for_items.get(stack);
+			int extra_space_needed = recipe_stacks.get(recipe_stack) - space_for_items.get(recipe_stack);
 
 			if (extra_space_needed > 0) {
-				extra_slots_needed += 1 + Math.floorDiv(extra_space_needed, stack.asItemStack().getMaxStackSize());
+				extra_slots_needed += 1 + Math.floorDiv(extra_space_needed, recipe_stack.getMaxStackSize());
 			}
 		}
 
@@ -538,23 +538,23 @@ public abstract class BaseWorldMultiblock {
 
 	
 
-	private void addItemsToTag(List<RecipeMixedItemStack> stacks, String tag) {
+	private void addItemsToTag(Map<ItemStack, Integer> stacks, String tag) {
 
 		// Map to show how much of each item we still need to add
-		Map<RecipeMixedItemStack, Integer> items_to_add = new HashMap<> ();
+		Map<ItemStack, Integer> items_to_add = new HashMap<> ();
 
-		for (RecipeMixedItemStack stack : stacks) {
-			items_to_add.put(stack, stack.amount);
+		for (ItemStack stack : stacks.keySet()) {
+			items_to_add.put(stack, stacks.get(stack));
 		}
 
 		// For each inventory
 		for (Inventory inventory : tags_inventory.get(tag)) {
 
 			// For each recipe stack
-			for (RecipeMixedItemStack recipe_stack : items_to_add.keySet()) {
+			for (ItemStack recipe_stack : items_to_add.keySet()) {
 
 				// Get the recipe stacks in the inventory
-				Map<Integer, ? extends ItemStack> items_in_inventory = inventory.all(recipe_stack.asItemStack().getType());
+				Map<Integer, ? extends ItemStack> items_in_inventory = inventory.all(recipe_stack.getType());
 
 				// For every recipe stack in the inventory
 				for (Map.Entry<Integer, ? extends ItemStack> inventory_slot : items_in_inventory.entrySet()) {
@@ -567,7 +567,7 @@ public abstract class BaseWorldMultiblock {
 					// Add only some capacity
 					if (to_add <= space_in_stack) {
 
-						ItemStack stack = recipe_stack.asItemStack();
+						ItemStack stack = recipe_stack;
 						stack.setAmount(to_add);
 						inventory.addItem(stack);
 
@@ -577,7 +577,7 @@ public abstract class BaseWorldMultiblock {
 					// Add all items
 					else {
 
-						ItemStack stack = recipe_stack.asItemStack();
+						ItemStack stack = recipe_stack;
 						stack.setAmount(space_in_stack);
 						inventory.addItem(stack);
 
@@ -596,14 +596,14 @@ public abstract class BaseWorldMultiblock {
 
 		// Add any remaining ItemStacks
 		for (Inventory inventory : tags_inventory.get(tag)) {
-			for (RecipeMixedItemStack recipe_stack : items_to_add.keySet()) {
+			for (ItemStack recipe_stack : items_to_add.keySet()) {
 				
 				if (inventory.firstEmpty() == -1) {
 					break;
 				}
 
 				int amount_to_add = items_to_add.get(recipe_stack);
-				ItemStack item_to_add = recipe_stack.asItemStack();
+				ItemStack item_to_add = recipe_stack;
 
 				int amount_can_add = amount_to_add % item_to_add.getMaxStackSize();
 
@@ -644,7 +644,7 @@ public abstract class BaseWorldMultiblock {
 				for (String tag : recipe.inputs.keySet()) {
 
 					// Items that should be in the tag
-					List<RecipeMixedItemStack> stacks = recipe.inputs.get(tag);
+					Map<ItemStack, Integer> stacks = recipe.inputs.get(tag);
 					recipe_valid = stacksExistInTag(stacks, tag);
 
 					if (!recipe_valid) {
@@ -673,7 +673,7 @@ public abstract class BaseWorldMultiblock {
 			for (String tag : active_recipe.inputs.keySet()) {
 
 				// Items that should be in the tag
-				List<RecipeMixedItemStack> stacks = active_recipe.inputs.get(tag);
+				Map<ItemStack, Integer> stacks = active_recipe.inputs.get(tag);
 
 				takeStacksFromTag(stacks, tag);
 			}

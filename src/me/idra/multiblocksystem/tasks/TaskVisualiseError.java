@@ -84,7 +84,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 		// Initialize particle and get location
 		ParticleBuilder particle;
 		Color dust_color = new Color(r, g, b);
-		Location location = error.block.getLocation();
+		Location location = error.block.getLocation().add(0.5, 0.5, 0.5);
 		
 		// X indicator
 		particle = new ParticleBuilder(ParticleEffect.REDSTONE, location);

@@ -65,7 +65,7 @@ public class BlockError {
 			primary_color = ChatColor.DARK_RED;
 		
 		// Generate the final error string
-		return primary_color + "[" + ChatColor.WHITE + group.name + primary_color + "]";
+		return primary_color + "[" + ChatColor.WHITE + StringConversion.formatItemName(group.name) + primary_color + "]";
 	}
 	
 	
@@ -124,18 +124,25 @@ public class BlockError {
 		// For every stack the block could be
 		for (ItemStack stack : group.stacks) {
 				
-			// Get material and slimefun item
-			Material material = block.getType();
-			SlimefunItem slimefun_item = BlockStorage.check(block);
+			// Get materials and slimefun items
+			Material block_material = block.getType();
+			SlimefunItem block_slimefun_item = BlockStorage.check(block);
+
+			Material group_material = stack.getType();
+			SlimefunItem group_slimefun_item = SlimefunItem.getByItem(stack);
 
 			// Compare the two stacks, return true if they match
-			if (slimefun_item != null) {
-				if (SlimefunUtils.isItemSimilar(stack, slimefun_item.getItem(), false)) {
-					return true;
+			if (block_slimefun_item != null
+				|| group_slimefun_item != null) {
+					
+				if (block_slimefun_item != null) {
+					if (SlimefunUtils.isItemSimilar(stack, block_slimefun_item.getItem(), true)) {
+						return true;
+					}
 				}
 
 			} else {
-				if (stack.getType() == material) {
+				if (group_material == block_material) {
 					return true;
 				}
 			}
