@@ -15,10 +15,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import me.idra.multiblocksystem.helpers.ConfigHelper;
 import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
+import me.idra.multiblocksystem.helpers.ItemStackHelper;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.helpers.StringConversion;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -315,14 +317,14 @@ public class AbstractMultiblock {
 	 */
 		
 	
-	public static Map<WorldMixedItemStack, AbstractMixedItemStack> getStructureFromStartingPoint(
+	public static Map<ItemStack, List<ItemStack>> getStructureFromStartingPoint(
 			Player player,
 			Location central_block_location,
 			BlockFace central_block_orientation, 
 			StructureDescriptor abstract_descriptor) {
 		
 		// Initialize empty map that will store every BlockInfo and its corresponding ItemInfo
-		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new LinkedHashMap<> ();
+		Map<ItemStack, List<ItemStack>> world_to_abstract_map = new LinkedHashMap<> ();
 		
 		// Figure out block locations
 		Location starting_point = central_block_location.clone();
@@ -383,10 +385,10 @@ public class AbstractMultiblock {
 		
 		// Enter block checking loop
 		for (int y = 0; y < abstract_descriptor.dimension.getBlockY(); y++) {
-			List<List<AbstractMixedItemStack>> abstract_array_y = abstract_descriptor.blocks.get(y);
+			List<List<ItemStack>> abstract_array_y = abstract_descriptor.blocks.get(y);
 			
 			for (int x = 0; x < abstract_descriptor.dimension.getBlockX(); x++) {
-				List<AbstractMixedItemStack> abstract_array_x = abstract_array_y.get(x);
+				List<ItemStack> abstract_array_x = abstract_array_y.get(x);
 				
 				for (int z = 0; z < abstract_descriptor.dimension.getBlockZ(); z++) {
 					
@@ -404,8 +406,8 @@ public class AbstractMultiblock {
 					
 					// Get the block itself, then generate ItemInfo and BlockInfo
 					Block block = player.getWorld().getBlockAt(block_location);
-					WorldMixedItemStack world_block = new WorldMixedItemStack(block);
-					AbstractMixedItemStack abstract_block = abstract_array_x.get(z);
+					ItemStack world_block = ItemStackHelper.blockToItemStack(block);
+					ItemStack abstract_block = abstract_array_x.get(z);
 					
 					// If the material is supposed to be air, don't bother checking it - it essentially isn't part of the multiblock
 					if (abstract_block.containsMaterial(Material.AIR))

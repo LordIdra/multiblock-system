@@ -1,0 +1,635 @@
+#
+# Some quick questions I whipped up
+# Source: https://minecraft.gamepedia.com/
+#
+questions:
+  #
+  # Entities
+  #
+  1:
+    question: 'What are Creepers scared of?'
+    answer:
+      - 'ocelot'
+      - 'ocelots'
+  2:
+    question: 'What can you wear to stop Enderman attacking you?'
+    answer:
+      - 'pumpkin'
+      - 'a pumpkin'
+  3:
+    question: 'What item do you need to breed llamas?'
+    answer:
+      - 'Hay bales'
+  4:
+    question: 'How many neutral mobs exist? (1.15)'
+    answer:
+      - '11'
+  5:
+    question: 'How many hit points does a Ghast have?'
+    answer:
+      - '10'
+  6:
+    question: 'How many mobs are tameable? (1.15)?'
+    answer:
+      - '9'
+  #
+  # Items
+  #
+  7:
+    question: 'How many items can you craft with iron ingots? (1.15)'
+    answer:
+      - '33'
+  8:
+    question: 'How many music discs are there? (1.15)'
+    answer:
+      - '12'
+  9:
+    question: 'On average, how many uses does an anvil survive?'
+    answer:
+      - '25'
+  10:
+    question: 'Does chain armor yield iron nuggets when smelted? (1.15)'
+    answer:
+      - 'yes'
+  #
+  # Enchants
+  #
+  11:
+    question: 'Are beehives obtainable with silk touch? (1.15)'
+    answer:
+      - 'yes'
+  12:
+    question: 'Does a looting enchanted bow yield more drops?'
+    answer:
+      - 'no'
+  13:
+    question: 'Name an enchant that conflicts with smite.'
+    answer:
+      - 'bane of arthropods'
+      - 'sharpness'
+  14:
+    question: 'What is the minimum amount of bookshelfs needed to get level 18 enchants?'
+    answer:
+      - '7'
+  #
+  # Minecraft updates
+  #
+  15:
+    question: 'What is the official name of update 1.4?'
+    answer:
+      - 'Pretty scary update'
+  16:
+    question: 'What is the official name of update 1.5?'
+    answer:
+      - 'Redstone update'
+  17:
+    question: 'What is the official name of update 1.6?'
+    answer:
+      - 'Horse update'
+  18:
+    question: 'What is the official name of update 1.7?'
+    answer:
+      - 'The update that changed the world'
+  19:
+    question: 'What is the official name of update 1.8?'
+    answer:
+      - 'Bountiful update'
+  20:
+    question: 'What is the official name of update 1.9?'
+    answer:
+      - 'Combat update'
+  21:
+    question: 'What is the official name of update 1.10?'
+    answer:
+      - 'Frostburn update'
+  22:
+    question: 'What is the official name of update 1.11?'
+    answer:
+      - 'Exploration update'
+  23:
+    question: 'What is the official name of update 1.12?'
+    answer:
+      - 'World of color update'
+  24:
+    question: 'What is the official name of update 1.13?'
+    answer:
+      - 'Aquatic update'
+  25:
+    question: 'What is the official name of update 1.14?'
+    answer:
+      - 'Village and pillage'
+  26:
+    question: 'What is the official name of update 1.15?'
+    answer:
+      - 'Buzzy bees'
+  56:
+    question: 'What is the official name of update 1.16?'
+    answer:
+      - 'Nether Update'
+  27:
+    question: 'What minecraft version added desert pyramids?'
+    answer:
+      - '1.3'
+  28:
+    question: 'What minecraft version added command blocks?'
+    answer:
+      - '1.4'
+  29:
+    question: 'What minecraft version added scoreboards?'
+    answer:
+      - '1.5'
+  30:
+    question: 'What minecraft version changed texture packs to resource packs?'
+    answer:
+      - '1.6'
+  31:
+    question: 'What minecraft version introduced amplified terrain?'
+    answer:
+      - '1.7'
+  32:
+    question: 'What minecraft version added the @e (entity) selector?'
+    answer:
+      - '1.8'
+  33:
+    question: 'What minecraft version overhauled the End?'
+    answer:
+      - '1.9'
+  34:
+    question: 'What minecraft version introduced auto jump?'
+    answer:
+      - '1.10'
+  35:
+    question: 'What minecraft version increased the chat message length to 256 characters?'
+    answer:
+      - '1.11'
+  36:
+    question: 'What minecraft version added hotbar saving/loading in creative mode?'
+    answer:
+      - '1.12'
+  37:
+    question: 'What minecraft version added datapacks?'
+    answer:
+      - '1.13'
+  38:
+    question: 'What minecraft version added suspicious stew?'
+    answer:
+      - '1.14'
+  39:
+    question: 'What minecraft version introduced bees?'
+    answer:
+      - '1.15'
+  40:
+    question: 'What minecraft version overhauled the Nether?'
+    answer:
+      - '1.16'
+  #
+  # Brewing
+  #
+  41:
+    question: 'What item do you use in a brewing stand to create a thick potion?'
+    answer:
+      - 'glowstone dust'
+  42:
+    question: 'How many seconds does it take for the regeneration I effect to heal 3 hearts?'
+    answer:
+      - '15'
+  43:
+    question: 'What item do you need to create a strength I potion from an awkward potion?'
+    answer:
+      - 'Blaze powder'
+  44:
+    question: 'How many seconds does a regular leaping II potion last for?'
+    answer:
+      - '90'
+  #
+  # Biomes
+  #
+  45:
+    question: 'How many unused and removed biomes are there in total? (1.15)'
+    answer:
+      - '7'
+  46:
+    question: 'Name an overworld biome not required for the adventure time (discover every biomes) advancement. (1.15)'
+    answer:
+      - 'Dark forest hills'
+      - 'Deep ocean'
+      - 'Desert hills'
+      - 'Desert lakes'
+      - 'Eroded badlands'
+      - 'Flower forest'
+      - 'Frozen ocean'
+      - 'Giant spruce tiaga'
+      - 'Giant spruce tiaga hills'
+      - 'Gravelly mountains'
+      - 'Ice spikes'
+      - 'Mountains'
+      - 'Mushroom field shore'
+      - 'Mushroom fields'
+      - 'Ocean'
+      - 'Shattered savanna'
+      - 'Shattered savanna plateau'
+      - 'Sunflower plains'
+      - 'Swamp hills'
+      - 'Tiaga mountains'
+      - 'Tall birch forest'
+      - 'Tall birch hills'
+  47:
+    question: 'What is the maximum temperature value a biome can have to allow snowfall?'
+    answer:
+      - '0.15'
+  #
+  # Other
+  #
+  48:
+    question: 'What tool do you need to mine a beacon?'
+    answer:
+      - 'hand'
+      - 'none'
+  49:
+    question: 'How many minecraft editions/games are there?'
+    answer:
+      - '7'
+  50:
+    question: 'What minecraft edition/game are you currently playing?'
+    answer:
+      - 'java'
+      - 'java edition'
+  51:
+    question: 'What is Notch''s real name?'
+    answer:
+      - 'Markus Persson'
+  52:
+    question: 'What year was minecraft classic released?'
+    answer:
+      - '2009'
+  53:
+    question: 'What year was minecraft''s full release?'
+    answer:
+      - '2011'
+  54:
+    question: 'How many minecraft editions have uncensored chat?'
+    answer:
+      - '1'
+  55:
+    question: 'What super mario 64 item was the elytra inspired by?'
+    answer:
+      - 'wing cap'
+  506:
+    question: 'Who is the supreme overlord?'
+    answer:
+      - 'idra'
+  57:
+    question: 'What is the integral of (5x^2 -8x +5)dx'
+    answer:
+      - '(5x^3)/3-4x^2+5x+c'
+  58:
+    question: 'What is the derivative of X^3?'
+    answer:
+      - '3x^2'
+  59:
+    question: 'What is the integral of 4x^6?'
+    answer:
+      - '(4x^7)/6+c'
+  60:
+    question: 'Integrate z^7?'
+    answer:
+      - '(z^8)/7+c'
+  61:
+    question: 'Who is the father of computers?'
+    answer:
+      - 'Charles Babbage'
+  62:
+    question: 'What is 11 * 11?'
+    answer:
+      - '121'
+  63:
+    question: 'How long is an Olympic swimming pool (in meters)?'
+    answer:
+      - '50'
+  64:
+    question: 'What was the first soft drink in space?'
+    answer:
+      - 'Coca Cola'
+  65:
+    question: 'What food never goes bad?'
+    answer:
+      - 'Honey'
+  66:
+    question: 'On the farm, what is a "kid?"'
+    answer:
+      - 'baby goat'
+  67:
+    question: 'Which country says "ta" for thank you?'
+    answer:
+      - 'UK'
+  68:
+    question: 'Which country has the most natural lakes?'
+    answer:
+      - 'Canada'
+  69:
+    question: 'Which country is in South America and has an official language of Dutch?'
+    answer:
+      - 'Suriname'
+  70:
+    question: 'Which country is Area 51 located in?'
+    answer:
+      - 'United States'
+      - 'usa'
+      - 'america'
+  71:
+    question: 'Which country is is the Terracotta Army located in?'
+    answer:
+      - 'China'
+  72:
+    question: 'Evaluate the limit, as x approaches 2, of (8-3x+12x^2).'
+    answer:
+      - '50'
+  73:
+    question: 'Evaluate the limit, as x approaches 2, of (8 - x^3).'
+    answer:
+      - '0'
+  74:
+    question: 'Integrate the following, (x^7 +1)'
+    answer:
+      - '(x^8)/7+x+c'
+  75:
+    question: 'What signifies "significance" within a summary statistics table?'
+    answer:
+      - 'star'
+      - 'stars'
+  76:
+    question: 'Evaluate 2(x-3)=4x-1?'
+    answer:
+      - '-2.5'
+
+  5001:
+    question: 'What is the formula for the sine rule?'
+    answer:
+      - 'a/sinA = b/sinB = c/sinC'
+
+  5003:
+    question: 'What instrument family does the bassoon belong to?'
+    answer:
+      - 'woodwind'
+
+  5004:
+    question: 'How much money does answering a trivia question give you?'
+    answer:
+      - '6k'
+      - '6000'
+
+  5005:
+    question: 'Which composer died 6 days after the premiere of their final symphony (symphony 6)?'
+    answer:
+      - 'tchaikovsky'
+
+  5006:
+    question: 'Evaluate e^(i*pi*2.5).'
+    answer:
+      - 'i'
+
+  5007:
+    question: 'What is the full name of the FDE cycle?'
+    answer:
+      - 'fetch decode execute cycle'
+      - 'fetch decode execute'
+ 
+  6001:
+    question: 'What was used in place of observers before they came out?'
+    answer: 
+      - 'BUD'
+  
+  6002:
+    question: 'What is the state that blocks turn into when pushed by pistons?'
+    answer: 
+      - 'Block 46'
+
+  6003:
+    question: 'How many game ticks does a redstone tick last?'
+    answer: 
+      - '2'
+
+  6004:
+    question: 'How long is the delay between each activation for a dispenser in redstone ticks?'
+    answer: 
+      - '4'
+
+  6005:
+    question: 'How many blocks can a piston push?'
+    answer: 
+      - '12'
+
+  6006:
+    question: 'What does the redstone acronym BUD stand for?'
+    answer: 
+      - 'Block Update Detector'
+
+  6007:
+    question: 'How long of a redstone signal does a stone button last for in redstone ticks?'
+    answer: 
+      - '10'
+
+  6008:
+    question: 'What is an alternative name for the hopper clock?'
+    answer: 
+      - 'Etho Clock'
+
+  6010:
+    question: 'What type of pressure plate(s) cannot be triggered by items?'
+    answer: 
+      - 'Stone'
+
+  6011:
+    question: 'Can a comparator detect a composter and give a signal strength?'
+    answer: 
+      - 'Yes'
+
+  6012:
+    question: 'Can bedrock be obtained in vanilla survival minecraft without the use of commands or creative mode?'
+    answer: 
+      - 'Yes'
+
+  6013:
+    question: 'Can the Ender dragon be killed by 1 arrow?'
+    answer: 
+      - 'Yes'
+
+  6014:
+    question: 'What do minecraft polar bears drop?'
+    answer: 
+      - 'Raw cod'
+
+  6015:
+    question: 'Can a slime block be powered by redstone?'
+    answer: 
+      - 'Yes'
+
+  6016:
+    question: 'Can a honey block be powered by redstone?'
+    answer: 
+      - 'No'
+
+  6017:
+    question: 'Starting from the rail that it is powered, up to how many blocks does a powered rail extend its power?'
+    answer: 
+      - '9'
+
+  6018:
+    question: 'What is the max effective level of the lure enchant?'
+    answer: 
+      - '5'
+
+  6019:
+    question: 'What were sugarcane used to be called?'
+    answer: 
+      - 'reeds'
+
+  6020:
+    question: 'What are the chances of a natural pink sheep spawning'
+    answer: 
+      - '1%'
+
+  6021:
+    question: 'What is physically shorter, a carpet or a 2 layered snow block?'
+    answer: 
+      - '2 layered snow block'
+
+  6022:
+    question: 'Can cats give you phantom membranes?'
+    answer: 
+      - 'Yes'
+
+  6023:
+    question: 'Can cats give you diamonds?'
+    answer: 
+      - 'No'
+
+  6024:
+    question: 'What is the minimum amount of iron ingots that an iron golem drops?'
+    answer: 
+      - '3'
+
+  6025:
+    question: 'How many days without sleeping does it take before phantoms start to spawn?'
+    answer: 
+      - '3'
+
+  6026:
+    question: 'Can you plant mushrooms on stone?'
+    answer: 
+      - 'Yes'
+
+  6027:
+    question: 'How many firework stars can you add to a rocket?'
+    answer: 
+      - '7'
+
+  6028:
+    question: 'What has the strongest explosion?'
+    answer: 
+      - 'Wither'
+
+  6029:
+    question: 'Which is stronger, a charged creeper explosion or an end crystal?'
+    answer: 
+      - 'Neither'
+
+  6030:
+    question: 'As of 1.17, what is the highest blast resistance value?'
+    asnwer: 
+      - '360000.8'
+
+  6031:
+    question: 'Can TNT destroy beacons?'
+    answer: 
+      - 'Yes'
+
+  6032:
+    question: 'How many items can be crafted with obsidian?'
+    answer: 
+      - '3'
+
+  6035:
+    question: 'What block allows for instant downwards redstone?'
+    answer: 
+      - 'Walls'
+
+  6036:
+    question: 'How many type of heads are there in vanilla?'
+    answer: 
+      - '6'
+
+  6037:
+    question: 'What were emeralds used to be called?'
+    answer: 
+      - 'Rubies'
+
+  6038:
+    question: 'Can you apply the power enchant on a crossbow?'
+    answer: 
+      - 'No'
+
+  6039:
+    question: 'Can leaves trigger an observer?'
+    answer: 
+      - 'Yes'
+
+  6040:
+    question: 'How long is a 0-tick pulse?'
+    answer: 
+      - '1 tick'
+
+  6041:
+    question: 'What is the laggiest redstone component?'
+    answer: 
+      - 'Redstone'
+
+  6042:
+    question: 'Can you break bedrock using pistons?'
+    answer: 
+      - 'Yes'
+
+  6043:
+    question: 'Can mobs spawn on bedrock?'
+    answer: 
+      - 'No'
+
+  6044:
+    question: 'What block, other than netherrack, can keep a fire going indefinitely?'
+    answer: 
+      - 'Bedrock'
+
+  6045:
+    question: 'Can bone blocks generate naturally?'
+    answer: 
+      - 'Yes'
+
+  6046:
+    question: 'Can an observer detect a cauldron being filled up?'
+    answer: 
+      - 'Yes'
+
+  6047:
+    question: 'What is the most effective level of fire resistance?'
+    answer: 
+      - '8'
+
+  6048:
+    question: 'What is the maximum damage reduction through enchantments?'
+    answer: 
+      - '80%'
+
+  6049:
+    question: 'Can you fish up a feather?'
+    answer: 
+      - 'No'
+
+  6050:
+    question: 'Do biomes affect fishing?'
+    answer: 
+      - 'Yes'
+
+  6051:
+    question: 'When will Hyn finish his island?'
+    answer: 
+      - 'Never'
