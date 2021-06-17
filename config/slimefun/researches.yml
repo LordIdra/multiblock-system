@@ -1,0 +1,17 @@
+# number has to be different for every research registered with slimefun
+# When the research is unlocked, the player will receive the message 'You have unlocked "<name>"'
+
+advanced_cooling_systems:
+  number: 160000001
+  xp: 40
+  name: 'Advanced Cooling Systems'
+
+advanced_uranium_processing:
+  number: 160000002
+  xp: 46
+  name: 'Advanced Uranium Processing'
+
+advanced_alloys:
+  number: 160000003
+  xp: 46
+  name: 'Advanced Alloys'

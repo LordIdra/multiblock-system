@@ -1,0 +1,115 @@
+Logger:
+
+
+  Info:
+
+    on-assemble: 'Multiblock assembled by player %player% with ID #%id%.'
+
+
+  Warning:
+
+    class-not-found: '&eMultiblock class %class% not found.'
+    world-multiblock-class-not-initialized: '&eWorld multiblock %structure% has failed to initialize.'
+
+    current-id-not-found: '&eCurrent-id not found in PermanentVariables.yml, creating one now.'
+    stored-tick-not-found: '&eStored-tick not found in PermanentVariables.yml, creating one now.'
+
+    save-fail-permanent-data: '&ePermanentData.yml failed to save.'
+    save-fail-player-data: '&ePlayerData.yml failed to save.'
+
+    material-invalid: '&eMaterial %material% is invalid for a structure.'
+    slimefun-item-invalid: '&eSlimefunItem %slimefun-item% is invalid for a structure.'
+    id-invalid: '&eMultiblock with ID %id% already taken. Problem with ID counter likely.'
+
+    structure-file-not-found: '&eStructure file %name%.yml not found.'
+    multiblock-file-not-found: '&eMultiblock file %name%.yml not found.'
+
+    description-not-found: '&eDescription for multiblock %name% not found.'
+
+    dimension-x-not-found: '&eDimension X for multiblock %name% not found.'
+    dimension-z-not-found: '&eDimension Z for multiblock %name% not found.'
+
+    abstract-lectern-not-found: '&eLectern not found for multiblock %multiblock%.'
+
+    file-not-found:             '&e%file% not found'
+
+    config-option-not-found:    '&3(%file%) &c%path% &3not found'
+    config-option-invalid:      '&3(%file%) &c%path% &3invalid value'
+
+
+
+Messages:
+  
+
+  Info:
+
+    newline: ''
+
+    multiblock-incomplete: '&9Multiblock is &b&l%percentage%% &r&9completed.'
+
+    help-title: '&f&l[&7&lMultiblock System&f&l]'
+    help-version: '&4Version: &2%version%'
+    help-author: '&4Author: &2%author%'
+
+    help-commands-title: '&f&l[&7&lCommand List&f&l]'
+    help-commands-format: '&c/mb &a%name% &e%args%&4- &2%description%'
+
+    multiblock-list-title: '&f&l[&7&lMultiblock List&f&l]'
+    multiblock-list-format: '&a%name% &c- &2%description%'
+    
+    trusted-list-title: '&f&l[&7&lTrusted Player List&f&l]'
+    trusted-list-format: '&c- &a%name%'
+
+    admin-log-title: '&f&l[&7&lError Log&f&l]'
+    admin-log-format: '&4[&6%time%&4] &e%error%'
+
+
+  Error:
+
+    multiblock-not-recognised: '&cMultiblock &6%multiblock% &cnot recognised.'
+    not-looking-at-lectern: '&cYou must be looking at the multiblock’s lectern to do this.'
+    lectern-already-used: '&cThis lectern is already part of another multiblock.'
+
+    multiblock-assembly-not-attempted: '&cYou have not yet tried assembling a multiblock.'
+
+    id-invalid: '&cThere was an error assembling the multiblock. Try running the &6/mb assemble&c command again. If the issue persists, contact a server admin.'
+
+    invalid-page: '&cThat page does not exist.'
+    nothing-to-display: '&cNothing to display.'
+
+    cannot-modify-multiblock: '&cYou do not have permission to modify &6%player%’s &cmultiblocks.'
+
+    multiblock-list-none: '&cYou have not unlocked any multiblocks.'
+    trusted-list-none: '&cYou have no players trusted.'
+    admin-log-none: '&cThe log contains no errors.'
+
+    player-not-found: '&cPlayer &6%player% &cnot found.'
+
+    not-enough-arguments: '&cNot enough arguments. Usage: &4/mb &a%name% &e%args%&4'
+    command-not-found: '&cCommand unrecognised. Run &6/mb help &cfor a list of commands.'
+    command-cannot-be-run-from-console: '&cThis command cannot be run from the console.'
+
+    no-permission-command: '&cYou do not have permission to run this command.'
+    no-permission-multiblock: '&cYou have not yet unlocked this multiblock.'
+
+    not-part-of-multiblock: '&cThis block is not part of a multiblock.'
+    invalid-block: '&cYou must be looking at a solid block.'
+    
+    inventory-tag-invalid-block: '&cYou must be looking at a chest or barrel to set this tag.'
+    invalid-inventory-tag: '&cThe inventory tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
+    invalid-position-tag: '&cThe position tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
+
+
+  Success:
+
+    multiblock-assembled: '&aMultiblock assembled.'
+    multiblock-disassembled: '&aMultiblock disassembled.'
+
+    player-untrusted: '&aPlayer &6%player% &auntrusted.'
+    player-trusted: '&aPlayer &6%player% &atrusted.'
+
+    admin-logs-cleared: '&aError logs cleared successfully.'
+    
+    tag-set: '&aTag successfully set.'
+    
+    auto-build-cancel: '&aAuto-build cancelled.'
