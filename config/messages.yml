@@ -36,7 +36,8 @@ Logger:
     config-option-not-found:    '&3(%file%) &c%path% &3not found'
     config-option-invalid:      '&3(%file%) &c%path% &3invalid value'
 
-
+    # Unsure of what to do here. It's for the BlockError.java isResolved()
+    world-not-found: '&eBlock World not found.'
 
 Messages:
   
