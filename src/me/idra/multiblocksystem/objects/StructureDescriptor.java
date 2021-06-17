@@ -21,17 +21,17 @@ public class StructureDescriptor {
 	
 	public Vector central_block = new Vector();
 	public Vector dimension = new Vector();
-	public List<List<List<AbstractMixedItemStack>>> blocks;
+	public List<List<List<ItemGroup>>> groups;
 	
 	
 	
-	public StructureDescriptor(String name, List<List<List<AbstractMixedItemStack>>> layer_blocks) {
+	public StructureDescriptor(String name, List<List<List<ItemGroup>>> layer_groups) {
 		
 		// Set direct variables
-		dimension.setY(layer_blocks.size());
-		dimension.setX(layer_blocks.get(0).size());
-		dimension.setZ(layer_blocks.get(0).get(0).size());
-		blocks = layer_blocks;
+		dimension.setY(layer_groups.size());
+		dimension.setX(layer_groups.get(0).size());
+		dimension.setZ(layer_groups.get(0).get(0).size());
+		groups = layer_groups;
 		
 		// Figure out if the structure contains a lectern (and if so, where it is)
 		boolean found_lectern = false;
@@ -42,7 +42,7 @@ public class StructureDescriptor {
 				for (int z = 0; z < dimension.getZ(); z++) {
 					
 					// Get the block
-					AbstractMixedItemStack block = layer_blocks.get(y).get(x).get(z);
+					ItemGroup block = layer_groups.get(y).get(x).get(z);
 					
 					// If it doesn't exist move on
 					if (block == null) {
@@ -80,9 +80,9 @@ public class StructureDescriptor {
 		number_of_air_blocks = 0;
 		
 		// Loop through every block and check if it's an air block. If it is, increment air block counter
-		for (List<List<AbstractMixedItemStack>> item_a_a : blocks)
-			for (List<AbstractMixedItemStack> item_a : item_a_a)
-				for (AbstractMixedItemStack item : item_a)
+		for (List<List<ItemGroup>> item_a_a : groups)
+			for (List<ItemGroup> item_a : item_a_a)
+				for (ItemGroup item : item_a)
 					if (item.containsMaterial(Material.AIR))
 						number_of_air_blocks++;
 		

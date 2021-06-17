@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
-import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
+import me.idra.multiblocksystem.objects.ItemGroup;
 
 
 
@@ -49,10 +49,10 @@ public class CommandEditorCreate extends BaseCommand{
 		List<List<List<String>>> stack_list = new ArrayList<> ();
 
 		for (int y = 0; y < dimension_y; y++) {
-			List<List<AbstractMixedItemStack>> stack = new ArrayList<> ();
+			List<List<ItemGroup>> stack = new ArrayList<> ();
 
 			for (int x = 0; x < dimension_x; x++) {
-				List<AbstractMixedItemStack> stack_x = new ArrayList<> ();
+				List<ItemGroup> stack_x = new ArrayList<> ();
 
 				for (int z = 0; z < dimension_z; z++) {
 

@@ -170,7 +170,7 @@ public class AbstractMultiblock {
 				// For every position tag, get the items the tag can be, and add them to an array
 				for (String item : position_tag_config.getStringList(tag)) {
 					
-					ItemStack stack = StringConversion.itemStackFromID(multiblock_file, position_tag_config, item);
+					ItemStack stack = ItemStackHelper.itemStackFromID(multiblock_file, position_tag_config, item);
 
 					if (stack == null) {
 						Logger.configError(Logger.OPTION_INVALID, multiblock_file, position_tag_config, tag);
@@ -215,7 +215,7 @@ public class AbstractMultiblock {
 				String id = split_string[1];
 
 				// Create MixedItemStack
-				ItemStack stack = StringConversion.itemStackFromID(multiblock_file, fuel_config, id);
+				ItemStack stack = ItemStackHelper.itemStackFromID(multiblock_file, fuel_config, id);
 
 				if (stack == null) {
 					Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
@@ -280,24 +280,24 @@ public class AbstractMultiblock {
 		 * STRUCTURE LOADING
 		 */
 
-		List<List<List<List<ItemStack>>>> block_array = new ArrayList<> ();	// y -> x -> z -> block
+		List<List<List<ItemGroup>>> block_array = new ArrayList<> ();	// y -> x -> z -> block
 		
 		ConfigurationSection structure_section = YamlConfiguration.loadConfiguration(structure_file);
 
 		for (String name_y : structure_section.getKeys(false)) {
 
 			ConfigurationSection section_y = structure_section.getConfigurationSection(name_y);
-			List<List<List<ItemStack>>> block_array_y = new ArrayList<> ();
+			List<List<ItemGroup>> block_array_y = new ArrayList<> ();
 
 			for (String name_x : section_y.getKeys(false)) {
 
 				ConfigurationSection section_x = section_y.getConfigurationSection(name_x);
-				List<List<ItemStack>> block_array_x = new ArrayList<> ();
+				List<ItemGroup> block_array_x = new ArrayList<> ();
 
 				for (String name_z : section_x.getKeys(false)) {
 
 					String string_z = section_x.getString(name_z);
-					block_array_x.add(StringConversion.stringToItemStackList(structure_file, section_x, string_z));
+					block_array_x.add(StringConversion.stringToGroup(structure_file, section_x, string_z));
 				}
 
 				block_array_y.add(block_array_x);
@@ -317,14 +317,14 @@ public class AbstractMultiblock {
 	 */
 		
 	
-	public static Map<ItemStack, List<ItemStack>> getStructureFromStartingPoint(
+	public static Map<Block, ItemGroup> getStructureFromStartingPoint(
 			Player player,
 			Location central_block_location,
 			BlockFace central_block_orientation, 
 			StructureDescriptor abstract_descriptor) {
 		
-		// Initialize empty map that will store every BlockInfo and its corresponding ItemInfo
-		Map<ItemStack, List<ItemStack>> world_to_abstract_map = new LinkedHashMap<> ();
+		// Initialize empty map that will store every block and its corresponding group
+		Map<Block, ItemGroup> block_to_group_map = new LinkedHashMap<> ();
 		
 		// Figure out block locations
 		Location starting_point = central_block_location.clone();
@@ -385,10 +385,10 @@ public class AbstractMultiblock {
 		
 		// Enter block checking loop
 		for (int y = 0; y < abstract_descriptor.dimension.getBlockY(); y++) {
-			List<List<List<ItemStack>>> abstract_array_y = abstract_descriptor.blocks.get(y);
+			List<List<ItemGroup>> abstract_array_y = abstract_descriptor.groups.get(y);
 			
 			for (int x = 0; x < abstract_descriptor.dimension.getBlockX(); x++) {
-				List<List<ItemStack>> abstract_array_x = abstract_array_y.get(x);
+				List<ItemGroup> abstract_array_x = abstract_array_y.get(x);
 				
 				for (int z = 0; z < abstract_descriptor.dimension.getBlockZ(); z++) {
 					
@@ -406,21 +406,20 @@ public class AbstractMultiblock {
 					
 					// Get the block itself, then generate ItemInfo and BlockInfo
 					Block block = player.getWorld().getBlockAt(block_location);
-					ItemStack world_block = ItemStackHelper.blockToItemStack(block);
-					List<ItemStack> abstract_block = abstract_array_x.get(z);
+					ItemGroup group = abstract_array_x.get(z);
 					
 					// If the material is supposed to be air, don't bother checking it - it essentially isn't part of the multiblock
-					if (abstract_block.contains(null)) {
+					if (group.containsMaterial(Material.AIR)) {
 						continue;
 					}
 					
 					// If not, add the block/item pair to the map
-					world_to_abstract_map.put(world_block, abstract_block);
+					block_to_group_map.put(block, group);
 				}
 			}
 		}
 		
 		// Return the final map
-		return world_to_abstract_map;
+		return block_to_group_map;
 	}
 }

@@ -12,8 +12,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+import me.idra.multiblocksystem.helpers.ItemStackHelper;
 import me.idra.multiblocksystem.helpers.Logger;
-import me.idra.multiblocksystem.helpers.StringConversion;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
@@ -213,7 +213,7 @@ public class ManagerSlimefunItems {
 					int index = Integer.parseInt(recipe_key);
 					String id = recipe_items_section.getString(recipe_key);
 	
-					recipe[index] = StringConversion.mixedItemStackFromID(slimefun_item_file, recipe_items_section, id).asItemStack();
+					recipe[index] = ItemStackHelper.itemStackFromID(slimefun_item_file, recipe_items_section, id);
 	
 					if (recipe[index] == null) {
 						Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, recipe_items_section, recipe_key);

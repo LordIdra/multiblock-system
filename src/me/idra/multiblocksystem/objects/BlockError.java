@@ -15,15 +15,15 @@ import me.idra.multiblocksystem.helpers.StringConversion;
 
 public class BlockError {
 
-	public WorldMixedItemStack current_item;
-	public AbstractMixedItemStack should_be_items;
+	public Block block;
+	public ItemGroup group;
 	public Player player;
 	
 	
 	
-	public BlockError(WorldMixedItemStack current_item, AbstractMixedItemStack should_be_items, Player player) {
-		this.current_item = current_item;
-		this.should_be_items = should_be_items;
+	public BlockError(Block block, ItemGroup group, Player player) {
+		this.block = block;
+		this.group = group;
 		this.player = player;
 	}
 	
@@ -31,13 +31,13 @@ public class BlockError {
 	public String getErrorMessage() {
 		
 		// Get location as vector
-		Vector location_vector = current_item.location.toVector();
+		Vector location_vector = block.getLocation().toVector();
 		
 		// Block that the location currently is
-		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + current_item.getDisplayName() + ChatColor.DARK_RED + "]";
+		String current_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatBlockName(block) + ChatColor.DARK_RED + "]";
 
 		// Block that the location should be
-		String should_be_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatItemName(should_be_items.identifier) + ChatColor.DARK_RED + "]";
+		String should_be_string = ChatColor.DARK_RED + "[" + ChatColor.WHITE + StringConversion.formatItemName(group.name) + ChatColor.DARK_RED + "]";
 
 		// Generate the final error string
 		return 	ChatColor.DARK_RED +  "x" + ChatColor.YELLOW + location_vector.getBlockX() +
@@ -60,16 +60,15 @@ public class BlockError {
 			primary_color = ChatColor.DARK_RED;
 		
 		// Generate the final error string
-		return primary_color + "[" + ChatColor.WHITE + should_be_items.identifier + primary_color + "]";
+		return primary_color + "[" + ChatColor.WHITE + group.name + primary_color + "]";
 	}
 	
 	
 	
 	public boolean isResolved() {
 		
-		// Update the current MixedItemStack
-		Block block = current_item.location.getWorld().getBlockAt(current_item.location);
-		WorldMixedItemStack current_block = new WorldMixedItemStack(block);
+		// Update the current block
+		block = block.getLocation().getWorld().getBlockAt(block.getLocation());
 		
 		// For every ItemStack the abstract mixed item stack could be
 		for (MixedItemStack abstract_itemstack : should_be_items.items) {

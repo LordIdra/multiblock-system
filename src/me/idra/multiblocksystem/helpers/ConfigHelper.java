@@ -175,7 +175,7 @@ public class ConfigHelper {
         List<ItemStack> item_stacks = new ArrayList<> ();
 
         for (String item_name : item_names) {
-			item_stacks.add(ItemStackHelper.itemStackFromID(item_name));
+			item_stacks.add(ItemStackHelper.itemStackFromID(group_file, group_section, item_name));
         }
 
         return item_stacks;

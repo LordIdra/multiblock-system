@@ -25,11 +25,10 @@ import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListBlockErrors;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
-import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.idra.multiblocksystem.objects.BlockError;
+import me.idra.multiblocksystem.objects.ItemGroup;
 import me.idra.multiblocksystem.objects.StructureDescriptor;
-import me.idra.multiblocksystem.objects.WorldMixedItemStack;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
 import me.idra.multiblocksystem.tasks.TaskVisualiseLocation;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
@@ -129,7 +128,7 @@ public class CommandAssemble extends BaseCommand{
 		
 		
 		// Create structures to store errors, location->tag map, and item->block info map
-		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
+		Map<Block, ItemGroup> block_to_group_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
 		List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, world_to_abstract_map);
 		
 		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]

@@ -7,12 +7,12 @@ import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
+import me.idra.multiblocksystem.helpers.ItemStackHelper;
 import me.idra.multiblocksystem.helpers.Logger;
-import me.idra.multiblocksystem.helpers.StringConversion;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
-import me.idra.multiblocksystem.objects.AbstractMixedItemStack;
-import me.idra.multiblocksystem.objects.MixedItemStack;
+import me.idra.multiblocksystem.objects.ItemGroup;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class ListItemGroups {
 
 
 
-	private static Map<String, AbstractMixedItemStack> material_groups = new HashMap<> ();
+	private static Map<String, ItemGroup> material_groups = new HashMap<> ();
 
 
 
@@ -56,12 +56,12 @@ public class ListItemGroups {
 		for (String group_name : config_section.getKeys(false)) {
 
 			List<String> group_item_names = config_section.getStringList(group_name);
-			List<MixedItemStack> group_item_stacks = new ArrayList<> ();
+			List<ItemStack> group_item_stacks = new ArrayList<> ();
 
 			// Convert the item names to MixedItemStacks
 			for (String name : group_item_names) {
 
-				MixedItemStack stack = StringConversion.mixedItemStackFromID(item_group_file, item_group_config, name);
+				ItemStack stack = ItemStackHelper.itemStackFromID(item_group_file, item_group_config, name);
 
 				if (stack == null) {
 					Logger.configError(Logger.OPTION_INVALID, item_group_file, item_group_config, name);
@@ -73,7 +73,7 @@ public class ListItemGroups {
 
 			// Initialize new stack and add it to the map
 			// Tag will be handled later
-			AbstractMixedItemStack group_item = new AbstractMixedItemStack(group_item_stacks, null, group_name);
+			ItemGroup group_item = new ItemGroup(group_name, group_item_stacks);
 
 			material_groups.put(group_name, group_item);
 		}
