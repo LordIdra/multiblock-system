@@ -27,7 +27,7 @@ public class InformationScoreboard {
 
 	public void update() {
 
-		StringBuilder completion = new StringBuilder(ChatColor.GRAY + "[" + ChatColor.RED + "||||||||||||||||||||" + ChatColor.GRAY + "]");
+		StringBuilder completion = new StringBuilder();
 
 		if (multiblock.active_recipe != null) {
 
@@ -45,6 +45,9 @@ public class InformationScoreboard {
 			}
 
 			completion.append(ChatColor.GRAY + "]" + ChatColor.GREEN);
+
+		} else {
+			completion = new StringBuilder(ChatColor.GRAY + "[" + ChatColor.RED + "||||||||||||||||||||" + ChatColor.GRAY + "]");
 		}
 
 		int seconds_remaining = Math.floorDiv(multiblock.fuel_ticks, 20);

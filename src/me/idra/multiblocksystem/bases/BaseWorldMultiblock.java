@@ -194,7 +194,7 @@ public abstract class BaseWorldMultiblock {
 						ItemStack stack = entry.getValue();
 
 						// Slimefun item check
-						if ((SlimefunItem.getByItem(stack) != null) && (!SlimefunUtils.isItemSimilar(stack, fuel.stack, false))) {
+						if ((SlimefunItem.getByItem(fuel.stack) != null) && (!SlimefunUtils.isItemSimilar(stack, fuel.stack, false))) {
 							continue;
 						}
 
@@ -369,7 +369,7 @@ public abstract class BaseWorldMultiblock {
 				for (ItemStack inventory_stack : items.values()) {
 
 					// Slimefun item check
-					if (SlimefunItem.getByItem(inventory_stack) != null) {
+					if (SlimefunItem.getByItem(recipe_stack) != null) {
 
 						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
@@ -432,7 +432,7 @@ public abstract class BaseWorldMultiblock {
 					ItemStack inventory_stack = stack.getValue();
 
 					// Slimefun item check
-					if (SlimefunItem.getByItem(inventory_stack) != null) {
+					if (SlimefunItem.getByItem(recipe_stack) != null) {
 
 						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
@@ -488,13 +488,13 @@ public abstract class BaseWorldMultiblock {
 					ItemStack inventory_stack = stack.getValue();
 					
 					// Slimefun item check
-					if (SlimefunItem.getByItem(inventory_stack) != null) {
+					if (SlimefunItem.getByItem(recipe_stack) != null) {
 
 						if (SlimefunItem.getByItem(recipe_stack) == null) {
 							continue;
 						}
 						
-						if (SlimefunItem.getByItem(inventory_stack) != SlimefunItem.getByItem(recipe_stack)) {
+						if (SlimefunItem.getByItem(inventory_stack) == SlimefunItem.getByItem(recipe_stack)) {
 							continue;
 						}
 					}
@@ -567,7 +567,7 @@ public abstract class BaseWorldMultiblock {
 					// Add only some capacity
 					if (to_add <= space_in_stack) {
 
-						ItemStack stack = recipe_stack;
+						ItemStack stack = recipe_stack.clone();
 						stack.setAmount(to_add);
 						inventory.addItem(stack);
 
@@ -577,7 +577,7 @@ public abstract class BaseWorldMultiblock {
 					// Add all items
 					else {
 
-						ItemStack stack = recipe_stack;
+						ItemStack stack = recipe_stack.clone();
 						stack.setAmount(space_in_stack);
 						inventory.addItem(stack);
 
@@ -603,7 +603,7 @@ public abstract class BaseWorldMultiblock {
 				}
 
 				int amount_to_add = items_to_add.get(recipe_stack);
-				ItemStack item_to_add = recipe_stack;
+				ItemStack item_to_add = recipe_stack.clone();
 
 				int amount_can_add = amount_to_add % item_to_add.getMaxStackSize();
 
