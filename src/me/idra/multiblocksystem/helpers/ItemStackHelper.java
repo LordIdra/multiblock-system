@@ -7,6 +7,8 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
+import me.idra.multiblocksystem.lists.ListItemGroups;
+import me.idra.multiblocksystem.objects.ItemGroup;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
@@ -76,5 +78,14 @@ public class ItemStackHelper {
 		} else {
 			return null;
 		}
+	}
+
+
+
+	public static ItemGroup groupFromBlock(Block block) {
+		
+		ItemStack stack = blockToItemStack(block);
+
+		for (String key : ListItemGroups.material_groups)
 	}
 }

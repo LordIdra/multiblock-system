@@ -29,7 +29,7 @@ public class ListItemGroups {
 
 
 
-	private static Map<String, ItemGroup> material_groups = new HashMap<> ();
+	public static Map<String, ItemGroup> material_groups = new HashMap<> ();
 
 
 
