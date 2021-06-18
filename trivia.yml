@@ -11,11 +11,13 @@ questions:
     answer:
       - 'ocelot'
       - 'ocelots'
+      - 'cats'
+      - 'cat'
   2:
     question: 'What can you wear to stop Enderman attacking you?'
     answer:
-      - 'pumpkin'
-      - 'a pumpkin'
+      - 'carved pumpkin'
+      - 'a carved pumpkin'
   3:
     question: 'What item do you need to breed llamas?'
     answer:
@@ -274,10 +276,11 @@ questions:
     question: 'What super mario 64 item was the elytra inspired by?'
     answer:
       - 'wing cap'
-  506:
-    question: 'Who is the supreme overlord?'
+  56:
+    question: 'Who is the server owner?'
     answer:
       - 'idra'
+      - 'indie'
   57:
     question: 'What is the integral of (5x^2 -8x +5)dx'
     answer:
@@ -307,7 +310,7 @@ questions:
     answer:
       - '50'
   64:
-    question: 'What was the first soft drink in space?'
+    question: 'What was the first soft drink (soda / pop) in space?'
     answer:
       - 'Coca Cola'
   65:
@@ -487,12 +490,14 @@ questions:
   6020:
     question: 'What are the chances of a natural pink sheep spawning'
     answer:
-      - '1%'
+      - '0.16%'
+      - '1/625'
+
 
   6021:
-    question: 'What is physically shorter, a carpet or a 2 layered snow block?'
+    question: 'What is physically shorter, a lily pad or a 2 layers of snow?'
     answer:
-      - '2 layered snow block'
+      - 'lily pad'
 
   6022:
     question: 'Can cats give you phantom membranes?'
@@ -583,6 +588,7 @@ questions:
     question: 'What is the laggiest redstone component?'
     answer:
       - 'Redstone'
+      - 'Redstone dust'
 
   6042:
     question: 'Can you break bedrock using pistons?'
@@ -630,9 +636,9 @@ questions:
       - 'Yes'
 
   6051:
-    question: 'When will Hyn finish his island?'
+    question: 'Will Hynlerin ever finish his Island?'
     answer:
-      - 'Sometime, Probably Post Reset'
+      - 'No'
 
   44001:
     question: 'What is the effective range of a Pillager when scaring a Villager?'
@@ -678,7 +684,7 @@ questions:
       - 'Francium'
 
   44007:
-    question: 'Who is a current contribiutor to LordIdra\multiblocksystem?'
+    question: 'Name one of the current contributors to Idra's Multiblock System?'
     answer:
       - 'Idra'
       - 'Anon'
@@ -690,13 +696,23 @@ questions:
       - 'The Strong Force'
 
   44009:
-    question: 'In computer repair, if your computer turns off after a short peroid of time but still allows you to turn it on, What should you do?'
+    question: 'What is the common name for Sodium Chloride (NaCl)?'
     answer:
-      - 'Take it to a repair shop'
-      - 'Replace your thermal compound or cooler'
+      - 'Salt'
+      - 'Table salt'
 
   44010:
     question: 'Assuming that Idra or Anon doesnt remember the answer to this question, what is on the mind of Hyn while writing this question?'
     answer:
       - 'If Idra gets this right I owe him 6000 of my balance'
       - 'Hopefully Anon doesnt go crazy over my terrible use of capitalization'
+
+  44011:
+    question: 'Would inhaling chloroform make you faint within 30 seconds?'
+    answer:
+      - 'No'
+
+  44012:
+    questoin: 'Pressing F3 + what will show chunk borders?'
+    answer:
+      - 'g'
