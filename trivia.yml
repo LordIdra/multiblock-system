@@ -382,7 +382,7 @@ questions:
       - '6000'
 
   5005:
-    question: 'Which composer died 6 days after the premiere of their final symphony (symphony 6)?'
+    question: 'Which composer died 9 days after the premiere of their final symphony (symphony 6)?'
     answer:
       - 'tchaikovsky'
 
