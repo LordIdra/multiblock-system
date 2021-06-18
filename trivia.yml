@@ -124,93 +124,93 @@ questions:
     question: 'What is the official name of update 1.15?'
     answer:
       - 'Buzzy bees'
-  56:
+  27:
     question: 'What is the official name of update 1.16?'
     answer:
       - 'Nether Update'
-  27:
+  28:
     question: 'What minecraft version added desert pyramids?'
     answer:
       - '1.3'
-  28:
+  29:
     question: 'What minecraft version added command blocks?'
     answer:
       - '1.4'
-  29:
+  30:
     question: 'What minecraft version added scoreboards?'
     answer:
       - '1.5'
-  30:
+  31:
     question: 'What minecraft version changed texture packs to resource packs?'
     answer:
       - '1.6'
-  31:
+  32:
     question: 'What minecraft version introduced amplified terrain?'
     answer:
       - '1.7'
-  32:
+  33:
     question: 'What minecraft version added the @e (entity) selector?'
     answer:
       - '1.8'
-  33:
+  34:
     question: 'What minecraft version overhauled the End?'
     answer:
       - '1.9'
-  34:
+  35:
     question: 'What minecraft version introduced auto jump?'
     answer:
       - '1.10'
-  35:
+  36:
     question: 'What minecraft version increased the chat message length to 256 characters?'
     answer:
       - '1.11'
-  36:
+  37:
     question: 'What minecraft version added hotbar saving/loading in creative mode?'
     answer:
       - '1.12'
-  37:
+  38:
     question: 'What minecraft version added datapacks?'
     answer:
       - '1.13'
-  38:
+  39:
     question: 'What minecraft version added suspicious stew?'
     answer:
       - '1.14'
-  39:
+  40:
     question: 'What minecraft version introduced bees?'
     answer:
       - '1.15'
-  40:
+  41:
     question: 'What minecraft version overhauled the Nether?'
     answer:
       - '1.16'
   #
   # Brewing
   #
-  41:
+  42:
     question: 'What item do you use in a brewing stand to create a thick potion?'
     answer:
       - 'glowstone dust'
-  42:
+  43:
     question: 'How many seconds does it take for the regeneration I effect to heal 3 hearts?'
     answer:
       - '15'
-  43:
+  44:
     question: 'What item do you need to create a strength I potion from an awkward potion?'
     answer:
       - 'Blaze powder'
-  44:
+  45:
     question: 'How many seconds does a regular leaping II potion last for?'
     answer:
       - '90'
   #
   # Biomes
   #
-  45:
+  46:
     question: 'How many unused and removed biomes are there in total? (1.15)'
     answer:
       - '7'
-  46:
+  47:
     question: 'Name an overworld biome not required for the adventure time (discover every biomes) advancement. (1.15)'
     answer:
       - 'Dark forest hills'
@@ -235,132 +235,132 @@ questions:
       - 'Tiaga mountains'
       - 'Tall birch forest'
       - 'Tall birch hills'
-  47:
+  48:
     question: 'What is the maximum temperature value a biome can have to allow snowfall?'
     answer:
       - '0.15'
   #
   # Other
   #
-  48:
+  49:
     question: 'What tool do you need to mine a beacon?'
     answer:
       - 'hand'
       - 'none'
-  49:
+  50:
     question: 'How many minecraft editions/games are there?'
     answer:
       - '7'
-  50:
+  51:
     question: 'What minecraft edition/game are you currently playing?'
     answer:
       - 'java'
       - 'java edition'
-  51:
+  52:
     question: 'What is Notch''s real name?'
     answer:
       - 'Markus Persson'
-  52:
+  53:
     question: 'What year was minecraft classic released?'
     answer:
       - '2009'
-  53:
+  54:
     question: 'What year was minecraft''s full release?'
     answer:
       - '2011'
-  54:
+  55:
     question: 'How many minecraft editions have uncensored chat?'
     answer:
       - '1'
-  55:
+  56:
     question: 'What super mario 64 item was the elytra inspired by?'
     answer:
       - 'wing cap'
-  56:
+  57:
     question: 'Who is the server owner?'
     answer:
       - 'idra'
       - 'indie'
-  57:
+  58:
     question: 'What is the integral of (5x^2 -8x +5)dx'
     answer:
       - '(5x^3)/3-4x^2+5x+c'
-  58:
+  59:
     question: 'What is the derivative of X^3?'
     answer:
       - '3x^2'
-  59:
+  60:
     question: 'What is the integral of 4x^6?'
     answer:
       - '(4x^7)/6+c'
-  60:
+  61:
     question: 'Integrate z^7?'
     answer:
       - '(z^8)/7+c'
-  61:
+  62:
     question: 'Who is the father of computers?'
     answer:
       - 'Charles Babbage'
-  62:
+  63:
     question: 'What is 11 * 11?'
     answer:
       - '121'
-  63:
+  64:
     question: 'How long is an Olympic swimming pool (in meters)?'
     answer:
       - '50'
-  64:
+  65:
     question: 'What was the first soft drink (soda / pop) in space?'
     answer:
       - 'Coca Cola'
-  65:
+  66:
     question: 'What food never goes bad?'
     answer:
       - 'Honey'
-  66:
+  67:
     question: 'On the farm, what is a "kid?"'
     answer:
       - 'baby goat'
-  67:
+  68:
     question: 'Which country says "ta" for thank you?'
     answer:
       - 'UK'
-  68:
+  69:
     question: 'Which country has the most natural lakes?'
     answer:
       - 'Canada'
-  69:
+  70:
     question: 'Which country is in South America and has an official language of Dutch?'
     answer:
       - 'Suriname'
-  70:
+  71:
     question: 'Which country is Area 51 located in?'
     answer:
       - 'United States'
       - 'usa'
       - 'america'
-  71:
+  72:
     question: 'Which country is is the Terracotta Army located in?'
     answer:
       - 'China'
-  72:
+  73:
     question: 'Evaluate the limit, as x approaches 2, of (8-3x+12x^2).'
     answer:
       - '50'
-  73:
+  74:
     question: 'Evaluate the limit, as x approaches 2, of (8 - x^3).'
     answer:
       - '0'
-  74:
+  75:
     question: 'Integrate the following, (x^7 +1)'
     answer:
       - '(x^8)/7+x+c'
-  75:
+  76:
     question: 'What signifies "significance" within a summary statistics table?'
     answer:
       - 'star'
       - 'stars'
-  76:
+  77:
     question: 'Evaluate 2(x-3)=4x-1?'
     answer:
       - '-2.5'
