@@ -27,7 +27,6 @@ import org.bukkit.util.BlockIterator;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +48,13 @@ public class CommandAssemble extends BaseCommand {
 		File multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks");
 
 		List<String> new_array = new ArrayList<>();
+		if (multiblock_folder.exists()) {
+			for (File file : multiblock_folder.listFiles()) {
+				new_array.add(file.getName());
+			}
 
-		for (File file : multiblock_folder.listFiles()) {
-			new_array.add(file.getName());
+			all_arguments.add(new_array);
 		}
-
-		all_arguments.add(new_array);
 	}
 
 	@Override
@@ -83,9 +83,9 @@ public class CommandAssemble extends BaseCommand {
 		BlockIterator block_iterator = new BlockIterator(player, 5);
 		Block central_block = null;
 
-		while (block_iterator.hasNext()) {
+		while (block_iterator.hasNext()) { // While there are still elements in the block_iterator
 
-			Block next_block = block_iterator.next();
+			Block next_block = block_iterator.next(); // Get the next element from block_iterator (does not move cursor forwards)
 
 			if (next_block.getType() == Material.LECTERN) {
 				central_block = next_block;
@@ -102,18 +102,11 @@ public class CommandAssemble extends BaseCommand {
 
 		Location central_block_location = central_block.getLocation();
 
-		// Verify block is a lectern
-		if (central_block.getType() != Material.LECTERN) {
-			MessageHandler.send(sender,
-					MessageHandler.getError("not-looking-at-lectern"));
-			return false;
-		}
-
 		// Find orientation of lectern
 		BlockFace central_block_orientation = ((Directional) central_block.getBlockData()).getFacing();
 
 		// Check if the lectern is already in use
-		if (ListWorldMultiblocks.getMultiblockFromLocation(central_block_location) != null) {
+		if (ListWorldMultiblocks.getMultiblockFromLocation(central_block_location) != null) { // Checking if the Lectern is already part in a different multiblock structure?
 			MessageHandler.send(sender,
 					MessageHandler.getError("lectern-already-used"));
 			return false;
@@ -129,13 +122,13 @@ public class CommandAssemble extends BaseCommand {
 
 		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]
 		int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
-		int percentage = Math.round((correct_blocks * 100) / (float) (abstract_descriptor.number_of_solid_blocks));
+		int percentage = Math.round((correct_blocks * 100) / (float) abstract_descriptor.number_of_solid_blocks);
 
 		// Check if multiblock is complete or not
 		if (percentage == 100) {
 
 			// Multiblock complete, let's assemble it. Start by creating a map of locations to tags
-			Map<BlockPosition, String> location_to_tag_map = new HashMap<>();
+			List<BlockPosition> assembled_block_position_list = new ArrayList<>();
 
 			// For every BlockInfo in the structure
 			for (Block block : block_to_group_map.keySet()) {
@@ -143,19 +136,12 @@ public class CommandAssemble extends BaseCommand {
 				// Convert location to block position
 				BlockPosition block_position = new BlockPosition(block.getLocation());
 
-				// If the block doesn't have any tag, value = null
-				if (block_to_group_map.get(block).tag == null) {
-					location_to_tag_map.put(block_position, null);
-
-					// If the block does have any tags, value = tags
-				} else {
-					location_to_tag_map.put(block_position, block_to_group_map.get(block).tag);
-				}
+				assembled_block_position_list.add(block_position);
 			}
 
 			// Actually create the multiblock
-			int ID = FileHandlerPermanentVariables.currentID(); // FIXME: There is more stuff here with Tags
-			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, location_to_tag_map, player.getUniqueId(), ID);
+			int ID = FileHandlerPermanentVariables.currentID();
+			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, assembled_block_position_list, player.getUniqueId(), ID);
 
 			// Notify the user
 			MessageHandler.send(sender,

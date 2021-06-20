@@ -15,7 +15,7 @@ import org.bukkit.util.StringUtil;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
-import me.idra.multiblocksystem.commands.CommandTag;
+import me.idra.multiblocksystem.commands.CommandFilter;
 import me.idra.multiblocksystem.lists.ListCommands;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -40,7 +40,7 @@ public class TabHandler implements TabCompleter {
 	    		continue;
 
 			// If the command is /mb tag
-			if (base_command instanceof CommandTag && args.length == 2) {
+			if (base_command instanceof CommandFilter && args.length == 2) {
 				
 				BlockIterator block_iterator = new BlockIterator((Player) sender, 5);
 				Block target_block = null;
