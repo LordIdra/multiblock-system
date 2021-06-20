@@ -95,7 +95,7 @@ public class CommandTag extends BaseCommand{
 			if (!multiblock.abstract_multiblock.inventory_tags.contains(args[1])) {
 				MessageHandler.send(player, 
 						MessageHandler.getError("invalid-inventory-tag")
-						.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name)
+						.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
 						.replace(ConstantPlaceholders.TAG, args[1]));
 				return false;
 			}
@@ -136,7 +136,7 @@ public class CommandTag extends BaseCommand{
 		if (!multiblock.abstract_multiblock.position_tags.keySet().contains(args[1])) {
 			MessageHandler.send(player,
 					MessageHandler.getError("invalid-position-tag")
-					.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name)
+					.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
 					.replace(ConstantPlaceholders.TAG, args[1]));
 			return false;
 		}

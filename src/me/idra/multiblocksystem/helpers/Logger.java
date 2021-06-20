@@ -1,30 +1,26 @@
 package me.idra.multiblocksystem.helpers;
 
+import me.idra.multiblocksystem.managers.ManagerPlugin;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-
-import me.idra.multiblocksystem.managers.ManagerPlugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime; 
-
-
 
 public class Logger {
-	
+
 	private static int log_ID = 0;
-	
-	private static Map<Integer, String> log_times = new HashMap<> ();
-	private static Map<Integer, String> log_messages = new HashMap<> ();
+
+	private static Map<Integer, String> log_times = new HashMap<>();
+	private static Map<Integer, String> log_messages = new HashMap<>();
 
 	public static final String OPTION_NOT_FOUND = "option_not_found";
 	public static final String OPTION_INVALID = "option_invalid";
-	
 
 
 	private Logger() {
@@ -33,9 +29,9 @@ public class Logger {
 
 
 	public static void reset() {
-		log_ID 			= 0;
-		log_times 		= new HashMap<> ();
-		log_messages 	= new HashMap<> ();
+		log_ID = 0;
+		log_times = new HashMap<>();
+		log_messages = new HashMap<>();
 	}
 
 	public static String getLogTime(int ID) {
@@ -49,33 +45,30 @@ public class Logger {
 	public static Set<Integer> getIDSet() {
 		return log_messages.keySet();
 	}
-	
 
-	
+
 	public static String getInfo(String location) {
 		return ManagerPlugin.messages.getString("Logger.Info." + location);
 	}
-	
+
 	public static String getWarning(String location) {
 		return ManagerPlugin.messages.getString("Logger.Warning." + location);
 	}
-	
-	
-	
+
+
 	public static void log(String message, boolean warning) {
 		ManagerPlugin.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[MultiblockSystem] " + message));
-		
+
 		if (warning) {
 			log_ID++;
 			log_times.put(log_ID, LocalDateTime.now().toString());
 			log_messages.put(log_ID, message);
 		}
 	}
-	
 
 
 	public static void configError(String type, File file, ConfigurationSection section, String option) {
-		
+
 		String error_message;
 
 		if (type.equals(OPTION_NOT_FOUND)) {
@@ -83,7 +76,7 @@ public class Logger {
 
 		} else if (type.equals(OPTION_INVALID)) {
 			error_message = getWarning("config-option-invalid").replace(ConstantPlaceholders.FILE, file.getPath());
-		
+
 		} else {
 			return;
 		}

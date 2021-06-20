@@ -1,52 +1,29 @@
 package me.idra.multiblocksystem.objects;
 
-import java.util.Map;
-
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
 
 
 public class MultiblockRecipe {
-	
-	public Map<String, Map<ItemStack, Integer>> inputs = null;
-	public Map<String, Map<ItemStack, Integer>> outputs = null;
-	public Map<String, Integer> energy = null;
-	public int time = 0;
-	
-	
-	
-	public MultiblockRecipe(
-			Map<String, Map<ItemStack, Integer>> inputs,		// Input  items
-			Map<String, Map<ItemStack, Integer>> outputs,	// Output items
-			Map<String, Integer> energy,						// Energy
-			int time											// Time
-	) {
-		this.inputs = inputs;
-		this.outputs = outputs;
-		this.energy = energy;
-		this.time = time;
+	public Map<ItemStack, Integer> inputItems; // Map<Item, Amount>
+	public Map<ItemStack, Integer> outputItems; // Map<Item, Amount>
+	public int crafting_time; // Time in Seconds
+
+	/**
+	 * Constructor for a MultiBlockRecipe inputting
+	 *
+	 * @param inputItems   Map consisting of Items and respective Amounts
+	 * @param outputItems  Map consisting of Items and respective Amounts
+	 * @param crafting_time Crafting time in seconds for the recipe
+	 */
+	public MultiblockRecipe(Map<ItemStack, Integer> inputItems, Map<ItemStack, Integer> outputItems, int crafting_time) {
+		this.inputItems = inputItems;
+		this.outputItems = outputItems;
+		this.crafting_time = crafting_time;
 	}
 
-
-
-	public MultiblockRecipe(MultiblockRecipe recipe) {
-		this.inputs = recipe.inputs;
-		this.outputs = recipe.outputs;
-		this.energy = recipe.energy;
-		this.time = recipe.time;
-	}
-	
-
-	
-	public boolean hasEnergy() {
-		return energy != null;
-	}
-
-	public boolean hasInputs() {
-		return inputs != null;
-	}
-	
-	public boolean hasOutputs() {
-		return outputs != null;
+	public MultiblockRecipe(Map<ItemStack, Integer> inputItems, Map<ItemStack, Integer> outputItems) {
+		this(inputItems, outputItems, 0);
 	}
 }

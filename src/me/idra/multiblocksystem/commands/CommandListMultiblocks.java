@@ -46,11 +46,11 @@ public class CommandListMultiblocks extends BaseCommand{
 		
 		// For every multiblock structure, send the name and description of said structure if the player has the appropriate permission
 		for (AbstractMultiblock structure : ListAbstractMultiblocks.structures.values())
-			if (sender.hasPermission("multiblocksystem.multiblock." + structure.name.toLowerCase()))
+			if (sender.hasPermission("multiblocksystem.multiblock." + structure.name_of_structure_block.toLowerCase()))
 				formatted_multiblocks.add(new ComponentBuilder("").append(
 						ChatColor.translateAlternateColorCodes('&', MessageHandler.getInfo("multiblock-list-format"))
-						.replace("%name%", structure.name)
-						.replace("%description%", structure.description.replace("\n", ""))));
+						.replace("%name%", structure.name_of_structure_block)
+						.replace("%description%", structure.multiblock_structure_description.replace("\n", ""))));
 		
 		// Set chatlister
 		ListChatListers.chat_listers.put(sender, new ChatLister(

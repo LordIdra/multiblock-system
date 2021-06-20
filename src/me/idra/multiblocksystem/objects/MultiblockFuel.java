@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class MultiblockFuel {
 	
-	public ItemStack stack = null;
-	public int ticks = 0;
+	public ItemStack stack;
+	public int ticks;
 	
 	
 	

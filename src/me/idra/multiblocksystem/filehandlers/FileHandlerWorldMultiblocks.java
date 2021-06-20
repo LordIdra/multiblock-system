@@ -1,16 +1,5 @@
 package me.idra.multiblocksystem.filehandlers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
@@ -18,44 +7,51 @@ import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 
 public class FileHandlerWorldMultiblocks {
 
 	static final String RECIPE = "recipe";
 	static final String POSITIONS = "positions";
-	
-	static FileConfiguration world_multiblock_config;
-	static File world_multiblock_file; 
 
+	static FileConfiguration world_multiblock_config;
+	static File world_multiblock_file;
 
 
 	private FileHandlerWorldMultiblocks() {
-        // Empty constructor
-    }
-	
-	
-	
+		// Empty constructor
+	}
+
+
 	public static void loadFile() {
-		
+
 		// Load the file
 		world_multiblock_file = new File(new File(ManagerPlugin.plugin.getDataFolder(), "data"), "WorldMultiblocks.yml");
-	
+
 		// Check the WorldMultiblocks.yml file exists
 		if (!world_multiblock_file.exists()) {
 			Logger.fileNotFoundError(world_multiblock_file);
 			return;
 		}
-		
+
 		// Load the config
 		world_multiblock_config = YamlConfiguration.loadConfiguration(world_multiblock_file);
 	}
-	
-	
-	
+
+
 	public static void saveFile() {
-		
+
 		try {
 			world_multiblock_config.save(world_multiblock_file);
 		} catch (IOException e) {
@@ -64,18 +60,16 @@ public class FileHandlerWorldMultiblocks {
 					true);
 		}
 	}
-	
 
-	
-	
+
 	public static void deleteMultiblock(int ID) {
-		
+
 		// Reload the file, just in case
 		loadFile();
-		
+
 		// Delete the section that starts with the ID
 		world_multiblock_config.set(String.valueOf(ID), null);
-		
+
 		// Save the new config
 		try {
 			world_multiblock_config.save(world_multiblock_file);
@@ -83,69 +77,49 @@ public class FileHandlerWorldMultiblocks {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
 	public static void saveMultiblocks() {
-		
 		// Reload the file, just in case
 		loadFile();
-		
+
 		// For every multiblock
 		for (BaseWorldMultiblock multiblock : ListWorldMultiblocks.multiblock_objects.values()) {
-			
+
 			// Create the config sections if necessary
 			ConfigurationSection multiblock_section = world_multiblock_config.getConfigurationSection(String.valueOf(multiblock.ID));
-					
+
 			if (multiblock_section == null) {
 				world_multiblock_config.createSection(String.valueOf(multiblock.ID));
 				multiblock_section = world_multiblock_config.getConfigurationSection(String.valueOf(multiblock.ID));
 			}
-			
+
 			// Set basic variables
-			Set<BlockPosition> blocks_as_array_list = multiblock.blocks.keySet();
-			
+			assert multiblock_section != null;
 			multiblock_section.set("Owner", multiblock.owner.toString());
-			multiblock_section.set("World", blocks_as_array_list.iterator().next().getWorld().getName());	// no idea wtf I'm doing
-			multiblock_section.set("AbstractMultiblock", multiblock.abstract_multiblock.name.toUpperCase());
+			multiblock_section.set("World", multiblock.world.toString());    // no idea wtf I'm doing // Anon fixed it
+			multiblock_section.set("AbstractMultiblock", multiblock.abstract_multiblock.name_of_structure_block.toUpperCase());
 			multiblock_section.set("FuelTicks", multiblock.fuel_ticks);
-			
+
 			// Check current recipe section exists
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
-			
+
 			if (recipe_section == null) {
 				multiblock_section.createSection(RECIPE);
 				recipe_section = multiblock_section.getConfigurationSection(RECIPE);
 			}
-			
+
 			// Store recipe
+			assert recipe_section != null;
 			recipe_section.set("Index", multiblock.abstract_multiblock.recipes.indexOf(multiblock.active_recipe));
-			if (multiblock.active_recipe != null)
-				recipe_section.set("Time", multiblock.active_recipe.time);
-			else
+			if (multiblock.active_recipe != null) {
+				recipe_section.set("Time", multiblock.active_recipe.crafting_time);
+			} else {
 				recipe_section.set("Time", 0);
-			
-			// Check map sections exist
-			ConfigurationSection position_section = multiblock_section.getConfigurationSection(POSITIONS);
-			
-			if (position_section == null) {
-				multiblock_section.createSection(POSITIONS);
-				position_section = multiblock_section.getConfigurationSection(POSITIONS);
 			}
-			
-			// Store blocks and their respective tags
-			for (BlockPosition position : multiblock.blocks.keySet()) {
-				String tag = multiblock.blocks.get(position);
-
-				// Null values won't be stored, so we have to set this to an empty string
-				if (tag == null) {
-					tag = "";
-				}
-
-				position_section.set(String.valueOf(position.getPosition()), tag);	// x/y/z : String
-			}
+			multiblock_section.set("positions", multiblock.blocks);
 		}
-		
+
 		// Save the new config
 		try {
 			world_multiblock_config.save(world_multiblock_file);
@@ -153,55 +127,45 @@ public class FileHandlerWorldMultiblocks {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	public static boolean loadMultiblocks() {
-		
+
+
+	public static boolean loadMultiblocks() { //TODO: Finish this
 		// Reload the file, just in case
 		loadFile();
-				
+
 		// For every multiblock
 		for (String id_as_string : world_multiblock_config.getKeys(false)) {
-				
+
 			// Convert string to int
 			int ID = Integer.parseInt(id_as_string);
-			
+
 			// Get the config section
 			ConfigurationSection multiblock_section = world_multiblock_config.getConfigurationSection(id_as_string);
-			ConfigurationSection position_section = multiblock_section.getConfigurationSection(POSITIONS);
-					
+
 			// Get basic variables
 			UUID uuid = UUID.fromString(multiblock_section.getString("Owner"));
 			String name = multiblock_section.getString("AbstractMultiblock");
 			int fuel_ticks = multiblock_section.getInt("FuelTicks");
 			AbstractMultiblock abstract_multiblock = ListAbstractMultiblocks.structures.get(name);
-					
-			// Get block positions
-			Map<BlockPosition, String> blocks = new HashMap<> ();
-			
-			// Store blocks and their respective tags
-			for (String position_as_string : position_section.getKeys(false)) {
-				
-				// Convert string to position
-				BlockPosition position = new BlockPosition(Bukkit.getWorld(multiblock_section.getString("World")), Long.valueOf(position_as_string));
-				String tag = position_section.getString(position_as_string);	// Long : String
-				
-				// Add to block position map
-				blocks.put(position, tag);
+
+			// Check map sections exist
+			List<BlockPosition> blocks;
+			if (multiblock_section.getList(POSITIONS) == null) {
+				multiblock_section.createSection(POSITIONS);
 			}
-			
+			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS);
+
 			// Get current recipe information
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
-			
+
 			// Store recipe
 			int recipe_index = recipe_section.getInt("Index");
 			int recipe_time = recipe_section.getInt("Time");
-			
+
 			// Generate WorldMultiblock
 			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_multiblock, blocks, uuid, ID, fuel_ticks, recipe_index, recipe_time);
 		}
-		
+
 		// Successful execution
 		return true;
 	}

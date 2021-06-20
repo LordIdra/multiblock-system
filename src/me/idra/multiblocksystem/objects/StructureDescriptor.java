@@ -1,92 +1,69 @@
 package me.idra.multiblocksystem.objects;
 
-
-
-import java.util.List;
-
+import me.idra.multiblocksystem.helpers.Logger;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
-import me.idra.multiblocksystem.helpers.Logger;
-
-
+import java.util.List;
 
 public class StructureDescriptor {
-	
+
 	public int number_of_blocks;
 	public int number_of_air_blocks;
 	public int number_of_solid_blocks;
-	
-	
-	
-	public Vector central_block = new Vector();
-	public Vector dimension = new Vector();
+
+	public Vector central_block;
+	public Vector structure_dimensions;
 	public List<List<List<ItemGroup>>> groups;
-	
-	
-	
-	public StructureDescriptor(String name, List<List<List<ItemGroup>>> layer_groups) {
-		
-		// Set direct variables
-		dimension.setY(layer_groups.size());
-		dimension.setX(layer_groups.get(0).size());
-		dimension.setZ(layer_groups.get(0).get(0).size());
+
+	/**
+	 * Constructor for a Wrapper Class for Multiblocks. Containing Structures Dimensions, Location of Center Block and Amount of Total Blocks, Air Blocks and Solid Blocks
+	 * @param multiblock_name Name of the Multiblock
+	 * @param layer_groups YXZ list of Blocks stored as ItemGroups
+	 */
+	public StructureDescriptor(String multiblock_name, List<List<List<ItemGroup>>> layer_groups) {
 		groups = layer_groups;
-		
-		// Figure out if the structure contains a lectern (and if so, where it is)
-		boolean found_lectern = false;
-		
-		// For each XYZ
-		for (int y = 0; y < dimension.getY(); y++) {
-			for (int x = 0; x < dimension.getX(); x++) {
-				for (int z = 0; z < dimension.getZ(); z++) {
-					
-					// Get the block
-					ItemGroup block = layer_groups.get(y).get(x).get(z);
-					
-					// If it doesn't exist move on
-					if (block == null) {
-						continue;
-					}
-					
-					// If it does exist, check it's a lectern
-					if (block.containsMaterial(Material.LECTERN)) {	
-						
-						// Literally what it says
-						found_lectern = true;
-						
-						central_block.setX(x);
-						central_block.setZ(z);
-						central_block.setY(y);
-						
-						// Found the lectern, no need to continue checking each block
-						break;
+		structure_dimensions = new Vector();
+		structure_dimensions.setX(groups.size());
+		structure_dimensions.setY(groups.get(0).size());
+		structure_dimensions.setZ(groups.get(0).get(0).size());
+
+		setCentralBlock(multiblock_name);
+		calculateAmountsOfDifferentBlocks();
+	}
+
+	/**
+	 * Sets the Vector for Central Block to the first Lectern found in the lists of blocks
+	 */
+	private void setCentralBlock(String multiblock_name) {
+		for (int y = 0; y < structure_dimensions.getY(); y++) {
+			for (int x = 0; x < structure_dimensions.getX(); x++) {
+				for (int z = 0; z < structure_dimensions.getZ(); z++) {
+					if (groups.get(y).get(x).get(z).containsMaterial(Material.LECTERN)) {
+						central_block = new Vector(x, y, z);
+						return;
 					}
 				}
 			}
 		}
-		
-		
-		// Lectern wasn't found, let's display an error
-		if (!found_lectern) {
-			Logger.log(
-					Logger.getWarning("abstract-lectern-not-found")
-					.replace("%multiblock%", name),
-					true);
-		}
-		
-		// Calculate number of solid blocks and air blocks in the structure
-		number_of_blocks = dimension.getBlockX() * dimension.getBlockY() * dimension.getBlockZ();
+		Logger.log(Logger.getWarning("abstract-lectern-not-found").replace("%multiblock%", multiblock_name), true);
+	}
+
+	/**
+	 * Calculates and Sets the amount of different blocks
+	 */
+	private void calculateAmountsOfDifferentBlocks() {
+		number_of_blocks = structure_dimensions.getBlockX() * structure_dimensions.getBlockY() * structure_dimensions.getBlockZ();
 		number_of_air_blocks = 0;
-		
-		// Loop through every block and check if it's an air block. If it is, increment air block counter
-		for (List<List<ItemGroup>> item_a_a : groups)
-			for (List<ItemGroup> item_a : item_a_a)
-				for (ItemGroup item : item_a)
-					if (item.containsMaterial(Material.AIR))
+		for (List<List<ItemGroup>> slice : groups) {
+			for (List<ItemGroup> line : slice) {
+				for (ItemGroup block : line) {
+					if (block.containsMaterial(Material.AIR)) {
 						number_of_air_blocks++;
-		
-		// Calculate number of solid blocks
+					}
+				}
+			}
+		}
 		number_of_solid_blocks = number_of_blocks - number_of_air_blocks;
 	}
 }

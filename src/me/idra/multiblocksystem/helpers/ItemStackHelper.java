@@ -1,47 +1,52 @@
 package me.idra.multiblocksystem.helpers;
 
-import java.io.File;
-
+import me.idra.multiblocksystem.lists.ListItemGroups;
+import me.idra.multiblocksystem.objects.ItemGroup;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
-import me.idra.multiblocksystem.lists.ListItemGroups;
-import me.idra.multiblocksystem.objects.ItemGroup;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
-
+import java.io.File;
 
 
 public class ItemStackHelper {
-    
-    private ItemStackHelper() {
-        // Empty constructor
-    }
+
+	private ItemStackHelper() {
+		// Empty constructor
+	}
 
 
+	public static ItemStack blockToItemStack(Block block) {
 
-    public static ItemStack blockToItemStack(Block block) {
-        
-        SlimefunItem slimefun_item = BlockStorage.check(block);
-        Material material = block.getType();
+		SlimefunItem slimefun_item = BlockStorage.check(block);
+		Material material = block.getType();
 
-        if (slimefun_item != null) {
-            return slimefun_item.getItem();
-    
-        } else if (material != null) {
-            return new ItemStack(material);
-    
-        } else {
-            // HOW????
-            return null;
-        }
-    }
+		if (slimefun_item != null) {
+			return slimefun_item.getItem();
 
+		} else if (material != null) {
+			return new ItemStack(material);
+
+		} else {
+			// HOW????
+			return null;
+		}
+	}
 
 
-    public static ItemStack itemStackFromID(File file, ConfigurationSection section, String ID) {
+	/**
+	 * Constructor for creating an ItemStack of either a Vanilla or a Slimefun item.<br>
+	 * If an ItemStack cannot be created it will Log the error.
+	 *
+	 * @param file    Path to Config File
+	 * @param section Config Label Path
+	 * @param ID      ID for Item to be made. Can be Slimefun 4 or Vanilla Minecraft item
+	 * @return ItemStack of either a Vanilla or Slimefun 4 item
+	 */
+	public static ItemStack itemStackFromID(File file, ConfigurationSection section, String ID) {
 
 		ID = ID.toUpperCase();
 
@@ -49,7 +54,7 @@ public class ItemStackHelper {
 		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(ID);
 
 		if (slimefun_item != null) {
-		    return slimefun_item.getItem();
+			return slimefun_item.getItem();
 
 		} else if (material != null) {
 			return new ItemStack(material);
@@ -61,8 +66,7 @@ public class ItemStackHelper {
 	}
 
 
-
-    public static ItemStack itemStackFromID(String ID) {
+	public static ItemStack itemStackFromID(String ID) {
 
 		ID = ID.toUpperCase();
 
@@ -70,7 +74,7 @@ public class ItemStackHelper {
 		SlimefunItem slimefun_item = StringConversion.idToSlimefunItem(ID);
 
 		if (slimefun_item != null) {
-		return slimefun_item.getItem();
+			return slimefun_item.getItem();
 
 		} else if (material != null) {
 			return new ItemStack(material);
@@ -81,11 +85,11 @@ public class ItemStackHelper {
 	}
 
 
-
 	public static ItemGroup groupFromBlock(Block block) {
-		
+
 		ItemStack stack = blockToItemStack(block);
 
-		for (String key : ListItemGroups.material_groups)
+//		for (String key : ListItemGroups.material_groups)
+		return null;
 	}
 }

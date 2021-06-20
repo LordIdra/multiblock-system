@@ -14,7 +14,7 @@ public class PROCESSINGMACHINE extends BaseWorldMultiblock {
 	
 	
 	public PROCESSINGMACHINE(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String> blocks, UUID owner, int ID) {
-		super(abstract_multiblock, blocks, owner, ID);
+		super(abstract_multiblock, blocks, owner, ID, world);
 
 		// Start ticking
 		startTick(true);

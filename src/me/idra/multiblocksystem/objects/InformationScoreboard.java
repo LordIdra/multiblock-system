@@ -18,7 +18,7 @@ public class InformationScoreboard {
 
 	public InformationScoreboard(Player player, BaseWorldMultiblock multiblock) {
 		board = new FastBoard(player);
-		board.updateTitle(ChatColor.GREEN + "" + ChatColor.BOLD + multiblock.abstract_multiblock.name);
+		board.updateTitle(ChatColor.GREEN + "" + ChatColor.BOLD + multiblock.abstract_multiblock.name_of_structure_block);
 		this.multiblock = multiblock;
 		update();
 	}
@@ -51,7 +51,7 @@ public class InformationScoreboard {
 		}
 
 		int seconds_remaining = Math.floorDiv(multiblock.fuel_ticks, 20);
-		int seconds_max = Math.floorDiv(multiblock.abstract_multiblock.max_fuel, 20);
+		int seconds_max = Math.floorDiv(multiblock.abstract_multiblock.max_fuel_ticks, 20);
 		
 		String remaining_text = StringConversion.formatTime(ChatColor.BLUE, ChatColor.DARK_GRAY, seconds_remaining);
 		String max_text =   	StringConversion.formatTime(ChatColor.BLUE, ChatColor.DARK_GRAY, seconds_max);
@@ -60,7 +60,7 @@ public class InformationScoreboard {
 
 		board.updateLines(
 			"",
-			ChatColor.YELLOW + multiblock.abstract_multiblock.fuel_name + " " + fuel_text,
+			ChatColor.YELLOW + multiblock.abstract_multiblock.fuel_display_name + " " + fuel_text,
 			ChatColor.YELLOW + "Progress " + ChatColor.BLUE + completion,
 			ChatColor.YELLOW + "Status " + ChatColor.BLUE + multiblock.status);
 	}

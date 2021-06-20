@@ -37,7 +37,7 @@ public class ManagerPermissions {
 		// Multiblock permissions
 		for (AbstractMultiblock multiblock : ListAbstractMultiblocks.structures.values()) {
 			
-			String formatted_name = "multiblocksystem.multiblock." + multiblock.name.toLowerCase();
+			String formatted_name = "multiblocksystem.multiblock." + multiblock.name_of_structure_block.toLowerCase();
 			multiblock_permissions.add(new Permission(formatted_name));
 		}
 		

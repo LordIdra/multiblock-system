@@ -8,6 +8,10 @@ import org.bukkit.inventory.ItemStack;
 
 
 public class ItemGroup {
+    public String name;
+    public String tag;
+    public List<ItemStack> stacks;
+
 
     public ItemGroup(String name, String tag, List<ItemStack> stacks) {
         this.name = name;
@@ -22,19 +26,11 @@ public class ItemGroup {
 
 
     public boolean containsMaterial(Material material) {
-
         for (ItemStack stack : stacks) {
             if (stack != null && stack.getType() == material) {
                 return true;
             }
         }
-
         return false;
     }
-
-
-
-    public String name;
-    public String tag;
-    public List<ItemStack> stacks;
 }
