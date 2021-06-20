@@ -702,13 +702,11 @@ questions:
       - 'Table salt'
 
   44010:
-    question: 'Assuming that Idra or Anon doesnt remember the answer to this question, what is on the mind of Hyn while writing this question?'
-    answer:
-      - 'If Idra gets this right I owe him 6000 of my balance'
-      - 'Hopefully Anon doesnt go crazy over my terrible use of capitalization'
+    question: 'Using the formula P=I^2*R, what is the resistance of a resistor that is passing through 3 amps and drawing 100 watts?'
+    answer: '11.11'
 
   44011:
-    question: 'Would inhaling chloroform make you faint within 30 seconds?'
+    question: 'Assuming no wind resistance, if you drop a brick and a feather from the same height will either hit the ground first?'
     answer:
       - 'No'
 
