@@ -25,14 +25,14 @@ import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
 
-public class CommandTag extends BaseCommand{
+public class CommandFilter extends BaseCommand{
 
-	public CommandTag() {
+	public CommandFilter() {
 		super();
 		
-		name = new String[] {"tag"};
-		description = ChatColor.DARK_AQUA + "Change the tags of blocks on an existing multiblock";
-		arguments = new String[] {"tag"};
+		name = new String[] {"filter"};
+		description = ChatColor.DARK_AQUA + "Set a Item Filter for a Block Entity";
+		arguments = new String[] {"filter"};
 		hidden = false;
 		console = false;
 		
@@ -87,7 +87,7 @@ public class CommandTag extends BaseCommand{
 		
 		// Is the tag an inventory tag?
 		boolean is_inventory_tag = multiblock.abstract_multiblock.inventory_tags.contains(args[1]);
-		
+
 		// If so, try to get the attached inventory and add it to the multiblock's map
 		if (is_inventory_tag) {
 
