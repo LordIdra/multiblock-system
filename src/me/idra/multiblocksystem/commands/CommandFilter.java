@@ -29,57 +29,57 @@ public class CommandFilter extends BaseCommand{
 
 	public CommandFilter() {
 		super();
-
+		
 		name = new String[] {"filter"};
 		description = ChatColor.DARK_AQUA + "Set a Item Filter for a Block Entity";
 		arguments = new String[] {"filter"};
 		hidden = false;
 		console = false;
-
+		
 		addPermission();
 		addName();
 	}
-
+	
 	@Override
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
-
+		
 		// Find the target block
 		Player player = (Player) sender;
 		BlockIterator block_iterator = new BlockIterator(player, 5);
 		Block target_block = null;
-
+				
 		while (block_iterator.hasNext()) {
-
-			Block next_block = block_iterator.next();
-
+					
+			Block next_block = block_iterator.next(); 
+					
 			if (next_block.getType() != Material.AIR) {
 				target_block = next_block;
 				break;
 			}
 		}
-
+		
 		// Does the target block exist?
 		if (target_block == null || target_block.getType() == Material.AIR) {
-			MessageHandler.send(player,
+			MessageHandler.send(player, 
 					MessageHandler.getError("invalid-block"));
 			return false;
 		}
-
+		
 		BlockPosition position = new BlockPosition(target_block.getLocation());
-
+		
 		// Get the multiblock the player is trying to interface with
 		BaseWorldMultiblock multiblock = ListWorldMultiblocks.getMultiblockFromLocation(target_block.getLocation());
-
+		
 		// Is the target block part of a multiblock?
 		if (multiblock == null) {
-				MessageHandler.send(player,
+				MessageHandler.send(player, 
 						MessageHandler.getError("not-part-of-multiblock"));
 				return false;
 		}
-
+		
 		// Does the sender have access to said multiblock?
 		if (!(multiblock.owner == player.getUniqueId() || Arrays.asList(FileHandlerPlayerData.getTrustedPlayers(multiblock.owner)).contains(player))) {
-			MessageHandler.send(player,
+			MessageHandler.send(player, 
 					MessageHandler.getError("cannot-modify-multiblock")
 					.replace("%player", player.getName()));
 			return false;
@@ -152,11 +152,11 @@ public class CommandFilter extends BaseCommand{
 //		List<BlockPosition> new_array = multiblock.tags_position.get(args[1]);
 //		new_array.add(position);
 //		multiblock.tags_position.put(args[1], new_array);
-
+		
 		// Successful execution
-		MessageHandler.send(player,
+		MessageHandler.send(player, 
 				MessageHandler.getSuccess("filter-added"));
-
+		
 		return true;
 	}
 }
