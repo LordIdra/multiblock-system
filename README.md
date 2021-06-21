@@ -8,8 +8,8 @@ intergrate within player's builds.
 
 <h2 id="contents">Contents</h2>
 
-* <a href="install">Installing</a>
-* <a href="cmds">Commands</a>
+* <a href="#install">Installing</a>
+* <a href="#cmds">Commands</a>
 
 <hr>
 <h2 id="install">Installing:</h2>
@@ -17,7 +17,7 @@ Ensure that you have the plugin within your Server's plugins folder. <br>
 You must have the correct version of Slimefun 4 installed. Presently, <b>DEV 5 (Git e4225)</b> Is tested and working <br>
 You must also have valid structures and recipes saved within a unique folder in <i>MultiblockSystem/multiblocks</i>. A template is provided in the release for easy set-up
 
-<a href="contents"><h6>To Contents</h6></a>
+<a href="#contents"><h6>To Contents</h6></a>
 <hr>
 <h2 id="cmds">Commands</h2>
 <hr>
@@ -93,6 +93,6 @@ To use this command you first need to be looking at the Storage you want to togg
 `/trust`
 
 <hr>
-<a href="contents"><h6>To Contents</h6></a>
+<a href="#contents"><h6>To Contents</h6></a>
 
 <i>As of June 20th, 0:40am (GMT) the plugin is undergoing a major rewrite</i>
