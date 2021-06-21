@@ -1,5 +1,6 @@
 package me.idra.multiblocksystem.multiblocks;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,8 +14,9 @@ public class PROCESSINGMACHINE extends BaseWorldMultiblock {
 
 	
 	
-	public PROCESSINGMACHINE(AbstractMultiblock abstract_multiblock, Map<BlockPosition, String> blocks, UUID owner, int ID) {
-		super(abstract_multiblock, blocks, owner, ID, world);
+	public PROCESSINGMACHINE(AbstractMultiblock abstract_multiblock, List<BlockPosition> blocks, UUID owner, int ID) {
+		super(abstract_multiblock, blocks, owner, ID);
+
 
 		// Start ticking
 		startTick(true);

@@ -71,6 +71,37 @@ public class ConfigHelper {
 		return outputs;
 	}
 
+	// Added temporarily in order to circumvent the use of getItemStackIntegerMap. Which might be removed soon
+	public static List<ItemStack> getItemStack(File file, ConfigurationSection config_outputs) {
+		List<ItemStack> outputs = new ArrayList<>();
+		Set<String> output_item_keys = config_outputs.getKeys(false);
+
+		for (String item_key : output_item_keys) {
+			String output_amount_and_item = config_outputs.getString(item_key);
+
+			if (output_amount_and_item == null || output_amount_and_item.isBlank()) {
+				Logger.configError(Logger.OPTION_INVALID, file, config_outputs, item_key + "." + output_amount_and_item);
+				return null;
+			}
+
+			String[] split_string = output_amount_and_item.split("\\s");
+
+			if (split_string.length == 2) {
+				String id = split_string[1];
+				ItemStack stack = ItemStackHelper.itemStackFromID(file, config_outputs, id);
+
+				if (stack != null) {
+					outputs.add(stack);
+				} else {
+					Logger.configError(Logger.OPTION_INVALID, file, config_outputs, item_key + "." + output_amount_and_item);
+				}
+
+			} else {
+				Logger.configError(Logger.OPTION_INVALID, file, config_outputs, item_key);
+			}
+		}
+		return outputs;
+	}
 
 	public static List<ItemStack> loadGroup(String name) {
 

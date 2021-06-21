@@ -12,16 +12,12 @@ import me.idra.multiblocksystem.objects.PlayerSettings;
 
 public class ListPlayerSettings {
 
+	private static Map<UUID, PlayerSettings> player_settings = new HashMap<> ();
+
 	private ListPlayerSettings() {
 		// Empty constructor
 	}
 
-
-	
-	private static Map<UUID, PlayerSettings> player_settings = new HashMap<> ();
-	
-	
-	
 	public static void setPlayerSettings(UUID player, PlayerSettings settings) {
 		
 		// Add the new player settings; this will overwrite existing ones automatically

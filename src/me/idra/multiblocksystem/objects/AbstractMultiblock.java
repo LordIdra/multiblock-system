@@ -28,7 +28,7 @@ public class AbstractMultiblock {
 	public StructureDescriptor structure; // Structural Description of Block Arrangement (This comes from the Structure.yml files)
 
 	public String fuel_display_name;
-	public int max_fuel_ticks;
+	public int max_fuel_ticks; // TODO: Change this to only use 1 fuel at a time
 
 	public Map<String, Object> variables = new HashMap<>();
 	public List<MultiblockRecipe> recipes = new ArrayList<>();
@@ -93,9 +93,7 @@ public class AbstractMultiblock {
 
 	public void loadStructure() {
 
-		/*
-		 * CONFIG LOADING
-		 */
+		// CONFIG LOADING
 
 		// Get parameters from config
 		multiblock_structure_description = multiblock_config.getString("Description");
@@ -116,75 +114,17 @@ public class AbstractMultiblock {
 		}
 
 
-		// TODO: I'm thinking about making the Load Fuel and Load Recipes into functions
-
 		// Load fuels
 		if (fuel_config != null) {
-
-			for (String key : fuel_config.getKeys(false)) {
-
-				// Seperate string into time and ID
-				String fuel_and_ticks = fuel_config.getString(key);
-				if (fuel_and_ticks != null) {
-					String[] split_string = fuel_and_ticks.split("\\s"); // Time, Fuel
-
-					if (split_string.length == 2) {
-						int time = Integer.parseInt(split_string[0]);
-						String id = split_string[1];
-
-						// Create MixedItemStack
-						ItemStack stack = ItemStackHelper.itemStackFromID(multiblock_file, fuel_config, id);
-
-						if (stack != null) { // Finally, create the fuel
-							fuels.add(new MultiblockFuel(stack, time));
-						} else {
-							Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
-						}
-
-					} else {
-						Logger.configError(Logger.OPTION_INVALID, multiblock_file, fuel_config, key);
-					}
-
-				}
-			}
+			loadFuel(fuel_config);
 		}
 
 		// Load recipes
 		if (recipe_config != null) {
-			for (String key : recipe_config.getKeys(false)) {
-
-				// Get config sections
-				ConfigurationSection current_recipe = recipe_config.getConfigurationSection(key);
-				ConfigurationSection config_energy = current_recipe.getConfigurationSection("ENERGY");
-				ConfigurationSection config_inputs = current_recipe.getConfigurationSection("INPUT");
-				ConfigurationSection config_outputs = current_recipe.getConfigurationSection("OUTPUT");
-
-				// Initialize variables
-				int time = current_recipe.getInt("TIME");
-				Map<ItemStack, Integer> inputs;
-				Map<ItemStack, Integer> outputs;
-
-				// Check recipe time is valid
-				if (time <= 0) {
-					Logger.configError(Logger.OPTION_INVALID, multiblock_file, current_recipe, "TIME");
-				}
-
-				if (config_inputs != null && config_outputs != null) {
-					inputs = ConfigHelper.getItemStackIntegerMap(multiblock_file, config_inputs);
-					outputs = ConfigHelper.getItemStackIntegerMap(multiblock_file, config_outputs);
-				} else {
-					inputs = null;
-					outputs = null;
-				}
-
-				// Combine all the above into a new recipe
-				recipes.add(new MultiblockRecipe(inputs, outputs, time));
-			}
+			loadRecipes(recipe_config);
 		}
 
-		/*
-		 * STRUCTURE LOADING
-		 */
+		// STRUCTURE LOADING
 
 		List<List<List<ItemGroup>>> block_array = new ArrayList<>();    // y -> x -> z -> block
 
@@ -217,10 +157,73 @@ public class AbstractMultiblock {
 	}
 
 
-	/*
-	 * STATIC METHODS
-	 */
+	private void loadFuel(ConfigurationSection config) {
+		for (String key : config.getKeys(false)) {
 
+			// Seperate string into time and ID
+			String fuel_and_ticks = config.getString(key);
+			assert fuel_and_ticks != null;
+			String[] split_string = fuel_and_ticks.split("\\s"); // Time, Fuel
+
+			if (split_string.length == 2) {
+				int time = Integer.parseInt(split_string[0]);
+				String id = split_string[1];
+
+				// Create MixedItemStack
+				ItemStack stack = ItemStackHelper.itemStackFromID(multiblock_file, config, id);
+
+				if (stack != null) { // Finally, create the fuel
+					fuels.add(new MultiblockFuel(stack, time));
+				} else {
+					Logger.configError(Logger.OPTION_INVALID, multiblock_file, config, key);
+				}
+
+			} else {
+				Logger.configError(Logger.OPTION_INVALID, multiblock_file, config, key);
+			}
+
+		}
+	}
+
+	private void loadRecipes(ConfigurationSection config) {
+		for (String key : config.getKeys(false)) {
+
+			// Get config sections
+			ConfigurationSection current_recipe = config.getConfigurationSection(key);
+			ConfigurationSection config_inputs, config_outputs;
+			if (current_recipe != null) {
+				config_inputs = current_recipe.getConfigurationSection("INPUT");
+				config_outputs = current_recipe.getConfigurationSection("OUTPUT");
+			} else {
+				return;
+			}
+
+			// Initialize variables
+			int time = current_recipe.getInt("TIME");
+			int energy = current_recipe.getInt("ENERGY");
+			List<ItemStack> inputs;
+			List<ItemStack> outputs;
+
+			// Check recipe time is valid
+			if (time <= 0) {
+				Logger.configError(Logger.OPTION_INVALID, multiblock_file, current_recipe, "TIME");
+			}
+
+			if (config_inputs != null && config_outputs != null) { // TODO: Fix ConfigHelper.getItemStackIntegerMap
+				inputs = ConfigHelper.getItemStack(multiblock_file, config_inputs);
+				outputs = ConfigHelper.getItemStack(multiblock_file, config_outputs);
+			} else {
+				inputs = null;
+				outputs = null;
+				Logger.log("Config is missing Input and/or Output", true); // TODO: Idra, you might need to make warning for this
+			}
+
+			// Combine all the above into a new recipe
+			recipes.add(new MultiblockRecipe(inputs, outputs, energy, time));
+		}
+	}
+
+	// STATIC METHODS BELOW
 
 	public static Map<Block, ItemGroup> getStructureFromStartingPoint(
 			Player player,

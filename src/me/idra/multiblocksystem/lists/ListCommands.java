@@ -10,19 +10,13 @@ import me.idra.multiblocksystem.commands.CommandListTrusted;
 import me.idra.multiblocksystem.commands.CommandPage;
 import me.idra.multiblocksystem.commands.CommandSettings;
 import me.idra.multiblocksystem.commands.CommandShowError;
-import me.idra.multiblocksystem.commands.CommandTag;
+import me.idra.multiblocksystem.commands.CommandFilter;
 import me.idra.multiblocksystem.commands.CommandTrust;
 
 
 
 public class ListCommands {
 
-	private ListCommands() {
-		// Empty constructor
-	}
-
-
-	
 	public static final BaseCommand[] command_object_array = {
 			new CommandHelp(),
 			new CommandListMultiblocks(),
@@ -33,7 +27,12 @@ public class ListCommands {
 			new CommandPage(),
 			new CommandAdminLogView(),
 			new CommandAdminLogClear(),
-			new CommandTag(),
+			new CommandFilter(),
 			new CommandSettings()
 	};
+
+	private ListCommands() {
+		// Empty constructor
+	}
+
 }

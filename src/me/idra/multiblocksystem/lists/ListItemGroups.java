@@ -23,15 +23,11 @@ import java.util.List;
 
 public class ListItemGroups {
 
+	public static Map<String, ItemGroup> material_groups = new HashMap<> ();
+
 	private ListItemGroups() {
 		// Empty constructor
 	}
-
-
-
-	public static Map<String, ItemGroup> material_groups = new HashMap<> ();
-
-
 
 	public static void initialize() {
 

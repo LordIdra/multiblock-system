@@ -12,13 +12,13 @@ import me.idra.multiblocksystem.objects.InformationScoreboard;
 
 public class ListInformationScoreBoards {
 
+	// Map
+	private static Map<UUID, InformationScoreboard> playerScoreBoard = new HashMap<>();
+
 	private ListInformationScoreBoards() {
 		// Empty constructor
 	}
 
-	// Map
-    private static Map<UUID, InformationScoreboard> playerScoreBoard = new HashMap<>();
-	
     public static void updateScoreboard() {
     	
     	playerScoreBoard.forEach((key, value) -> value.update());

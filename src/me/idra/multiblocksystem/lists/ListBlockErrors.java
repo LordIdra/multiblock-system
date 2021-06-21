@@ -25,15 +25,15 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 public class ListBlockErrors {
 
+
+
+	public static Map<Player, List<BlockError>> block_errors = new HashMap<> ();
+
+
 	private ListBlockErrors() {
 		// Empty constructor
 	}
 
-	
-	
-	public static Map<Player, List<BlockError>> block_errors = new HashMap<> ();
-	
-	
 	public static void setBlockErrors(Player player, List<BlockError> block_error_array) {
 		
 		// Add the new array; this will overwrite existing ones automatically

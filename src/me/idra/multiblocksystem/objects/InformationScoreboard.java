@@ -32,7 +32,7 @@ public class InformationScoreboard {
 		if (multiblock.active_recipe != null) {
 
 			completion.append(ChatColor.GRAY + "[" + ChatColor.GREEN);
-			int percentage_complete_20 = ((multiblock.recipe_ticks_remaining * 20) / multiblock.active_recipe.time);
+			int percentage_complete_20 = ((multiblock.recipe_ticks_remaining * 20) / multiblock.active_recipe.crafting_time);
 			
 			for (int i = 0; i < 20 - percentage_complete_20; i++) {
 				completion.append("|");
