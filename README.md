@@ -25,81 +25,66 @@ You must also have valid structures and recipes saved within a unique folder in 
 
 <hr>
 
-<h4>AdminLogClear</h4>
+<h4>Admin Log Clear</h4>
 
-`/adminlogclear`
-
-<hr>
-
-<h4>AdminLogView</h4>
-
-`/adminlogview`
+`/mb admin log clear`
 
 <hr>
 
-<h4>Assemble</h4>
+<h4>Admin Log View</h4>
 
-`/assemble`
+`/mb admin log view`
 
 <hr>
 
 <h4>Editor Create</h4>
 
-`/editor create`
+`/mb editor create`
+
+<hr>
+
+<h4>Assemble</h4>
+
+`/mb assemble`
 
 <hr>
 
 <h4>Filter</h4>
 
-`/filter <item_id>`
+`/mb filter <itemID>`
 
 <hr>
 
 <h4>Help</h4>
 
-`/help`
+`/mb help`
 
 <hr>
 
 <h4>List Multiblocks</h4>
 
-`/listmultiblocks`
+`/mb list multiblocks`
 
 <hr>
 
 <h4>List Trusted</h4>
 
-`/listtrusted`
-
-<hr>
-
-<h4>Page</h4>
-
-`/page`
+`/mb list trusted`
 
 <hr>
 
 <h4>Settings</h4>
 
-`/settings`
-
-<hr>
-
-<h4>Show Error</h4>
-
-`/showerror`
+`/mb settings`
 
 <hr>
 
 <h4>Toggle IO</h4>
 
-`/toggleio`
+`/mb toggle io`
 
 <p>
-	The ToggleIO command is used for toggling the Input and Output storage in a Multiblock. 
-	Giving free access to define which storages should be used for Fuel and Materials to create items.
-	<br>
-	To use this command you first need to be looking at the Storage you want to toggle to be Input or Output, then type the command and it should change the Storage for you
+	Toggles a storage between input and output mode. You must be looking at the storage you want to toggle when this command is run.
 	<br>
 	<i>By Default, all storages are set to output</i>
 </p>
@@ -108,7 +93,7 @@ You must also have valid structures and recipes saved within a unique folder in 
 
 <h4>Trust</h4>
 
-`/trust`
+`/mb trust`
 
 <hr>
 
