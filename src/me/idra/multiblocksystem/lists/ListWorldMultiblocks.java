@@ -16,13 +16,11 @@ import java.util.UUID;
 
 public class ListWorldMultiblocks {
 
+	public static Map<Integer, BaseWorldMultiblock> multiblock_objects = new HashMap<>();
+
 	private ListWorldMultiblocks() {
 		// Empty constructor
 	}
-
-
-	public static Map<Integer, BaseWorldMultiblock> multiblock_objects = new HashMap<>();
-
 
 	public static BaseWorldMultiblock getMultiblockFromLocation(Location loc) {
 

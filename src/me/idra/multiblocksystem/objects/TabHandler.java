@@ -67,19 +67,19 @@ public class TabHandler implements TabCompleter {
 
 				if (target_block.getType() == Material.CHEST || target_block.getType() == Material.BARREL) {
 
-					for (String tag : multiblock.abstract_multiblock.inventory_tags) {
-						possibilities.add(tag);
-					}
+//					for (String tag : multiblock.abstract_multiblock.inventory_tags) {
+//						possibilities.add(tag);
+//					}
 
 				} else if ((BlockStorage.check(target_block) != null) && (BlockStorage.check(target_block).getId().contains("CAPACITOR"))) {
-					for (String tag : multiblock.abstract_multiblock.energy_tags) {
-						possibilities.add(tag);
-					}
+//					for (String tag : multiblock.abstract_multiblock.energy_tags) {
+//						possibilities.add(tag);
+//					}
 				
 				} else {
-					for (String tag : multiblock.abstract_multiblock.position_tags.keySet()) {
-						possibilities.add(tag);
-					}
+//					for (String tag : multiblock.abstract_multiblock.position_tags.keySet()) {
+//						possibilities.add(tag);
+//					}
 				}
 
 				continue;

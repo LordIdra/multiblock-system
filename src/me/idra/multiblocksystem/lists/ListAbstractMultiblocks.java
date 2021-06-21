@@ -13,15 +13,15 @@ import me.idra.multiblocksystem.objects.AbstractMultiblock;
 
 public class ListAbstractMultiblocks {
 
+	private static List<String> multiblock_names = new ArrayList<> ();
+	public static Map<String, AbstractMultiblock> structures = new HashMap<> ();
+
 	private ListAbstractMultiblocks() {
 		// Empty constructor
 	}
-	
 
-	
-	private static List<String> multiblock_names = new ArrayList<> ();
-	public static Map<String, AbstractMultiblock> structures = new HashMap<> ();
-	
+
+
 	
 	public static void initialize() {
 		

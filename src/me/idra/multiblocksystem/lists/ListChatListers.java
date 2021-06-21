@@ -9,6 +9,7 @@ import me.idra.multiblocksystem.objects.ChatLister;
 
 
 public class ListChatListers {
+	public static Map<CommandSender, ChatLister> chat_listers = new HashMap<> ();
 
 	private ListChatListers() {
 		// Empty constructor
@@ -16,5 +17,4 @@ public class ListChatListers {
 
 
 
-	public static Map<CommandSender, ChatLister> chat_listers = new HashMap<> ();
 }

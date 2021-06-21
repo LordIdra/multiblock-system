@@ -17,12 +17,6 @@ import me.idra.multiblocksystem.commands.CommandTrust;
 
 public class ListCommands {
 
-	private ListCommands() {
-		// Empty constructor
-	}
-
-
-	
 	public static final BaseCommand[] command_object_array = {
 			new CommandHelp(),
 			new CommandListMultiblocks(),
@@ -36,4 +30,9 @@ public class ListCommands {
 			new CommandFilter(),
 			new CommandSettings()
 	};
+
+	private ListCommands() {
+		// Empty constructor
+	}
+
 }

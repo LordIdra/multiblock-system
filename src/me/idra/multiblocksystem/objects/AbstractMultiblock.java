@@ -201,17 +201,17 @@ public class AbstractMultiblock {
 			// Initialize variables
 			int time = current_recipe.getInt("TIME");
 			int energy = current_recipe.getInt("ENERGY");
-			Map<ItemStack, Integer> inputs;
-			Map<ItemStack, Integer> outputs;
+			List<ItemStack> inputs;
+			List<ItemStack> outputs;
 
 			// Check recipe time is valid
 			if (time <= 0) {
 				Logger.configError(Logger.OPTION_INVALID, multiblock_file, current_recipe, "TIME");
 			}
 
-			if (config_inputs != null && config_outputs != null) {
-				inputs = ConfigHelper.getItemStackIntegerMap(multiblock_file, config_inputs);
-				outputs = ConfigHelper.getItemStackIntegerMap(multiblock_file, config_outputs);
+			if (config_inputs != null && config_outputs != null) { // TODO: Fix ConfigHelper.getItemStackIntegerMap
+				inputs = ConfigHelper.getItemStack(multiblock_file, config_inputs);
+				outputs = ConfigHelper.getItemStack(multiblock_file, config_outputs);
 			} else {
 				inputs = null;
 				outputs = null;

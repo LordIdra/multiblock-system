@@ -1,6 +1,5 @@
 package me.idra.multiblocksystem.helpers;
 
-import me.idra.multiblocksystem.lists.ListItemGroups;
 import me.idra.multiblocksystem.objects.ItemGroup;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
