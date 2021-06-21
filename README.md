@@ -39,19 +39,29 @@ You must also have valid structures and recipes saved within a unique folder in 
 
 <h4>Editor Create</h4>
 
-`/mb editor create`
+`/mb editor create <file> <x> <y> <z>`
 
 <hr>
 
 <h4>Assemble</h4>
 
-`/mb assemble`
+`/mb assemble <multiblock>`
+
+<p>
+	A
+	<br>
+</p>
 
 <hr>
 
 <h4>Filter</h4>
 
-`/mb filter <itemID>`
+`/mb filter <add|remove> <item>`
+
+<p>
+	Adds or removes a filter to/from an output storage. Storages with a filter will act as if any items, apart from those specified in the filter, do not exist.
+	<br>
+</p>
 
 <hr>
 
@@ -59,11 +69,22 @@ You must also have valid structures and recipes saved within a unique folder in 
 
 `/mb help`
 
+<p>
+	Shows a list of commands.
+	<br>
+</p>
+
 <hr>
 
 <h4>List Multiblocks</h4>
 
 `/mb list multiblocks`
+
+<p>
+	Lists the multiblocks and their descriptions.
+	<i>This is temporary and will soon be replaced with an interface</i>
+	<br>
+</p>
 
 <hr>
 
@@ -71,11 +92,21 @@ You must also have valid structures and recipes saved within a unique folder in 
 
 `/mb list trusted`
 
+<p>
+	Shows your trusted list. Trusted players are allowed to break your multiblocks.
+	<br>
+</p>
+
 <hr>
 
 <h4>Settings</h4>
 
 `/mb settings`
+
+<p>
+	Opens the settings interface, where many aspects of the plugin can be configured on a per-player-basis.
+	<br>
+</p>
 
 <hr>
 
@@ -94,6 +125,11 @@ You must also have valid structures and recipes saved within a unique folder in 
 <h4>Trust</h4>
 
 `/mb trust`
+
+<p>
+	Adds or removes a player from your trusted list. Trusted players are allowed to break your multiblocks.
+	<br>
+</p>
 
 <hr>
 
