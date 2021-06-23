@@ -17,11 +17,11 @@ public class PlayerSettings {
 	
 
 
-	public class SettingContainer {
+	public static class SettingContainer {
 
 		private int value;
-		private int lower_bound;
-		private int upper_bound;
+		private final int lower_bound;
+		private final int upper_bound;
 		
 
 		private SettingContainer(int new_value, int new_lower_bound, int new_upper_bound) {
@@ -37,21 +37,6 @@ public class PlayerSettings {
 		public void setValue(int value) {
 			this.value = value;
 		}
-		
-		public int getLower_bound() {
-			return lower_bound;
-		}
-		public void setLowerBoand(int lower_bound) {
-			this.lower_bound = lower_bound;
-		}
-		
-		public int getUpperBoand() {
-			return upper_bound;
-		}
-		public void setUpperBoand(int upper_bound) {
-			this.upper_bound = upper_bound;
-		}
-		
 	}
 	
 

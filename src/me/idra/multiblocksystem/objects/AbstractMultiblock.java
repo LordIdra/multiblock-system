@@ -51,7 +51,7 @@ public class AbstractMultiblock {
 		if (!multiblock_file.exists()) {
 			Logger.log(
 					Logger.getWarning("multiblock-file-not-found")
-							.replace(ConstantPlaceholders.NAME, String.valueOf(name_of_structure_block)),
+							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
 					true);
 			return;
 		}
@@ -59,7 +59,7 @@ public class AbstractMultiblock {
 		if (!structure_file.exists()) {
 			Logger.log(
 					Logger.getWarning("structure-file-not-found")
-							.replace(ConstantPlaceholders.NAME, String.valueOf(name_of_structure_block)),
+							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
 					true);
 			return;
 		}
@@ -84,7 +84,7 @@ public class AbstractMultiblock {
 		} catch (ClassNotFoundException e) {
 			Logger.log(
 					Logger.getWarning("class-not-found")
-							.replace("%class%", String.valueOf(class_location)),
+							.replace("%class%", class_location),
 					true);
 		}
 	}
@@ -158,7 +158,7 @@ public class AbstractMultiblock {
 	private void loadFuel(ConfigurationSection config) {
 		for (String key : config.getKeys(false)) {
 
-			// Seperate string into time and ID
+			// Separate string into time and ID
 			String fuel_and_ticks = config.getString(key);
 			assert fuel_and_ticks != null;
 			String[] split_string = fuel_and_ticks.split("\\s"); // Time, Fuel
@@ -302,15 +302,17 @@ public class AbstractMultiblock {
 						default -> null;
 					};
 
-					// Get the block itself, then generate ItemInfo and BlockInfo
-					Block block = player.getWorld().getBlockAt(block_location);
-					ItemGroup group = abstract_array_x.get(z);
+					if (block_location != null) {
 
-					// If the material is supposed to be air, don't bother checking it - it essentially isn't part of the multiblock
-					if (!group.containsMaterial(Material.AIR)) {// If not, add the block/item pair to the map
-						block_to_group_map.put(block, group);
+						// Get the block itself, then generate ItemInfo and BlockInfo
+						Block block = player.getWorld().getBlockAt(block_location);
+						ItemGroup group = abstract_array_x.get(z);
+
+						// If the material is supposed to be air, don't bother checking it - it essentially isn't part of the multiblock
+						if (!group.containsMaterial(Material.AIR)) {// If not, add the block/item pair to the map
+							block_to_group_map.put(block, group);
+						}
 					}
-
 				}
 			}
 		}

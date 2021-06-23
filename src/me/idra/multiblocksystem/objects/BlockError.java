@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -73,10 +74,14 @@ public class BlockError {
 	public boolean isResolved() {
 		
 		// Update the current block
-		block = block.getLocation().getWorld().getBlockAt(block.getLocation());
-		
-		// Compare blocks
-		return compareBlockAndGroup(block, group);
+		World world = block.getLocation().getWorld();
+
+		if (world != null) {
+			block = world.getBlockAt(block.getLocation());
+			return compareBlockAndGroup(block, group);
+		}
+
+		return false;
 	}
 	
 	

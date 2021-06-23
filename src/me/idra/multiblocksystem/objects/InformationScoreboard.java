@@ -5,14 +5,13 @@ import org.bukkit.entity.Player;
 
 import fr.mrmicky.fastboard.FastBoard;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
-import me.idra.multiblocksystem.helpers.StringConversion;
 
 
 
 public class InformationScoreboard {
 	
 	FastBoard board;
-	BaseWorldMultiblock multiblock = null;
+	BaseWorldMultiblock multiblock;
 
 
 
@@ -31,36 +30,23 @@ public class InformationScoreboard {
 
 		if (multiblock.active_recipe != null) {
 
-			completion.append(ChatColor.GRAY + "[" + ChatColor.GREEN);
+			completion.append(ChatColor.GRAY).append("[").append(ChatColor.GREEN);
 			int percentage_complete_20 = ((multiblock.recipe_ticks_remaining * 20) / multiblock.active_recipe.crafting_time);
-			
-			for (int i = 0; i < 20 - percentage_complete_20; i++) {
-				completion.append("|");
-			}
+
+			completion.append("|".repeat(Math.max(0, 20 - percentage_complete_20)));
 
 			completion.append(ChatColor.DARK_GRAY);
 
-			for (int i = 0; i < percentage_complete_20; i++) {
-				completion.append("|");
-			}
+			completion.append("|".repeat(Math.max(0, percentage_complete_20)));
 
-			completion.append(ChatColor.GRAY + "]" + ChatColor.GREEN);
+			completion.append(ChatColor.GRAY).append("]").append(ChatColor.GREEN);
 
 		} else {
 			completion = new StringBuilder(ChatColor.GRAY + "[" + ChatColor.RED + "||||||||||||||||||||" + ChatColor.GRAY + "]");
 		}
 
-		int seconds_remaining = Math.floorDiv(multiblock.fuel_ticks, 20);
-		int seconds_max = Math.floorDiv(multiblock.abstract_multiblock.max_fuel_ticks, 20);
-		
-		String remaining_text = StringConversion.formatTime(ChatColor.BLUE, ChatColor.DARK_GRAY, seconds_remaining);
-		String max_text =   	StringConversion.formatTime(ChatColor.BLUE, ChatColor.DARK_GRAY, seconds_max);
-
-		String fuel_text = remaining_text + ChatColor.YELLOW + "/" + max_text;
-
 		board.updateLines(
 			"",
-			ChatColor.YELLOW + multiblock.abstract_multiblock.fuel_display_name + " " + fuel_text,
 			ChatColor.YELLOW + "Progress " + ChatColor.BLUE + completion,
 			ChatColor.YELLOW + "Status " + ChatColor.BLUE + multiblock.status);
 	}

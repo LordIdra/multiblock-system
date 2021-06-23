@@ -39,8 +39,8 @@ public class ChatLister {
 			in_info_text.set(i, ChatColor.translateAlternateColorCodes('&', in_info_text.get(i)));
 		
 		// Convert the ArrayList<String>'s to String[]'s
-		info_text = in_info_text.toArray(new String[in_info_text.size()]);
-		list_text = in_list_text.toArray(new ComponentBuilder[in_list_text.size()]);
+		info_text = in_info_text.toArray(new String[0]);
+		list_text = in_list_text.toArray(new ComponentBuilder[0]);
 		
 		// Set remaining variables
 		nothing_to_display_error = ChatColor.translateAlternateColorCodes('&', in_nothing_to_display_error);
@@ -78,8 +78,8 @@ public class ChatLister {
 		if (max_pages == 1) {
 			
 			// Display errors from that page
-			for (int i = 0; i < list_text.length; i++) {
-				player.spigot().sendMessage(list_text[i].create());
+			for (ComponentBuilder componentBuilder : list_text) {
+				player.spigot().sendMessage(componentBuilder.create());
 			}
 			
 			// And a newline to separate this from the next message

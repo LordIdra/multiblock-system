@@ -27,14 +27,6 @@ public class MultiblockRecipe {
 		this.crafting_time = crafting_time;
 	}
 
-	public MultiblockRecipe(List<ItemStack> inputItems, List<ItemStack> outputItems, int energy) {
-		this(inputItems, outputItems, energy, 0);
-	}
-
-	public MultiblockRecipe(List<ItemStack> inputItems, List<ItemStack> outputItems) {
-		this(inputItems, outputItems, 0, 0);
-	}
-
 	public boolean canCraft(List<ItemStack> available_items) {
 		boolean craftable = false;
 		for (ItemStack available_item : available_items) { // For each item available in inv
