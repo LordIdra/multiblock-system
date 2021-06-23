@@ -18,7 +18,6 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 	
 	PlayerSettings player_settings;
 	Location loc;
-	Location offset;
 	public int visual_time;
 	public Color color;
 	

@@ -16,11 +16,11 @@ public class UserInterfaceColorAdjuster extends BaseUserInterface {
 	private static final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
 	private static final String CURRENT_VALUE_TEXT = ChatColor.DARK_AQUA + "current value: ";
 
-	private UserInterfaceSettings parent;
+	private final UserInterfaceSettings parent;
 	
-	public int r = 0;
-	public int g = 0;
-	public int b = 0;
+	public int r;
+	public int g;
+	public int b;
 	
 	
 	
@@ -31,19 +31,19 @@ public class UserInterfaceColorAdjuster extends BaseUserInterface {
 		
 		setItem(3, Material.RED_CONCRETE, 
 				ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(r),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + r,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 
 		setItem(4, Material.GREEN_CONCRETE, 
 				ChatColor.GREEN + "" + ChatColor.BOLD + "Green" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(g),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + g,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 		
 		setItem(5, Material.BLUE_CONCRETE, 
 				ChatColor.BLUE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(b),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + b,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 	}

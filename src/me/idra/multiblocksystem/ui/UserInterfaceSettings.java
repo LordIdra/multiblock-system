@@ -29,9 +29,9 @@ public class UserInterfaceSettings extends BaseUserInterface {
 	
 	private static final String ERROR_PARTICLE_OFFSET = "error-particle-offset";
 	
-	private PlayerSettings settings = null;
-	private Map<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<> ();
-	private Map<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<> ();
+	private final PlayerSettings settings;
+	private final Map<String, UserInterfaceColorAdjuster> color_adjusters = new HashMap<> ();
+	private final Map<String, UserInterfaceVectorAdjuster> vector_adjusters = new HashMap<> ();
 	
 	
 	
@@ -175,12 +175,8 @@ public class UserInterfaceSettings extends BaseUserInterface {
 		
 		// Auto build
 		case 0:
-			if (settings.auto_build_enabled)
-				settings.auto_build_enabled = false;
-			else
-				settings.auto_build_enabled = true;
+			settings.auto_build_enabled = !settings.auto_build_enabled;
 			break;
-			
 		
 		case 9:
 			settings.handleClick(ConstantSettingNames.UNRESOLVED_ERROR_TIME, click);

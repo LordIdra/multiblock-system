@@ -16,11 +16,11 @@ public class UserInterfaceVectorAdjuster extends BaseUserInterface {
 	private static final String DECREASE_TEXT = ChatColor.GRAY + ">> right click to decrease";
 	private static final String CURRENT_VALUE_TEXT = ChatColor.DARK_AQUA + "current value: ";
 
-	private UserInterfaceSettings parent;
+	private final UserInterfaceSettings parent;
 	
-	public int x = 0;
-	public int y = 0;
-	public int z = 0;
+	public int x;
+	public int y;
+	public int z;
 	
 	
 	
@@ -31,19 +31,19 @@ public class UserInterfaceVectorAdjuster extends BaseUserInterface {
 		
 		setItem(3, Material.WHITE_CONCRETE, 
 				ChatColor.WHITE + "" + ChatColor.BOLD + "x" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(x),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + x,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 
 		setItem(4, Material.WHITE_CONCRETE, 
 				ChatColor.WHITE + "" + ChatColor.BOLD + "y" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(y),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + y,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 		
 		setItem(5, Material.WHITE_CONCRETE, 
 				ChatColor.WHITE + "" + ChatColor.BOLD + "z" + ChatColor.RESET + ChatColor.GOLD + LIMIT_TEXT, 
-				CURRENT_VALUE_TEXT + ChatColor.YELLOW + String.valueOf(z),
+				CURRENT_VALUE_TEXT + ChatColor.YELLOW + z,
 				INCREASE_TEXT,
 				DECREASE_TEXT);
 	}

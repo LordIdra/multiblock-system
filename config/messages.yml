@@ -34,6 +34,7 @@ Logger:
     config-option-invalid:      '&3(%file%) &c%path% &3invalid value'
 
     world-not-found: '&eBlock world not found'
+    inventory-holder-not-found: '&eInventory holder not found while processing recipe for multiblock %id%'
 
 
 

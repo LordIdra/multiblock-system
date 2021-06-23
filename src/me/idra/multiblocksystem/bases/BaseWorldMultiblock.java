@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.bases;
 
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -14,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Container;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -66,11 +68,15 @@ public abstract class BaseWorldMultiblock {
 		setInventoriesAsOutputs();
 
 		// Debug
-		Logger.log(
-				Logger.getInfo("on-assemble")
-						.replace("%player%", Bukkit.getOfflinePlayer(owner).getName())
-						.replace("%id%", String.valueOf(ID)),
-				false);
+		String owner_name = Bukkit.getOfflinePlayer(owner).getName();
+
+		if (owner_name != null) {
+			Logger.log(
+					Logger.getInfo("on-assemble")
+							.replace("%player%", owner_name)
+							.replace("%id%", String.valueOf(ID)),
+					false);
+		}
 	}
 
 	/**
@@ -167,6 +173,11 @@ public abstract class BaseWorldMultiblock {
 	private void putItemsToStorage(List<ItemStack> items_to_store) {
 		Map<Inventory, Inventory> inventories_and_new_inventories = findSuitableInventory(items_to_store);
 
+		if (inventories_and_new_inventories == null) {
+			status = PAUSED_ITEM_OUTPUT_FULL;
+			return;
+		}
+
 		for (Inventory storage_inventory : inventories_and_new_inventories.keySet()) { // for each storage block
 			storage_inventory.setContents(inventories_and_new_inventories.get(storage_inventory).getContents());
 		}
@@ -179,7 +190,17 @@ public abstract class BaseWorldMultiblock {
 
 		for (Inventory output : outputs) {
 			// Clone Output Storage to ItemStack Array. This is to be used as a reset for the Inventory
-			clonedOutputInventory = output.getHolder().getInventory();
+			InventoryHolder holder = output.getHolder();
+
+			if (holder == null) {
+				Logger.log(
+						Logger.getWarning("inventory-holder-not-found")
+						.replace(ConstantPlaceholders.ID, String.valueOf(ID)),
+						true);
+				return null;
+			}
+
+			clonedOutputInventory = holder.getInventory();
 
 			// Attempt to add items to Inventory. If there's not enough space, it will return a HashMap containing the Items and Amounts that would not fit
 			// This has to be done due to an inability to create an Inventory
