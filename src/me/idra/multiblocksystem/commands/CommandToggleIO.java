@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
+import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -46,12 +47,12 @@ public class CommandToggleIO extends BaseCommand {
 			}
 		}
 		if (container_block == null || container_block.getLocation() == null) {
-			// TODO: Log that an INV has not been found
+			MessageHandler.send(player, MessageHandler.getError("not-looking-at-container"));
 			return false;
 		} else {
 			multi_block = ListWorldMultiblocks.getMultiblockFromLocation(container_block.getLocation());
 			if (multi_block == null) {
-				// TODO: Log that there was no MultiBlock structure found
+				MessageHandler.send(player, MessageHandler.getError("not-part-of-multiblock"));
 				return false;
 			}
 			multi_block.flipIO(container_block);

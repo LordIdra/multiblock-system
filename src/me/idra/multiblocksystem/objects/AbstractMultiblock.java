@@ -28,7 +28,6 @@ public class AbstractMultiblock {
 	public StructureDescriptor structure; // Structural Description of Block Arrangement (This comes from the Structure.yml files)
 
 	public String fuel_display_name;
-	public int max_fuel_ticks; // TODO: Change this to only use 1 fuel at a time
 
 	public Map<String, Object> variables = new HashMap<>();
 	public List<MultiblockRecipe> recipes = new ArrayList<>();
@@ -98,7 +97,6 @@ public class AbstractMultiblock {
 		// Get parameters from config
 		multiblock_structure_description = multiblock_config.getString("Description");
 		fuel_display_name = multiblock_config.getString("FuelName");
-		max_fuel_ticks = multiblock_config.getInt("MaxFuel");
 
 
 		ConfigurationSection variable_config = multiblock_config.getConfigurationSection("Variables");
@@ -209,13 +207,18 @@ public class AbstractMultiblock {
 				Logger.configError(Logger.OPTION_INVALID, multiblock_file, current_recipe, "TIME");
 			}
 
-			if (config_inputs != null && config_outputs != null) { // TODO: Fix ConfigHelper.getItemStackIntegerMap
-				inputs = ConfigHelper.getItemStack(multiblock_file, config_inputs);
-				outputs = ConfigHelper.getItemStack(multiblock_file, config_outputs);
+			inputs = null;
+			outputs = null;
+
+			if (config_inputs == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, multiblock_file, current_recipe, "INPUTS");
+
+			} else if (config_outputs == null) {
+				Logger.configError(Logger.OPTION_NOT_FOUND, multiblock_file, current_recipe, "OUTPUTS");
+
 			} else {
-				inputs = null;
-				outputs = null;
-				Logger.log("Config is missing Input and/or Output", true); // TODO: Idra, you might need to make warning for this
+				inputs = ConfigHelper.getItemStackList(multiblock_file, config_inputs);
+				outputs = ConfigHelper.getItemStackList(multiblock_file, config_outputs);
 			}
 
 			// Combine all the above into a new recipe

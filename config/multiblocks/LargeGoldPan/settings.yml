@@ -1,18 +1,6 @@
 Description: An advanced gold pan that processes large amounts of gravel and soul sand at a high efficiency, in exchange for large amounts of power and coolant cells.
 ClassName: ProcessingMachine
 FuelName: "Coolant"
-MaxFuel: 2400
-
-InventoryTags:
-  - 'ItemIn'
-  - 'ItemOut'
-
-FuelTags:
-  - 'FuelIn'
-
-EnergyTags:
-  - 'EnergyIn'
-
 
 
 Fuels:
@@ -23,35 +11,28 @@ Fuels:
 
 Recipes:
   recipe-1:
-    TIME: 20
 
-    ENERGY:
-      EnergyIn: 20
+    TIME: 20
+    ENERGY: 20
 
     INPUT:
-      ItemIn:
         item-1: '64 gravel'
 
     OUTPUT:
-      ItemOut:
         item-1: '32 sifted_ore'
   
   
   recipe-2:
     TIME: 20
-
-    ENERGY:
-      EnergyIn: 20
+    ENERGY: 20
 
     INPUT:
-      ItemIn:
-        item-1: '64 soul_sand'
+      item-1: '64 soul_sand'
 
     OUTPUT:
-      ItemOut:
-        item-1: '2 ghast_tear'
-        item-2: '4 glowstone_dust'
-        item-3: '6 blaze_powder'
-        item-4: '7 nether_wart'
-        item-5: '7 gold_nugget'
-        item-6: '32 quartz'
+      item-1: '2 ghast_tear'
+      item-2: '4 glowstone_dust'
+      item-3: '6 blaze_powder'
+      item-4: '7 nether_wart'
+      item-5: '7 gold_nugget'
+      item-6: '32 quartz'
