@@ -1,13 +1,10 @@
 Logger:
 
-
   Info:
-
     on-assemble: 'Multiblock assembled by player %player% with ID #%id%.'
 
 
   Warning:
-
     class-not-found: '&eMultiblock class %class% not found.'
     world-multiblock-class-not-initialized: '&eWorld multiblock %structure% has failed to initialize.'
 
@@ -36,14 +33,14 @@ Logger:
     config-option-not-found:    '&3(%file%) &c%path% &3not found'
     config-option-invalid:      '&3(%file%) &c%path% &3invalid value'
 
-    # Unsure of what to do here. It's for the BlockError.java isResolved()
-    world-not-found: '&eBlock World not found.'
+    world-not-found: '&eBlock world not found'
+
+
+
 
 Messages:
-  
 
   Info:
-
     newline: ''
 
     multiblock-incomplete: '&9Multiblock is &b&l%percentage%% &r&9completed.'
@@ -66,7 +63,6 @@ Messages:
 
 
   Error:
-
     multiblock-not-recognised: '&cMultiblock &6%multiblock% &cnot recognised.'
     not-looking-at-lectern: '&cYou must be looking at the multiblock’s lectern to do this.'
     lectern-already-used: '&cThis lectern is already part of another multiblock.'
@@ -100,9 +96,10 @@ Messages:
     invalid-inventory-tag: '&cThe inventory tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
     invalid-position-tag: '&cThe position tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
 
+    not-looking-at-container: '&cYou must be looking at a container to do this.'
+
 
   Success:
-
     multiblock-assembled: '&aMultiblock assembled.'
     multiblock-disassembled: '&aMultiblock disassembled.'
 
