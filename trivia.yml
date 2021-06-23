@@ -365,297 +365,297 @@ questions:
     answer:
       - '-2.5'
 
-  5001:
+  78:
     question: 'What is the formula for the sine rule?'
     answer:
       - 'a/sinA = b/sinB = c/sinC'
 
-  5003:
+  79:
     question: 'What instrument family does the bassoon belong to?'
     answer:
       - 'woodwind'
 
-  5004:
+  80:
     question: 'How much money does answering a trivia question give you?'
     answer:
       - '6k'
       - '6000'
 
-  5005:
+  81:
     question: 'Which composer died 9 days after the premiere of their final symphony (symphony 6)?'
     answer:
       - 'tchaikovsky'
 
-  5006:
+  82:
     question: 'Evaluate e^(i*pi*2.5).'
     answer:
       - 'i'
 
-  5007:
+  83:
     question: 'What is the full name of the FDE cycle?'
     answer:
       - 'fetch decode execute cycle'
       - 'fetch decode execute'
 
-  6001:
+  84:
     question: 'What was used in place of observers before they came out?'
     answer:
       - 'BUD'
 
-  6002:
+  85:
     question: 'What is the state that blocks turn into when pushed by pistons?'
     answer:
       - 'Block 46'
 
-  6003:
+  86:
     question: 'How many game ticks does a redstone tick last?'
     answer:
       - '2'
 
-  6004:
+  87:
     question: 'How long is the delay between each activation for a dispenser in redstone ticks?'
     answer:
       - '4'
 
-  6005:
+  88:
     question: 'How many blocks can a piston push?'
     answer:
       - '12'
 
-  6006:
+  89:
     question: 'What does the redstone acronym BUD stand for?'
     answer:
       - 'Block Update Detector'
 
-  6007:
+  90:
     question: 'How long of a redstone signal does a stone button last for in redstone ticks?'
     answer:
       - '10'
 
-  6008:
+  91:
     question: 'What is an alternative name for the hopper clock?'
     answer:
       - 'Etho Clock'
 
-  6010:
+  92:
     question: 'What type of pressure plate(s) cannot be triggered by items?'
     answer:
       - 'Stone'
 
-  6011:
+  93:
     question: 'Can a comparator detect a composter and give a signal strength?'
     answer:
       - 'Yes'
 
-  6012:
+  94:
     question: 'Can bedrock be obtained in vanilla survival minecraft without the use of commands or creative mode?'
     answer:
       - 'Yes'
 
-  6013:
+  95:
     question: 'Can the Ender dragon be killed by 1 arrow?'
     answer:
       - 'Yes'
 
-  6014:
+  96:
     question: 'What do minecraft polar bears drop?'
     answer:
       - 'Raw cod'
 
-  6015:
+  97:
     question: 'Can a slime block be powered by redstone?'
     answer:
       - 'Yes'
 
-  6016:
+  98:
     question: 'Can a honey block be powered by redstone?'
     answer:
       - 'No'
 
-  6017:
+  99:
     question: 'Starting from the rail that it is powered, up to how many blocks does a powered rail extend its power?'
     answer:
       - '9'
 
-  6018:
+  100:
     question: 'What is the max effective level of the lure enchant?'
     answer:
       - '5'
 
-  6019:
+  101:
     question: 'What were sugarcane used to be called?'
     answer:
       - 'reeds'
 
-  6020:
+  102:
     question: 'What are the chances of a natural pink sheep spawning'
     answer:
       - '0.16%'
       - '1/625'
 
 
-  6021:
+  103:
     question: 'What is physically shorter, a lily pad or a 2 layers of snow?'
     answer:
       - 'lily pad'
 
-  6022:
+  104:
     question: 'Can cats give you phantom membranes?'
     answer:
       - 'Yes'
 
-  6023:
+  105:
     question: 'Can cats give you diamonds?'
     answer:
       - 'No'
 
-  6024:
+  106:
     question: 'What is the minimum amount of iron ingots that an iron golem drops?'
     answer:
       - '3'
 
-  6025:
+  107:
     question: 'How many days without sleeping does it take before phantoms start to spawn?'
     answer:
       - '3'
 
-  6026:
+  108:
     question: 'Can you plant mushrooms on stone?'
     answer:
       - 'Yes'
 
-  6027:
+  109:
     question: 'How many firework stars can you add to a rocket?'
     answer:
       - '7'
 
-  6028:
+  110:
     question: 'What has the strongest explosion?'
     answer:
       - 'Wither'
 
-  6029:
+  111:
     question: 'Which is stronger, a charged creeper explosion or an end crystal?'
     answer:
       - 'Neither'
 
-  6030:
+  112:
     question: 'As of 1.17, what is the highest blast resistance value?'
     asnwer:
       - '360000.8'
 
-  6031:
+  113:
     question: 'Can TNT destroy beacons?'
     answer:
       - 'Yes'
 
-  6032:
+  114:
     question: 'How many items can be crafted with obsidian?'
     answer:
       - '3'
 
-  6035:
+  115:
     question: 'What block allows for instant downwards redstone?'
     answer:
       - 'Walls'
 
-  6036:
+  116:
     question: 'How many type of heads are there in vanilla?'
     answer:
       - '6'
 
-  6037:
+  117:
     question: 'What were emeralds used to be called?'
     answer:
       - 'Rubies'
 
-  6038:
+  118:
     question: 'Can you apply the power enchant on a crossbow?'
     answer:
       - 'No'
 
-  6039:
+  119:
     question: 'Can leaves trigger an observer?'
     answer:
       - 'Yes'
 
-  6040:
+  120:
     question: 'How long is a 0-tick pulse?'
     answer:
       - '1 tick'
 
-  6041:
+  121:
     question: 'What is the laggiest redstone component?'
     answer:
       - 'Redstone'
       - 'Redstone dust'
 
-  6042:
+  122:
     question: 'Can you break bedrock using pistons?'
     answer:
       - 'Yes'
 
-  6043:
+  123:
     question: 'Can mobs spawn on bedrock?'
     answer:
       - 'No'
 
-  6044:
+  124:
     question: 'What block, other than netherrack, can keep a fire going indefinitely?'
     answer:
       - 'Bedrock'
 
-  6045:
+  125:
     question: 'Can bone blocks generate naturally?'
     answer:
       - 'Yes'
 
-  6046:
+  126:
     question: 'Can an observer detect a cauldron being filled up?'
     answer:
       - 'Yes'
 
-  6047:
+  127:
     question: 'What is the most effective level of fire resistance?'
     answer:
       - '8'
 
-  6048:
+  128:
     question: 'What is the maximum damage reduction through enchantments?'
     answer:
       - '80%'
 
-  6049:
+  129:
     question: 'Can you fish up a feather?'
     answer:
       - 'No'
 
-  6050:
+  130:
     question: 'Do biomes affect fishing?'
     answer:
       - 'Yes'
 
-  6051:
+  131:
     question: 'Will Hynlerin ever finish his Island?'
     answer:
       - 'No'
 
-  44001:
+  132:
     question: 'What is the effective range of a Pillager when scaring a Villager?'
     answer:
       - '15'
 
-  44002:
+  133:
     question: 'Can a Snow Golem attack Phantoms?'
     answer:
       - 'Yes'
 
-  44003:
+  134:
     question: 'If you stich a left handed Möbius strip with a right handed one, What do you get?'
     answer:
       - 'A Klein bottle'
 
-  44004:
+  135:
     question: 'Name a mob thats effective at scaring Villagers besides a Zombie or Pillager'
     answer:
       - 'Husk'
@@ -668,12 +668,12 @@ questions:
       - 'Illusioner'
       - 'Ravager'
 
-  44005:
+  136:
     question: 'Given the chemical formula H2SO4, what is the common chemical?'
     answer:
       - 'Sulfuric Acid'
 
-  44006:
+  137:
     question: 'Name an element from the Alkali series that can explode on contact with H2O'
     answer:
       - 'Lithium'
@@ -683,36 +683,36 @@ questions:
       - 'Cesium'
       - 'Francium'
 
-  44007:
+  138:
     question: 'Name one of the current contributors to Idra's Multiblock System?'
     answer:
       - 'Idra'
       - 'Anon'
       - 'Hyn'
 
-  44008:
+  139:
     question: 'Which is stronger at close range, "The Strong Force", "The Electromgnetic Force", "The Weak Nuclear Force", or "The Gravitational Force"'
     answer:
       - 'The Strong Force'
 
-  44009:
+  140:
     question: 'What is the common name for Sodium Chloride (NaCl)?'
     answer:
       - 'Salt'
       - 'Table salt'
 
-  44010:
+  145:
     question: 'Assuming that Idra or Anon doesnt remember the answer to this question, what is on the mind of Hyn while writing this question?'
     answer:
       - 'If Idra gets this right I owe him 6000 of my balance'
       - 'Hopefully Anon doesnt go crazy over my terrible use of capitalization'
 
-  44011:
+  146:
     question: 'Would inhaling chloroform make you faint within 30 seconds?'
     answer:
       - 'No'
 
-  44012:
-    questoin: 'Pressing F3 + what will show chunk borders?'
+  147:
+    question: 'Pressing F3 + what will show chunk borders?'
     answer:
       - 'g'
