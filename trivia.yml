@@ -413,9 +413,9 @@ questions:
       - '2'
 
   87:
-    question: 'How long is the delay between each activation for a dispenser in redstone ticks?'
+    question: 'When a Dispenser has been activated, how many redstone ticks until it can be activated again?'
     answer:
-      - '4'
+      - '2'
 
   88:
     question: 'How many blocks can a piston push?'
