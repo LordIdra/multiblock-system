@@ -3,6 +3,7 @@ package me.idra.multiblocksystem.commands;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
 import me.idra.multiblocksystem.lists.ListBlockErrors;
@@ -67,7 +68,7 @@ public class CommandAssemble extends BaseCommand {
 		if (abstract_structure_object == null) {
 			MessageHandler.send(sender,
 					MessageHandler.getError("multiblock-not-recognised")
-							.replace("%multiblock%", args[1]));
+							.replace(ConstantPlaceholders.arg1, args[1]));
 			return false;
 		}
 
@@ -153,7 +154,7 @@ public class CommandAssemble extends BaseCommand {
 			// Display % completion
 			MessageHandler.send(sender,
 					MessageHandler.getInfo("multiblock-incomplete")
-							.replace("%percentage%", String.valueOf(percentage)));
+							.replace(ConstantPlaceholders.arg1, String.valueOf(percentage)));
 
 			// Display block error list
 			ListBlockErrors.setBlockErrors(player, block_error_list);

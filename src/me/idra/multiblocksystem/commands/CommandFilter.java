@@ -81,7 +81,7 @@ public class CommandFilter extends BaseCommand{
 		if (!(multiblock.owner == player.getUniqueId() || Arrays.asList(FileHandlerPlayerData.getTrustedPlayers(multiblock.owner)).contains(player))) {
 			MessageHandler.send(player,
 					MessageHandler.getError("cannot-modify-multiblock")
-					.replace("%player", player.getName()));
+					.replace(ConstantPlaceholders.arg1, player.getName()));
 			return false;
 		}
 
@@ -97,8 +97,8 @@ public class CommandFilter extends BaseCommand{
 //			if (!multiblock.abstract_multiblock.inventory_tags.contains(args[1])) {
 //				MessageHandler.send(player,
 //						MessageHandler.getError("invalid-inventory-tag")
-//						.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
-//						.replace(ConstantPlaceholders.TAG, args[1]));
+//						.replace(ConstantPlaceholders.arg1, multiblock.abstract_multiblock.name_of_structure_block)
+//						.replace(ConstantPlaceholders.arg2, args[1]));
 //				return false;
 //			}
 //
@@ -138,8 +138,8 @@ public class CommandFilter extends BaseCommand{
 //		if (!multiblock.abstract_multiblock.position_tags.keySet().contains(args[1])) {
 //			MessageHandler.send(player,
 //					MessageHandler.getError("invalid-position-tag")
-//					.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
-//					.replace(ConstantPlaceholders.TAG, args[1]));
+//					.replace(ConstantPlaceholders.arg1, multiblock.abstract_multiblock.name_of_structure_block)
+//					.replace(ConstantPlaceholders.arg2, args[1]));
 //			return false;
 //		}
 //
