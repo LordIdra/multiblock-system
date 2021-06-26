@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ListItemGroups {
 
-	public static Map<String, ItemGroup> material_groups = new HashMap<> ();
+	public static final Map<String, ItemGroup> material_groups = new HashMap<> ();
 
 	private ListItemGroups() {
 		// Empty constructor
