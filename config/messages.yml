@@ -1,12 +1,12 @@
 Logger:
 
   Info:
-    on-assemble: 'Multiblock assembled by player %player% with ID #%id%.'
+    on-assemble: 'Multiblock assembled by player %arg1% with ID #%arg2%.'
 
 
   Warning:
-    class-not-found: '&eMultiblock class %class% not found.'
-    world-multiblock-class-not-initialized: '&eWorld multiblock %structure% has failed to initialize.'
+    class-not-found: '&eMultiblock class %arg1% not found.'
+    world-multiblock-class-not-initialized: '&eWorld multiblock %arg1% has failed to initialize.'
 
     current-id-not-found: '&eCurrent-id not found in PermanentVariables.yml, creating one now.'
     stored-tick-not-found: '&eStored-tick not found in PermanentVariables.yml, creating one now.'
@@ -14,24 +14,24 @@ Logger:
     save-fail-permanent-data: '&ePermanentData.yml failed to save.'
     save-fail-player-data: '&ePlayerData.yml failed to save.'
 
-    material-invalid: '&eMaterial %material% is invalid for a structure.'
-    slimefun-item-invalid: '&eSlimefunItem %slimefun-item% is invalid for a structure.'
-    id-invalid: '&eMultiblock with ID %id% already taken. Problem with ID counter likely.'
+    material-invalid: '&eMaterial %arg1% is invalid for a structure.'
+    slimefun-item-invalid: '&eSlimefunItem %arg1% is invalid for a structure.'
+    id-invalid: '&eMultiblock with ID %arg1% already taken. Problem with ID counter likely.'
 
-    structure-file-not-found: '&eStructure file %name%.yml not found.'
-    multiblock-file-not-found: '&eMultiblock file %name%.yml not found.'
+    structure-file-not-found: '&eStructure file %arg1%.yml not found.'
+    multiblock-file-not-found: '&eMultiblock file %arg1%.yml not found.'
 
-    description-not-found: '&eDescription for multiblock %name% not found.'
+    description-not-found: '&eDescription for multiblock %arg1% not found.'
 
-    dimension-x-not-found: '&eDimension X for multiblock %name% not found.'
-    dimension-z-not-found: '&eDimension Z for multiblock %name% not found.'
+    dimension-x-not-found: '&eDimension X for multiblock %arg1% not found.'
+    dimension-z-not-found: '&eDimension Z for multiblock %arg1% not found.'
 
-    abstract-lectern-not-found: '&eLectern not found for multiblock %multiblock%.'
+    abstract-lectern-not-found: '&eLectern not found for multiblock %arg1%.'
 
-    file-not-found:             '&e%file% not found'
+    file-not-found:             '&e%arg1% not found'
 
-    config-option-not-found:    '&3(%file%) &c%path% &3not found'
-    config-option-invalid:      '&3(%file%) &c%path% &3invalid value'
+    config-option-not-found:    '&3(%arg1%) &c%arg2% &3not found'
+    config-option-invalid:      '&3(%arg1%) &c%arg2% &3invalid value'
 
     world-not-found: '&eBlock world not found'
     inventory-holder-not-found: '&eInventory holder not found while processing recipe for multiblock %id%'
@@ -44,27 +44,27 @@ Messages:
   Info:
     newline: ''
 
-    multiblock-incomplete: '&9Multiblock is &b&l%percentage%% &r&9completed.'
+    multiblock-incomplete: '&9Multiblock is &b&l%arg1%% &r&9completed.'
 
     help-title: '&f&l[&7&lMultiblock System&f&l]'
-    help-version: '&4Version: &2%version%'
-    help-author: '&4Author: &2%author%'
+    help-version: '&4Version: &2%arg1%'
+    help-author: '&4Author: &2%arg1%'
 
     help-commands-title: '&f&l[&7&lCommand List&f&l]'
-    help-commands-format: '&c/mb &a%name% &e%args%&4- &2%description%'
+    help-commands-format: '&c/mb &a%arg1% &e%arg2%&4- &2%arg3%'
 
     multiblock-list-title: '&f&l[&7&lMultiblock List&f&l]'
-    multiblock-list-format: '&a%name% &c- &2%description%'
+    multiblock-list-format: '&a%arg1% &c- &2%arg2%'
     
     trusted-list-title: '&f&l[&7&lTrusted Player List&f&l]'
-    trusted-list-format: '&c- &a%name%'
+    trusted-list-format: '&c- &a%arg1%'
 
     admin-log-title: '&f&l[&7&lError Log&f&l]'
-    admin-log-format: '&4[&6%time%&4] &e%error%'
+    admin-log-format: '&4[&6%arg1%&4] &e%arg2%'
 
 
   Error:
-    multiblock-not-recognised: '&cMultiblock &6%multiblock% &cnot recognised.'
+    multiblock-not-recognised: '&cMultiblock &6%arg1% &cnot recognised.'
     not-looking-at-lectern: '&cYou must be looking at the multiblock’s lectern to do this.'
     lectern-already-used: '&cThis lectern is already part of another multiblock.'
 
@@ -75,15 +75,15 @@ Messages:
     invalid-page: '&cThat page does not exist.'
     nothing-to-display: '&cNothing to display.'
 
-    cannot-modify-multiblock: '&cYou do not have permission to modify &6%player%’s &cmultiblocks.'
+    cannot-modify-multiblock: '&cYou do not have permission to modify &6%arg1%’s &cmultiblocks.'
 
     multiblock-list-none: '&cYou have not unlocked any multiblocks.'
     trusted-list-none: '&cYou have no players trusted.'
     admin-log-none: '&cThe log contains no errors.'
 
-    player-not-found: '&cPlayer &6%player% &cnot found.'
+    player-not-found: '&cPlayer &6%arg1% &cnot found.'
 
-    not-enough-arguments: '&cNot enough arguments. Usage: &4/mb &a%name% &e%args%&4'
+    not-enough-arguments: '&cNot enough arguments. Usage: &4/mb &a%arg1% &e%arg2%&4'
     command-not-found: '&cCommand unrecognised. Run &6/mb help &cfor a list of commands.'
     command-cannot-be-run-from-console: '&cThis command cannot be run from the console.'
 
@@ -92,10 +92,6 @@ Messages:
 
     not-part-of-multiblock: '&cThis block is not part of a multiblock.'
     invalid-block: '&cYou must be looking at a solid block.'
-    
-    inventory-tag-invalid-block: '&cYou must be looking at a chest or barrel to set this tag.'
-    invalid-inventory-tag: '&cThe inventory tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
-    invalid-position-tag: '&cThe position tag &6%tag% &cis not applicable for the multiblock &6%multiblock%'
 
     not-looking-at-container: '&cYou must be looking at a container to do this.'
 
@@ -104,11 +100,9 @@ Messages:
     multiblock-assembled: '&aMultiblock assembled.'
     multiblock-disassembled: '&aMultiblock disassembled.'
 
-    player-untrusted: '&aPlayer &6%player% &auntrusted.'
-    player-trusted: '&aPlayer &6%player% &atrusted.'
+    player-untrusted: '&aPlayer &6%arg1% &auntrusted.'
+    player-trusted: '&aPlayer &6%arg1% &atrusted.'
 
     admin-logs-cleared: '&aError logs cleared successfully.'
-    
-    tag-set: '&aTag successfully set.'
     
     auto-build-cancel: '&aAuto-build cancelled.'
