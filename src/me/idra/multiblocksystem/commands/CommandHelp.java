@@ -72,10 +72,10 @@ public class CommandHelp extends BaseCommand{
 			
 			// Format command
 			for (String arg : command_object.name)
-				name.append(arg + " ");
+				name.append(arg).append(" ");
 					
 			for (String argument : command_object.arguments)
-				arguments.append("<" + argument + "> ");
+				arguments.append("<").append(argument).append("> ");
 			
 			// Add formatted command to ChatLister
 			formatted_commands.add(new ComponentBuilder("").append(

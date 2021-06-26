@@ -60,14 +60,14 @@ public class CommandListTrusted extends BaseCommand{
 		}
 		
 		// Set chatlister
-		ListChatListers.chat_listers.put((Player) sender, new ChatLister(
-				(Player) sender,
+		ListChatListers.chat_listers.put(sender, new ChatLister(
+				sender,
 				top_text,
 				formatted_players,
 				MessageHandler.getError("trusted-list-none")));
 				
 		// Display chat lister
-		ListChatListers.chat_listers.get((Player) sender).display(1);
+		ListChatListers.chat_listers.get(sender).display(1);
 		
 		// Successful execution
 		return true;

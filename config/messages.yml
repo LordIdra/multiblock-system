@@ -34,7 +34,10 @@ Logger:
     config-option-invalid:      '&3(%arg1%) &c%arg2% &3invalid value'
 
     world-not-found: '&eBlock world not found'
-    inventory-holder-not-found: '&eInventory holder not found while processing recipe for multiblock %id%'
+    inventory-holder-not-found: '&eInventory holder not found while processing recipe for multiblock %arg1%'
+    uuid-not-found: "UUID not found for multiblock #%arg1%"
+    recipe-section-not-found: "Recipe section was not found for multiblock #%arg1%"
+    settings-section-not-found: "Settings section was not found for player %arg1%"
 
 
 
