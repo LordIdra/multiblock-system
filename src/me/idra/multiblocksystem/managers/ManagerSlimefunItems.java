@@ -110,7 +110,8 @@ public class ManagerSlimefunItems {
 			// Get variables
 			ConfigurationSection research_section = research_config.getConfigurationSection(key);
 
-			int number 	= research_section.getInt("number");
+			 assert research_section != null;
+			 int number 	= research_section.getInt("number");
 			int xp 		= research_section.getInt("xp");
 			String name = research_section.getString("name");
 
@@ -146,22 +147,24 @@ public class ManagerSlimefunItems {
 
 			// Sections
 			ConfigurationSection section = item_config.getConfigurationSection(key);
+			assert section != null;
+
 			ConfigurationSection display_item_section = section.getConfigurationSection("Item");
 			ConfigurationSection recipe_section = section.getConfigurationSection("Recipe");
 
 			if (display_item_section == null) {
-				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, null);
 				continue;
 			}
 
 			if (recipe_section == null) {
-				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
+				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, null);
 				continue;
 			}
 
 			// Variables
 			String name 				= section.getString("Name");
-			String display_item_type 	= display_item_section.getString("type").toUpperCase();
+			String display_item_type 	= display_item_section.getString("type");
 			String display_item_id 		= display_item_section.getString("id");
 			int amount 			 		= recipe_section.getInt("amount");
 			RecipeType recipe_type		= RECIPE_TYPES.get(recipe_section.getString("type"));
@@ -196,6 +199,8 @@ public class ManagerSlimefunItems {
 				continue;
 			}
 
+			display_item_type = display_item_type.toUpperCase();
+
 
 			// Get recipe items + amount
 			ItemStack[] recipe = new ItemStack[] {
@@ -222,10 +227,10 @@ public class ManagerSlimefunItems {
 			}
 
 			// Get lore
-			String[] lore = (String[]) section.getStringList("Lore").toArray(new String[section.getStringList("Lore").size()]);
+			String[] lore = section.getStringList("Lore").toArray(new String[0]);
 
 			// Register item
-			SlimefunItemStack slimefun_itemstack = null;
+			SlimefunItemStack slimefun_itemstack;
 			if (display_item_type.equals("NORMAL")) {
 
 				Material display_item_material = Material.getMaterial(display_item_id.toUpperCase());
@@ -261,6 +266,7 @@ public class ManagerSlimefunItems {
 
 				if (research == null) {
 					Logger.configError(Logger.OPTION_INVALID, slimefun_item_file, section, "Research");
+					continue;
 				}
 
 				research.addItems(slimefun_itemstack);

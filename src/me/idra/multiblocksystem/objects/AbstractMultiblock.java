@@ -312,7 +312,7 @@ public class AbstractMultiblock {
 						case WEST:
 							block_location = starting_point.clone().add(new Location(player.getWorld(), -z, y, x));
 							break;
-					};
+					}
 
 					if (block_location != null) {
 
