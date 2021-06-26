@@ -38,9 +38,9 @@ public class CommandEditorCreate extends BaseCommand{
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
 		
 		// Get dimensions
-		int dimension_y = Integer.valueOf(args[3]);
-		int dimension_x = Integer.valueOf(args[4]);
-		int dimension_z = Integer.valueOf(args[5]);
+		int dimension_y = Integer.parseInt(args[3]);
+		int dimension_x = Integer.parseInt(args[4]);
+		int dimension_z = Integer.parseInt(args[5]);
 
 		// Get corner position
 		Location player_location = ((Player) sender).getLocation();
