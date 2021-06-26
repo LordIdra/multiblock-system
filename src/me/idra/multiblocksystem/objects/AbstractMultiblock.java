@@ -51,7 +51,7 @@ public class AbstractMultiblock {
 		if (!multiblock_file.exists()) {
 			Logger.log(
 					Logger.getWarning("multiblock-file-not-found")
-							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
+							.replace(ConstantPlaceholders.arg1, name_of_structure_block),
 					true);
 			return;
 		}
@@ -59,7 +59,7 @@ public class AbstractMultiblock {
 		if (!structure_file.exists()) {
 			Logger.log(
 					Logger.getWarning("structure-file-not-found")
-							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
+							.replace(ConstantPlaceholders.arg1, name_of_structure_block),
 					true);
 			return;
 		}
@@ -84,7 +84,7 @@ public class AbstractMultiblock {
 		} catch (ClassNotFoundException e) {
 			Logger.log(
 					Logger.getWarning("class-not-found")
-							.replace("%class%", class_location),
+							.replace(ConstantPlaceholders.arg1, class_location),
 					true);
 		}
 	}
