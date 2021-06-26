@@ -72,10 +72,10 @@ public class Logger {
 		String error_message;
 
 		if (type.equals(OPTION_NOT_FOUND)) {
-			error_message = getWarning("config-option-not-found").replace(ConstantPlaceholders.FILE, file.getPath());
+			error_message = getWarning("config-option-not-found").replace(ConstantPlaceholders.arg1, file.getPath());
 
 		} else if (type.equals(OPTION_INVALID)) {
-			error_message = getWarning("config-option-invalid").replace(ConstantPlaceholders.FILE, file.getPath());
+			error_message = getWarning("config-option-invalid").replace(ConstantPlaceholders.arg1, file.getPath());
 
 		} else {
 			return;
@@ -85,14 +85,14 @@ public class Logger {
 		if (section != null) {
 
 			if (option != null) {
-				error_message = error_message.replace(ConstantPlaceholders.PATH, section.getCurrentPath() + "." + option);
+				error_message = error_message.replace(ConstantPlaceholders.arg2, section.getCurrentPath() + "." + option);
 
 			} else {
-				error_message = error_message.replace(ConstantPlaceholders.PATH, section.getCurrentPath());
+				error_message = error_message.replace(ConstantPlaceholders.arg2, section.getCurrentPath());
 			}
 
 		} else {
-			error_message = error_message.replace(ConstantPlaceholders.PATH, option);
+			error_message = error_message.replace(ConstantPlaceholders.arg2, option);
 		}
 
 		log(error_message, true);
@@ -101,7 +101,7 @@ public class Logger {
 
 
 	public static void fileNotFoundError(File file) {
-		Logger.log(getWarning("file-not-found").replace(ConstantPlaceholders.FILE, file.getPath()), true);
+		Logger.log(getWarning("file-not-found").replace(ConstantPlaceholders.arg1, file.getPath()), true);
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
