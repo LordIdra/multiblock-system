@@ -81,7 +81,7 @@ public class ListBlockErrors {
 			
 			// Add 'view' text and add error view events
 			new_text = new TextComponent(ChatColor.RED   + "" + ChatColor.BOLD + "" + ChatColor.ITALIC + "View");
-			new_text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb show error " + String.valueOf(error_text.size())));
+			new_text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mb show error " + error_text.size()));
 			new_text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Visualise error")));
 			error_message.append(new_text);
 

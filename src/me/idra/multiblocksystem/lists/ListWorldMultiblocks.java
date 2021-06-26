@@ -7,6 +7,7 @@ import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -26,7 +27,16 @@ public class ListWorldMultiblocks {
 	public static BaseWorldMultiblock getMultiblockFromLocation(Location loc) {
 
 		// Convert location to block position
-		BlockPosition block_pos = new BlockPosition(loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+		World world = loc.getWorld();
+		if (world == null) {
+			Logger.log(
+					Logger.getWarning("world-not-found")
+					.replace(ConstantPlaceholders.arg1, loc.toString()),
+					true);
+			return null;
+		}
+
+		BlockPosition block_pos = new BlockPosition(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 
 		// Check if the block position exists in the array - return the multiblock if it does
 		for (BaseWorldMultiblock multiblock_object : multiblock_objects.values()) {
@@ -48,7 +58,7 @@ public class ListWorldMultiblocks {
 		if (abstract_multiblock.structure_class != null) {
 			try {
 				world_multiblock =
-						(BaseWorldMultiblock) abstract_multiblock.structure_class.getDeclaredConstructor(AbstractMultiblock.class, Map.class,
+						(BaseWorldMultiblock) abstract_multiblock.structure_class.getDeclaredConstructor(AbstractMultiblock.class, List.class,
 								UUID.class, int.class)
 								.newInstance(abstract_multiblock, block_list, player, ID);
 

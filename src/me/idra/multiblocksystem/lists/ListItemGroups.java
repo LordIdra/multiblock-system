@@ -50,6 +50,7 @@ public class ListItemGroups {
 		}
 
 		// Get each group and add it to the map
+		assert config_section != null;
 		for (String group_name : config_section.getKeys(false)) {
 
 			List<String> group_item_names = config_section.getStringList(group_name);

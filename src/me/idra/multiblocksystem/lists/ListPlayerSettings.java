@@ -12,7 +12,7 @@ import me.idra.multiblocksystem.objects.PlayerSettings;
 
 public class ListPlayerSettings {
 
-	private static Map<UUID, PlayerSettings> player_settings = new HashMap<> ();
+	private static final Map<UUID, PlayerSettings> player_settings = new HashMap<> ();
 
 	private ListPlayerSettings() {
 		// Empty constructor

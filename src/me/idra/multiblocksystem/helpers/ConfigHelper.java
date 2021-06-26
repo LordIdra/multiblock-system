@@ -61,7 +61,12 @@ public class ConfigHelper {
 		// Load config
 		FileConfiguration group_config = YamlConfiguration.loadConfiguration(group_file);
 		ConfigurationSection group_section = group_config.getConfigurationSection(ITEM_GROUPS);
-		Logger.log(name, true);
+
+		if (group_section == null) {
+			// Error message handled outside of this group
+			return null;
+		}
+
 		List<String> item_names = group_section.getStringList(name.toLowerCase());
 
 		// Convert names to MixedItemStacks
