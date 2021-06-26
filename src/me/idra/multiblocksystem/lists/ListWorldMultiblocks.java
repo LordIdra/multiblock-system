@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.lists;
 
 
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
@@ -56,7 +57,7 @@ public class ListWorldMultiblocks {
 
 				Logger.log(
 						Logger.getWarning("world-multiblock-class-not-initialized")
-								.replace("%structure%", String.valueOf(abstract_multiblock.name_of_structure_block)),
+								.replace(ConstantPlaceholders.arg1, String.valueOf(abstract_multiblock.name_of_structure_block)),
 						true);
 				e.printStackTrace();
 				return null;

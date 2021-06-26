@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.managers;
 
 
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -101,9 +102,9 @@ public class ManagerCommands implements CommandExecutor {
 					// Send all the above together
 					MessageHandler.send(sender,
 							MessageHandler.getError("not-enough-arguments")
-							.replace("%name%", name)
-							.replace("%args%", arguments)
-							.replace("%description%", description));
+							.replace(ConstantPlaceholders.arg1, name)
+							.replace(ConstantPlaceholders.arg2, arguments)
+							.replace(ConstantPlaceholders.arg3, description));
 							
 					// Command successfully handled, return true before the unrecognised command message is sent
 					return true;
