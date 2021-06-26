@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.objects;
 
 import java.util.Arrays;
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,7 @@ public class MultiblockListener implements Listener {
 				event.setCancelled(true);
 				MessageHandler.send(player, 
 						MessageHandler.getError("cannot-modify-multiblock")
-						.replace("%player", player.getName()));
+						.replace(ConstantPlaceholders.arg1, player.getName()));
 			}
 		}
 	}
