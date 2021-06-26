@@ -86,6 +86,7 @@ public class ItemStackHelper {
 
 	public static ItemGroup groupFromBlock(Block block) {
 
+		// TODO
 		ItemStack stack = blockToItemStack(block);
 
 //		for (String key : ListItemGroups.material_groups)
