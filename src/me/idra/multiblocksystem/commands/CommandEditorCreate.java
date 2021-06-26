@@ -42,6 +42,8 @@ public class CommandEditorCreate extends BaseCommand{
 		int dimension_x = Integer.parseInt(args[4]);
 		int dimension_z = Integer.parseInt(args[5]);
 
+		// TODO finish this
+
 		// Get corner position
 		Location player_location = ((Player) sender).getLocation();
 		Location corner = player_location.add(1, 0, 1);
