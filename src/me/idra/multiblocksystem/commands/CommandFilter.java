@@ -65,8 +65,6 @@ public class CommandFilter extends BaseCommand{
 			return false;
 		}
 
-		BlockPosition position = new BlockPosition(target_block.getLocation());
-
 		// Get the multiblock the player is trying to interface with
 		BaseWorldMultiblock multiblock = ListWorldMultiblocks.getMultiblockFromLocation(target_block.getLocation());
 

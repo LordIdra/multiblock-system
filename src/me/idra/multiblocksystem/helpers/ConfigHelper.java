@@ -26,7 +26,7 @@ public class ConfigHelper {
 
 			if (output_amount_and_item == null || output_amount_and_item.isBlank()) {
 				Logger.configError(Logger.OPTION_INVALID, file, config_outputs, item_key + "." + output_amount_and_item);
-				return null;
+				return new ArrayList<>();
 			}
 
 			String[] split_string = output_amount_and_item.split("\\s");
