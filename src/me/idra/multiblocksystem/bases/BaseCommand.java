@@ -35,7 +35,7 @@ public abstract class BaseCommand {
 
 		// Add each name to the permission
 		for (String s : name) {
-			formatted_command.append(s + ".");
+			formatted_command.append(s).append(".");
 		}
 
 		// Remove the final '.'

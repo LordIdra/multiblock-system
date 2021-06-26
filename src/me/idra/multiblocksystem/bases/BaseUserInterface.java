@@ -45,6 +45,11 @@ public abstract class BaseUserInterface implements Listener {
         final ItemStack item = new ItemStack(material, 1);
         final ItemMeta meta = item.getItemMeta();
 
+        if (meta == null) {
+            // How?????
+            return;
+        }
+
         meta.setDisplayName(name);
         meta.setLore(Arrays.asList(lore));
         item.setItemMeta(meta);

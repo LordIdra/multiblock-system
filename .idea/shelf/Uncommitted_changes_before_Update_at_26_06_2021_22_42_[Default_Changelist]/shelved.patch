@@ -1,0 +1,378 @@
+Index: src/me/idra/multiblocksystem/commands/CommandEditorCreate.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package me.idra.multiblocksystem.commands;\r\n\r\n\r\n\r\nimport java.util.List;\r\nimport java.util.ArrayList;\r\n\r\nimport org.bukkit.ChatColor;\r\nimport org.bukkit.Location;\r\nimport org.bukkit.block.Block;\r\nimport org.bukkit.command.Command;\r\nimport org.bukkit.command.CommandSender;\r\nimport org.bukkit.entity.Player;\r\n\r\nimport me.idra.multiblocksystem.bases.BaseCommand;\r\nimport me.idra.multiblocksystem.helpers.ItemStackHelper;\r\nimport me.idra.multiblocksystem.objects.ItemGroup;\r\n\r\n\r\n\r\npublic class CommandEditorCreate extends BaseCommand{\r\n\t\r\n\r\n\tpublic CommandEditorCreate() {\r\n\t\tsuper();\r\n\t\t\r\n\t\tname = new String[] {\"editor\", \"create\"};\r\n\t\tdescription = ChatColor.DARK_AQUA + \"Creates a new structure file from an in-world structure\";\r\n\t\targuments = new String[] {\"filename\", \"y\", \"x\", \"z\"};\r\n\t\thidden = false;\r\n\t\tconsole = true;\r\n\t\t\r\n\t\taddPermission();\r\n\t\taddName();\r\n\t}\r\n\t\r\n\t@Override\r\n\tpublic boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {\r\n\t\t\r\n\t\t// Get dimensions\r\n\t\tint dimension_y = Integer.valueOf(args[3]);\r\n\t\tint dimension_x = Integer.valueOf(args[4]);\r\n\t\tint dimension_z = Integer.valueOf(args[5]);\r\n\r\n\t\t// Get corner position\r\n\t\tLocation player_location = ((Player) sender).getLocation();\r\n\t\tLocation corner = player_location.add(1, 0, 1);\r\n\r\n\t\t// Build block array\r\n\t\tList<List<List<ItemGroup>>> stack_list = new ArrayList<> ();\r\n\r\n\t\tfor (int y = 0; y < dimension_y; y++) {\r\n\t\t\tList<List<ItemGroup>> stack_y = new ArrayList<> ();\r\n\r\n\t\t\tfor (int x = 0; x < dimension_x; x++) {\r\n\t\t\t\tList<ItemGroup> stack_x = new ArrayList<> ();\r\n\r\n\t\t\t\tfor (int z = 0; z < dimension_z; z++) {\r\n\r\n\t\t\t\t\tLocation location = corner.clone().add(x, y, z);\r\n\t\t\t\t\tBlock block = location.getBlock();\r\n\t\t\t\t\tstack_x.add(ItemStackHelper.groupFromBlock(block));\r\n\t\t\t\t}\r\n\r\n\t\t\t\tstack_y.add(stack_x);\r\n\t\t\t}\r\n\r\n\t\t\tstack_list.add(stack_y);\r\n\t\t}\r\n\t\t\r\n\t\t// Successful execution\r\n\t\treturn true;\r\n\t}\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/me/idra/multiblocksystem/commands/CommandEditorCreate.java b/src/me/idra/multiblocksystem/commands/CommandEditorCreate.java
+--- a/src/me/idra/multiblocksystem/commands/CommandEditorCreate.java	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/src/me/idra/multiblocksystem/commands/CommandEditorCreate.java	(date 1624743444446)
+@@ -38,9 +38,11 @@
+ 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
+ 		
+ 		// Get dimensions
+-		int dimension_y = Integer.valueOf(args[3]);
+-		int dimension_x = Integer.valueOf(args[4]);
+-		int dimension_z = Integer.valueOf(args[5]);
++		int dimension_y = Integer.parseInt(args[3]);
++		int dimension_x = Integer.parseInt(args[4]);
++		int dimension_z = Integer.parseInt(args[5]);
++
++		// TODO finish this
+ 
+ 		// Get corner position
+ 		Location player_location = ((Player) sender).getLocation();
+Index: src/me/idra/multiblocksystem/managers/ManagerPlugin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package me.idra.multiblocksystem.managers;\r\n\r\nimport java.io.File;\r\nimport org.bukkit.configuration.file.FileConfiguration;\r\nimport org.bukkit.configuration.file.YamlConfiguration;\r\n\r\nimport me.idra.multiblocksystem.MultiblockSystem;\r\nimport me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;\r\nimport me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;\r\nimport me.idra.multiblocksystem.filehandlers.FileHandlerWorldMultiblocks;\r\nimport me.idra.multiblocksystem.lists.ListAbstractMultiblocks;\r\nimport me.idra.multiblocksystem.lists.ListItemGroups;\r\nimport me.idra.multiblocksystem.tasks.TaskIncrementTick;\r\nimport me.idra.multiblocksystem.tasks.TaskTickScoreboards;\r\n\r\n\r\n\r\npublic class ManagerPlugin {\r\n\r\n\tprivate ManagerPlugin() {\r\n\t\t// Empty constructor\r\n\t}\r\n\r\n\r\n\t\r\n\tpublic static final String VERSION = \"0.1.1\";\r\n\tpublic static final String AUTHOR = \"Idra\";\r\n\r\n\tpublic static MultiblockSystem plugin;\r\n\tpublic static FileConfiguration config;\r\n\tpublic static FileConfiguration messages;\r\n\t\r\n\tpublic static long tick;\r\n\tpublic static int tick_interval;\r\n\tprivate static TaskIncrementTick task_increment_tick;\r\n\tprivate static TaskTickScoreboards task_tick_scoreboards;\r\n\t\r\n\t\r\n\t\r\n\tpublic static void initialize(MultiblockSystem in_plugin) {\r\n\t\t\r\n    \t// Set important attributes\r\n\t\tplugin = in_plugin;\r\n    \tconfig = plugin.getConfig();\r\n    \tmessages = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), \"messages.yml\"));\r\n    \ttick_interval = config.getInt(\"Ticks.multiblock-tick-interval\");\r\n    \t\r\n    \t// Set up config\r\n    \tplugin.saveDefaultConfig();\r\n    \t\r\n    \t// Ensure default folders exist\r\n\t\tFile multiblock_folder = new File(plugin.getDataFolder(), \"multiblocks\");\r\n\t\tif (!multiblock_folder.exists())\r\n\t\t\tmultiblock_folder.mkdir();\r\n\t\t\r\n\t\tFile data_folder = new File(plugin.getDataFolder(), \"data\");\r\n\t\tif (!data_folder.exists())\r\n\t\t\tdata_folder.mkdir();\r\n\r\n\t\tFile slimefun_folder = new File(plugin.getDataFolder(), \"slimefun\");\r\n\t\t\tif (!slimefun_folder.exists())\r\n\t\t\t\tslimefun_folder.mkdir();\r\n\t\t\r\n\t\tFileHandlerPermanentVariables.loadFile();\r\n\t\tFileHandlerPlayerData.loadFile();\r\n\t\tFileHandlerWorldMultiblocks.loadFile();\r\n\t\t\r\n\t\t// Handle ticks\r\n\t\ttick = FileHandlerPermanentVariables.getStoredTick();\r\n\t\ttask_increment_tick = new TaskIncrementTick();\r\n\t\ttask_increment_tick.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);\r\n\r\n\t\t// Handle scoreboards\r\n\t\ttask_tick_scoreboards = new TaskTickScoreboards();\r\n\t\ttask_tick_scoreboards.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);\r\n\r\n    \t// Initialize classes\r\n\t\tManagerSlimefunItems.initialize();\r\n\t\tListItemGroups.initialize();\r\n    \tListAbstractMultiblocks.initialize();\r\n    \tManagerPermissions.initialize();\r\n\t}\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/me/idra/multiblocksystem/managers/ManagerPlugin.java b/src/me/idra/multiblocksystem/managers/ManagerPlugin.java
+--- a/src/me/idra/multiblocksystem/managers/ManagerPlugin.java	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/src/me/idra/multiblocksystem/managers/ManagerPlugin.java	(date 1624743691034)
+@@ -32,11 +32,8 @@
+ 	
+ 	public static long tick;
+ 	public static int tick_interval;
+-	private static TaskIncrementTick task_increment_tick;
+-	private static TaskTickScoreboards task_tick_scoreboards;
+-	
+-	
+-	
++
++
+ 	public static void initialize(MultiblockSystem in_plugin) {
+ 		
+     	// Set important attributes
+@@ -67,11 +64,11 @@
+ 		
+ 		// Handle ticks
+ 		tick = FileHandlerPermanentVariables.getStoredTick();
+-		task_increment_tick = new TaskIncrementTick();
++		TaskIncrementTick task_increment_tick = new TaskIncrementTick();
+ 		task_increment_tick.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
+ 
+ 		// Handle scoreboards
+-		task_tick_scoreboards = new TaskTickScoreboards();
++		TaskTickScoreboards task_tick_scoreboards = new TaskTickScoreboards();
+ 		task_tick_scoreboards.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
+ 
+     	// Initialize classes
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n.classpath\r\n.classpath\r\n.classpath\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/.gitignore	(date 1624280629482)
+@@ -2,3 +2,5 @@
+ .classpath
+ .classpath
+ .classpath
++.idea/workspace.xml
++multiblocks.iml
+Index: src/me/idra/multiblocksystem/bases/BaseUserInterface.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package me.idra.multiblocksystem.bases;\r\n\r\nimport java.util.Arrays;\r\n\r\nimport org.bukkit.Bukkit;\r\nimport org.bukkit.Material;\r\nimport org.bukkit.entity.Player;\r\nimport org.bukkit.event.EventHandler;\r\nimport org.bukkit.event.Listener;\r\nimport org.bukkit.event.inventory.ClickType;\r\nimport org.bukkit.event.inventory.InventoryClickEvent;\r\nimport org.bukkit.event.inventory.InventoryDragEvent;\r\nimport org.bukkit.inventory.Inventory;\r\nimport org.bukkit.inventory.ItemStack;\r\nimport org.bukkit.inventory.meta.ItemMeta;\r\n\r\nimport me.idra.multiblocksystem.managers.ManagerPlugin;\r\n\r\n\r\n\r\npublic abstract class BaseUserInterface implements Listener {\r\n\r\n\tprivate final Inventory inv;\r\n\tprotected final Player player;\r\n\t\r\n\t\r\n\t\r\n\tprotected  BaseUserInterface (Player player, int size, String title) {\r\n\t\t\r\n\t\tthis.player = player;\r\n\t\t\r\n\t\tinv = Bukkit.createInventory(null, size, title);\r\n\t\t\r\n\t\tManagerPlugin.plugin.getServer().getPluginManager().registerEvents(this, ManagerPlugin.plugin);\r\n\t}\r\n\t\r\n\t\r\n\t\r\n    public void display() {\r\n        player.openInventory(inv);\r\n    }\r\n\t\r\n\tprotected void setItem(int slot, Material material, String name, String... lore) {\r\n\t\t\r\n        final ItemStack item = new ItemStack(material, 1);\r\n        final ItemMeta meta = item.getItemMeta();\r\n\r\n        meta.setDisplayName(name);\r\n        meta.setLore(Arrays.asList(lore));\r\n        item.setItemMeta(meta);\r\n\r\n        inv.setItem(slot, item);\r\n    }\r\n\t\r\n\t\r\n\t\r\n\t@EventHandler\r\n    public void onInventoryClick(InventoryClickEvent event) {\r\n\t\t\r\n        if (event.getInventory() != inv)\r\n        \treturn;\r\n        \r\n        event.setCancelled(true);\r\n\r\n        ItemStack clickedItem = event.getCurrentItem();\r\n\r\n        if (clickedItem == null || clickedItem.getType().isAir()) \r\n        \treturn;\r\n        \r\n        onClick(player, event.getRawSlot(), event.getClick());\r\n    }\r\n\r\n    @EventHandler\r\n    public void onInventoryClick(InventoryDragEvent event) {\r\n    \t\r\n        if (event.getInventory().equals(inv))\r\n          event.setCancelled(true);\r\n    }\r\n\r\n    \r\n    \r\n\tprotected abstract void onClick(Player player, int slot, ClickType click);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/me/idra/multiblocksystem/bases/BaseUserInterface.java b/src/me/idra/multiblocksystem/bases/BaseUserInterface.java
+--- a/src/me/idra/multiblocksystem/bases/BaseUserInterface.java	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/src/me/idra/multiblocksystem/bases/BaseUserInterface.java	(date 1624743220013)
+@@ -45,6 +45,11 @@
+         final ItemStack item = new ItemStack(material, 1);
+         final ItemMeta meta = item.getItemMeta();
+ 
++        if (meta == null) {
++            // How?????
++            return;
++        }
++
+         meta.setDisplayName(name);
+         meta.setLore(Arrays.asList(lore));
+         item.setItemMeta(meta);
+Index: src/me/idra/multiblocksystem/bases/BaseCommand.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package me.idra.multiblocksystem.bases;\r\n\r\nimport org.bukkit.command.Command;\r\nimport org.bukkit.command.CommandSender;\r\nimport org.bukkit.permissions.Permission;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\n\r\npublic abstract class BaseCommand {\r\n\r\n\tpublic String[] name;\r\n\tpublic String description;\r\n\tpublic String[] arguments;\r\n\tpublic Permission permission;\r\n\tpublic boolean hidden;\r\n\tpublic boolean console;\r\n\tpublic List<List<String>> all_arguments = new ArrayList<>();\r\n\r\n\tpublic void addName() {\r\n\t\tif (!hidden) {\r\n\t\t\tfor (String s : name) {\r\n\t\t\t\tList<String> new_array = new ArrayList<>();\r\n\t\t\t\tnew_array.add(s);\r\n\t\t\t\tall_arguments.add(new_array);\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\r\n\tpublic void addPermission() {\r\n\r\n\t\t// Create new StringBuilder\r\n\t\tStringBuilder formatted_command = new StringBuilder(\"multiblocksystem.command.\");\r\n\r\n\t\t// Add each name to the permission\r\n\t\tfor (String s : name) {\r\n\t\t\tformatted_command.append(s + \".\");\r\n\t\t}\r\n\r\n\t\t// Remove the final '.'\r\n\t\tString formatted_command_string = formatted_command.substring(0, formatted_command.length() - 1);\r\n\r\n\t\t// Generate new permission\r\n\t\tpermission = new Permission(formatted_command_string);\r\n\t}\r\n\r\n\tpublic abstract boolean commandFunction(CommandSender sender, Command command, String label, String[] args);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/me/idra/multiblocksystem/bases/BaseCommand.java b/src/me/idra/multiblocksystem/bases/BaseCommand.java
+--- a/src/me/idra/multiblocksystem/bases/BaseCommand.java	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/src/me/idra/multiblocksystem/bases/BaseCommand.java	(date 1624743220023)
+@@ -35,7 +35,7 @@
+ 
+ 		// Add each name to the permission
+ 		for (String s : name) {
+-			formatted_command.append(s + ".");
++			formatted_command.append(s).append(".");
+ 		}
+ 
+ 		// Remove the final '.'
+Index: src/me/idra/multiblocksystem/commands/CommandAssemble.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package me.idra.multiblocksystem.commands;\r\n\r\n\r\nimport me.idra.multiblocksystem.bases.BaseCommand;\r\nimport me.idra.multiblocksystem.filehandlers.FileHandlerPermanentVariables;\r\nimport me.idra.multiblocksystem.helpers.ConstantPlaceholders;\r\nimport me.idra.multiblocksystem.helpers.MessageHandler;\r\nimport me.idra.multiblocksystem.lists.ListAbstractMultiblocks;\r\nimport me.idra.multiblocksystem.lists.ListBlockErrors;\r\nimport me.idra.multiblocksystem.lists.ListWorldMultiblocks;\r\nimport me.idra.multiblocksystem.managers.ManagerPlugin;\r\nimport me.idra.multiblocksystem.objects.AbstractMultiblock;\r\nimport me.idra.multiblocksystem.objects.BlockError;\r\nimport me.idra.multiblocksystem.objects.ItemGroup;\r\nimport me.idra.multiblocksystem.objects.StructureDescriptor;\r\nimport me.idra.multiblocksystem.tasks.TaskVisualiseLocation;\r\nimport me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;\r\nimport org.bukkit.ChatColor;\r\nimport org.bukkit.Location;\r\nimport org.bukkit.Material;\r\nimport org.bukkit.block.Block;\r\nimport org.bukkit.block.BlockFace;\r\nimport org.bukkit.block.data.Directional;\r\nimport org.bukkit.command.Command;\r\nimport org.bukkit.command.CommandSender;\r\nimport org.bukkit.entity.Player;\r\nimport org.bukkit.util.BlockIterator;\r\n\r\nimport java.io.File;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Map;\r\n\r\n\r\npublic class CommandAssemble extends BaseCommand {\r\n\r\n\tpublic CommandAssemble() {\r\n\t\tsuper();\r\n\r\n\t\tname = new String[]{\"assemble\"};\r\n\t\tdescription = ChatColor.DARK_AQUA + \"Assembles a specified multiblock\";\r\n\t\targuments = new String[]{\"multiblock\"};\r\n\t\thidden = false;\r\n\t\tconsole = false;\r\n\r\n\t\taddPermission();\r\n\t\taddName();\r\n\r\n\t\tFile multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), \"multiblocks\");\r\n\r\n\t\tList<String> new_array = new ArrayList<>();\r\n\t\tif (multiblock_folder.exists()) {\r\n\t\t\tfor (File file : multiblock_folder.listFiles()) {\r\n\t\t\t\tnew_array.add(file.getName());\r\n\t\t\t}\r\n\r\n\t\t\tall_arguments.add(new_array);\r\n\t\t}\r\n\t}\r\n\r\n\t@Override\r\n\tpublic boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {\r\n\r\n\t\t// Create descriptor for the abstract structure we're trying to assemble\r\n\t\tAbstractMultiblock abstract_structure_object = ListAbstractMultiblocks.structures.get(args[1].toUpperCase());\r\n\r\n\t\t// Check that the specified multiblock exists\r\n\t\tif (abstract_structure_object == null) {\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getError(\"multiblock-not-recognised\")\r\n\t\t\t\t\t\t\t.replace(ConstantPlaceholders.arg1, args[1]));\r\n\t\t\treturn false;\r\n\t\t}\r\n\r\n\t\t// Check that the user has permission to assemble the multiblock\r\n\t\tif (!sender.hasPermission(\"multiblocksystem.multiblock.\" + args[1].toLowerCase())) {\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getError(\"no-permission-multiblock\"));\r\n\t\t\treturn false;\r\n\t\t}\r\n\r\n\t\t// Find coordinates and block of the location the player is looking at\r\n\t\tPlayer player = (Player) sender;\r\n\t\tBlockIterator block_iterator = new BlockIterator(player, 5);\r\n\t\tBlock central_block = null;\r\n\r\n\t\twhile (block_iterator.hasNext()) { // While there are still elements in the block_iterator\r\n\r\n\t\t\tBlock next_block = block_iterator.next(); // Get the next element from block_iterator (does not move cursor forwards)\r\n\r\n\t\t\tif (next_block.getType() == Material.LECTERN) {\r\n\t\t\t\tcentral_block = next_block;\r\n\t\t\t\tbreak;\r\n\t\t\t}\r\n\t\t}\r\n\r\n\t\t// Check block is not null\r\n\t\tif (central_block == null) {\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getError(\"not-looking-at-lectern\"));\r\n\t\t\treturn false;\r\n\t\t}\r\n\r\n\t\tLocation central_block_location = central_block.getLocation();\r\n\r\n\t\t// Find orientation of lectern\r\n\t\tBlockFace central_block_orientation = ((Directional) central_block.getBlockData()).getFacing();\r\n\r\n\t\t// Check if the lectern is already in use\r\n\t\tif (ListWorldMultiblocks.getMultiblockFromLocation(central_block_location) != null) { // Checking if the Lectern is already part in a different multiblock structure?\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getError(\"lectern-already-used\"));\r\n\t\t\treturn false;\r\n\t\t}\r\n\r\n\t\t// Get the structure's descriptor\r\n\t\tStructureDescriptor abstract_descriptor = abstract_structure_object.structure;\r\n\r\n\r\n\t\t// Create structures to store errors, location->tag map, and item->block info map\r\n\t\tMap<Block, ItemGroup> block_to_group_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);\r\n\t\tList<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, block_to_group_map);\r\n\r\n\t\t// Calculate number of matching blocks and then percentage of blocks that match in each match[n]\r\n\t\tint correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();\r\n\t\tint percentage = Math.round((correct_blocks * 100) / (float) abstract_descriptor.number_of_solid_blocks);\r\n\r\n\t\t// Check if multiblock is complete or not\r\n\t\tif (percentage == 100) {\r\n\r\n\t\t\t// Multiblock complete, let's assemble it. Start by creating a map of locations to tags\r\n\t\t\tList<BlockPosition> assembled_block_position_list = new ArrayList<>();\r\n\r\n\t\t\t// For every BlockInfo in the structure\r\n\t\t\tfor (Block block : block_to_group_map.keySet()) {\r\n\r\n\t\t\t\t// Convert location to block position\r\n\t\t\t\tBlockPosition block_position = new BlockPosition(block.getLocation());\r\n\r\n\t\t\t\tassembled_block_position_list.add(block_position);\r\n\t\t\t}\r\n\r\n\t\t\t// Actually create the multiblock\r\n\t\t\tint ID = FileHandlerPermanentVariables.currentID();\r\n\t\t\tListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, assembled_block_position_list, player.getUniqueId(), ID);\r\n\r\n\t\t\t// Notify the user\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getSuccess(\"multiblock-assembled\"));\r\n\r\n\r\n\t\t} else {\r\n\r\n\t\t\t// Display % completion\r\n\t\t\tMessageHandler.send(sender,\r\n\t\t\t\t\tMessageHandler.getInfo(\"multiblock-incomplete\")\r\n\t\t\t\t\t\t\t.replace(ConstantPlaceholders.arg1, String.valueOf(percentage)));\r\n\r\n\t\t\t// Display block error list\r\n\t\t\tListBlockErrors.setBlockErrors(player, block_error_list);\r\n\t\t\tListBlockErrors.display(player);\r\n\r\n\t\t\t// Also display the location of each block, so it's clear where the multiblock is\r\n\t\t\tfor (Block block : block_to_group_map.keySet()) {\r\n\t\t\t\tTaskVisualiseLocation task = new TaskVisualiseLocation(player, block.getLocation());\r\n\t\t\t\ttask.runTaskTimer(ManagerPlugin.plugin, 0, ManagerPlugin.config.getInt(\"LocationVisualisation.particle-interval\"));\r\n\t\t\t}\r\n\t\t}\r\n\r\n\t\t// Successfully executed so return true\r\n\t\treturn true;\r\n\t}\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/me/idra/multiblocksystem/commands/CommandAssemble.java b/src/me/idra/multiblocksystem/commands/CommandAssemble.java
+--- a/src/me/idra/multiblocksystem/commands/CommandAssemble.java	(revision 2f2d3e95983aa3ef74277ca0c6a9ad75c1f3cad4)
++++ b/src/me/idra/multiblocksystem/commands/CommandAssemble.java	(date 1624743444450)
+@@ -30,144 +30,145 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Objects;
+ 
+ 
+ public class CommandAssemble extends BaseCommand {
+ 
+-	public CommandAssemble() {
+-		super();
++    public CommandAssemble() {
++        super();
+ 
+-		name = new String[]{"assemble"};
+-		description = ChatColor.DARK_AQUA + "Assembles a specified multiblock";
+-		arguments = new String[]{"multiblock"};
+-		hidden = false;
+-		console = false;
++        name = new String[]{"assemble"};
++        description = ChatColor.DARK_AQUA + "Assembles a specified multiblock";
++        arguments = new String[]{"multiblock"};
++        hidden = false;
++        console = false;
+ 
+-		addPermission();
+-		addName();
++        addPermission();
++        addName();
+ 
+-		File multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks");
++        File multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks");
+ 
+-		List<String> new_array = new ArrayList<>();
+-		if (multiblock_folder.exists()) {
+-			for (File file : multiblock_folder.listFiles()) {
+-				new_array.add(file.getName());
+-			}
++        List<String> new_array = new ArrayList<>();
++        if (multiblock_folder.exists()) {
++            for (File file : Objects.requireNonNull(multiblock_folder.listFiles(), "plugins/multiblocks folder not found")) {
++                new_array.add(file.getName());
++            }
+ 
+-			all_arguments.add(new_array);
+-		}
+-	}
++            all_arguments.add(new_array);
++        }
++    }
+ 
+-	@Override
+-	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
++    @Override
++    public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
+ 
+-		// Create descriptor for the abstract structure we're trying to assemble
+-		AbstractMultiblock abstract_structure_object = ListAbstractMultiblocks.structures.get(args[1].toUpperCase());
++        // Create descriptor for the abstract structure we're trying to assemble
++        AbstractMultiblock abstract_structure_object = ListAbstractMultiblocks.structures.get(args[1].toUpperCase());
+ 
+-		// Check that the specified multiblock exists
+-		if (abstract_structure_object == null) {
+-			MessageHandler.send(sender,
+-					MessageHandler.getError("multiblock-not-recognised")
+-							.replace(ConstantPlaceholders.arg1, args[1]));
+-			return false;
+-		}
++        // Check that the specified multiblock exists
++        if (abstract_structure_object == null) {
++            MessageHandler.send(sender,
++                    MessageHandler.getError("multiblock-not-recognised")
++                            .replace(ConstantPlaceholders.arg1, args[1]));
++            return false;
++        }
+ 
+-		// Check that the user has permission to assemble the multiblock
+-		if (!sender.hasPermission("multiblocksystem.multiblock." + args[1].toLowerCase())) {
+-			MessageHandler.send(sender,
+-					MessageHandler.getError("no-permission-multiblock"));
+-			return false;
+-		}
++        // Check that the user has permission to assemble the multiblock
++        if (!sender.hasPermission("multiblocksystem.multiblock." + args[1].toLowerCase())) {
++            MessageHandler.send(sender,
++                    MessageHandler.getError("no-permission-multiblock"));
++            return false;
++        }
+ 
+-		// Find coordinates and block of the location the player is looking at
+-		Player player = (Player) sender;
+-		BlockIterator block_iterator = new BlockIterator(player, 5);
+-		Block central_block = null;
++        // Find coordinates and block of the location the player is looking at
++        Player player = (Player) sender;
++        BlockIterator block_iterator = new BlockIterator(player, 5);
++        Block central_block = null;
+ 
+-		while (block_iterator.hasNext()) { // While there are still elements in the block_iterator
++        while (block_iterator.hasNext()) { // While there are still elements in the block_iterator
+ 
+-			Block next_block = block_iterator.next(); // Get the next element from block_iterator (does not move cursor forwards)
++            Block next_block = block_iterator.next(); // Get the next element from block_iterator (does not move cursor forwards)
+ 
+-			if (next_block.getType() == Material.LECTERN) {
+-				central_block = next_block;
+-				break;
+-			}
+-		}
++            if (next_block.getType() == Material.LECTERN) {
++                central_block = next_block;
++                break;
++            }
++        }
+ 
+-		// Check block is not null
+-		if (central_block == null) {
+-			MessageHandler.send(sender,
+-					MessageHandler.getError("not-looking-at-lectern"));
+-			return false;
+-		}
++        // Check block is not null
++        if (central_block == null) {
++            MessageHandler.send(sender,
++                    MessageHandler.getError("not-looking-at-lectern"));
++            return false;
++        }
+ 
+-		Location central_block_location = central_block.getLocation();
++        Location central_block_location = central_block.getLocation();
+ 
+-		// Find orientation of lectern
+-		BlockFace central_block_orientation = ((Directional) central_block.getBlockData()).getFacing();
++        // Find orientation of lectern
++        BlockFace central_block_orientation = ((Directional) central_block.getBlockData()).getFacing();
+ 
+-		// Check if the lectern is already in use
+-		if (ListWorldMultiblocks.getMultiblockFromLocation(central_block_location) != null) { // Checking if the Lectern is already part in a different multiblock structure?
+-			MessageHandler.send(sender,
+-					MessageHandler.getError("lectern-already-used"));
+-			return false;
+-		}
++        // Check if the lectern is already in use
++        if (ListWorldMultiblocks.getMultiblockFromLocation(central_block_location) != null) { // Checking if the Lectern is already part in a different multiblock structure?
++            MessageHandler.send(sender,
++                    MessageHandler.getError("lectern-already-used"));
++            return false;
++        }
+ 
+-		// Get the structure's descriptor
+-		StructureDescriptor abstract_descriptor = abstract_structure_object.structure;
++        // Get the structure's descriptor
++        StructureDescriptor abstract_descriptor = abstract_structure_object.structure;
+ 
+ 
+-		// Create structures to store errors, location->tag map, and item->block info map
+-		Map<Block, ItemGroup> block_to_group_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
+-		List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, block_to_group_map);
++        // Create structures to store errors, location->tag map, and item->block info map
++        Map<Block, ItemGroup> block_to_group_map = AbstractMultiblock.getStructureFromStartingPoint(player, central_block_location, central_block_orientation, abstract_descriptor);
++        List<BlockError> block_error_list = BlockError.getBlockErrorsFromInfoMap(player, block_to_group_map);
+ 
+-		// Calculate number of matching blocks and then percentage of blocks that match in each match[n]
+-		int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
+-		int percentage = Math.round((correct_blocks * 100) / (float) abstract_descriptor.number_of_solid_blocks);
++        // Calculate number of matching blocks and then percentage of blocks that match in each match[n]
++        int correct_blocks = abstract_descriptor.number_of_solid_blocks - block_error_list.size();
++        int percentage = Math.round((correct_blocks * 100) / (float) abstract_descriptor.number_of_solid_blocks);
+ 
+-		// Check if multiblock is complete or not
+-		if (percentage == 100) {
++        // Check if multiblock is complete or not
++        if (percentage == 100) {
+ 
+-			// Multiblock complete, let's assemble it. Start by creating a map of locations to tags
+-			List<BlockPosition> assembled_block_position_list = new ArrayList<>();
++            // Multiblock complete, let's assemble it. Start by creating a map of locations to tags
++            List<BlockPosition> assembled_block_position_list = new ArrayList<>();
+ 
+-			// For every BlockInfo in the structure
+-			for (Block block : block_to_group_map.keySet()) {
++            // For every BlockInfo in the structure
++            for (Block block : block_to_group_map.keySet()) {
+ 
+-				// Convert location to block position
+-				BlockPosition block_position = new BlockPosition(block.getLocation());
++                // Convert location to block position
++                BlockPosition block_position = new BlockPosition(block.getLocation());
+ 
+-				assembled_block_position_list.add(block_position);
+-			}
++                assembled_block_position_list.add(block_position);
++            }
+ 
+-			// Actually create the multiblock
+-			int ID = FileHandlerPermanentVariables.currentID();
+-			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, assembled_block_position_list, player.getUniqueId(), ID);
++            // Actually create the multiblock
++            int ID = FileHandlerPermanentVariables.currentID();
++            ListWorldMultiblocks.instantiateWorldMultiblock(abstract_structure_object, assembled_block_position_list, player.getUniqueId(), ID);
+ 
+-			// Notify the user
+-			MessageHandler.send(sender,
+-					MessageHandler.getSuccess("multiblock-assembled"));
++            // Notify the user
++            MessageHandler.send(sender,
++                    MessageHandler.getSuccess("multiblock-assembled"));
+ 
+ 
+-		} else {
++        } else {
+ 
+-			// Display % completion
+-			MessageHandler.send(sender,
+-					MessageHandler.getInfo("multiblock-incomplete")
+-							.replace(ConstantPlaceholders.arg1, String.valueOf(percentage)));
++            // Display % completion
++            MessageHandler.send(sender,
++                    MessageHandler.getInfo("multiblock-incomplete")
++                            .replace(ConstantPlaceholders.arg1, String.valueOf(percentage)));
+ 
+-			// Display block error list
+-			ListBlockErrors.setBlockErrors(player, block_error_list);
+-			ListBlockErrors.display(player);
++            // Display block error list
++            ListBlockErrors.setBlockErrors(player, block_error_list);
++            ListBlockErrors.display(player);
+ 
+-			// Also display the location of each block, so it's clear where the multiblock is
+-			for (Block block : block_to_group_map.keySet()) {
+-				TaskVisualiseLocation task = new TaskVisualiseLocation(player, block.getLocation());
+-				task.runTaskTimer(ManagerPlugin.plugin, 0, ManagerPlugin.config.getInt("LocationVisualisation.particle-interval"));
+-			}
+-		}
++            // Also display the location of each block, so it's clear where the multiblock is
++            for (Block block : block_to_group_map.keySet()) {
++                TaskVisualiseLocation task = new TaskVisualiseLocation(player, block.getLocation());
++                task.runTaskTimer(ManagerPlugin.plugin, 0, ManagerPlugin.config.getInt("LocationVisualisation.particle-interval"));
++            }
++        }
+ 
+-		// Successfully executed so return true
+-		return true;
+-	}
++        // Successfully executed so return true
++        return true;
++    }
+ }
