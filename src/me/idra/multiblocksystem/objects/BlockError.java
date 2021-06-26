@@ -140,10 +140,9 @@ public class BlockError {
 			if (block_slimefun_item != null
 				|| group_slimefun_item != null) {
 					
-				if (block_slimefun_item != null) {
-					if (SlimefunUtils.isItemSimilar(stack, block_slimefun_item.getItem(), true)) {
-						return true;
-					}
+				if (block_slimefun_item != null 
+					&& SlimefunUtils.isItemSimilar(stack, block_slimefun_item.getItem(), true)) {
+					return true;
 				}
 
 			} else {
