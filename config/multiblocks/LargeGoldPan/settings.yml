@@ -16,10 +16,10 @@ Recipes:
     ENERGY: 20
 
     INPUT:
-        item-1: '64 gravel'
+      item-1: '64 gravel'
 
     OUTPUT:
-        item-1: '32 sifted_ore'
+      item-1: '32 sifted_ore'
   
   
   recipe-2:
