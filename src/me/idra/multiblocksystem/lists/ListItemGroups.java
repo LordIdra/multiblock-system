@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import me.idra.multiblocksystem.helpers.ConfigHelper;
 import me.idra.multiblocksystem.helpers.ItemStackHelper;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -41,11 +42,11 @@ public class ListItemGroups {
 
 		// Verify config is valid
 		FileConfiguration item_group_config = YamlConfiguration.loadConfiguration(item_group_file);
-		ConfigurationSection config_section = item_group_config.getConfigurationSection("ItemGroups");
+		ConfigurationSection config_section = item_group_config.getConfigurationSection(ConfigHelper.ITEM_GROUPS);
 
 		if (config_section == null) {
-			item_group_config.createSection("ItemGroups");
-			config_section = item_group_config.getConfigurationSection("ItemGroups");
+			item_group_config.createSection(ConfigHelper.ITEM_GROUPS);
+			config_section = item_group_config.getConfigurationSection(ConfigHelper.ITEM_GROUPS);
 		}
 
 		// Get each group and add it to the map

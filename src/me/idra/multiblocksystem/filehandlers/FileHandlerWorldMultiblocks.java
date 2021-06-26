@@ -114,7 +114,7 @@ public class FileHandlerWorldMultiblocks {
 			} else {
 				recipe_section.set("Time", 0);
 			}
-			multiblock_section.set("positions", multiblock.blocks);
+			multiblock_section.set(POSITIONS, multiblock.blocks);
 		}
 
 		// Save the new config
