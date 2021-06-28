@@ -64,7 +64,7 @@ public class ConfigHelper {
 
 		if (group_section == null) {
 			// Error message handled outside of this group
-			return null;
+			return new ArrayList<>();
 		}
 
 		List<String> item_names = group_section.getStringList(name.toLowerCase());
