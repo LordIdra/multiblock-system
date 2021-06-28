@@ -188,7 +188,8 @@ public class AbstractMultiblock {
 
 			// Get config sections
 			ConfigurationSection current_recipe = config.getConfigurationSection(key);
-			ConfigurationSection config_inputs, config_outputs;
+			ConfigurationSection config_inputs;
+			ConfigurationSection config_outputs;
 			if (current_recipe != null) {
 				config_inputs = current_recipe.getConfigurationSection("INPUT");
 				config_outputs = current_recipe.getConfigurationSection("OUTPUT");
