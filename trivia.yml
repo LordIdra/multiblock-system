@@ -716,3 +716,9 @@ questions:
     question: 'Pressing F3 + what will show chunk borders?'
     answer:
       - 'g'
+
+  148:
+    question: 'Name a block which can spawn on top of the Nether'
+    answer:
+      - 'red mushroom'
+      - 'brown mushroom'
