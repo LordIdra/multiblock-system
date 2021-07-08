@@ -25,7 +25,7 @@ public class CommandListMultiblocks extends BaseCommand{
 		super();
 		
 		name = new String[] {"list", "multiblocks"};
-		description = ChatColor.DARK_AQUA + "Lists all the multiblocks. Run " + ChatColor.AQUA + "/multiblock info <multiblock>" + ChatColor.DARK_AQUA + "for information abou a specific multiblock.";
+		description = ChatColor.DARK_AQUA + "Lists all the multiblocks. Run " + ChatColor.AQUA + "/multiblock info <multiblock>" + ChatColor.DARK_AQUA + "for information about a specific multiblock.";
 		arguments = new String[] {};
 		hidden = false;
 		console = true;

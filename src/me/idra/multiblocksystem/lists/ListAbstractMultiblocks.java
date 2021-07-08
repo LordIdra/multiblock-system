@@ -13,7 +13,7 @@ import me.idra.multiblocksystem.objects.AbstractMultiblock;
 
 public class ListAbstractMultiblocks {
 
-	private static List<String> multiblock_names = new ArrayList<> ();
+	private static final List<String> multiblock_names = new ArrayList<> ();
 	public static Map<String, AbstractMultiblock> structures = new HashMap<> ();
 
 	private ListAbstractMultiblocks() {
@@ -26,7 +26,12 @@ public class ListAbstractMultiblocks {
 	public static void initialize() {
 		
 		// Load multiblock names
-		for (File multiblock_file : new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks").listFiles()) {
+		File[] multiblock_folder = new File(ManagerPlugin.plugin.getDataFolder(), "multiblocks").listFiles();
+		if (multiblock_folder == null) {
+			return;
+		}
+
+		for (File multiblock_file : multiblock_folder) {
 			
 			// Append base name to multiblock name array
 			multiblock_names.add(multiblock_file.getName());

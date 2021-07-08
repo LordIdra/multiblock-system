@@ -1,6 +1,7 @@
 package me.idra.multiblocksystem.filehandlers;
 
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.lists.ListAbstractMultiblocks;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
@@ -68,11 +69,7 @@ public class FileHandlerWorldMultiblocks {
 		world_multiblock_config.set(String.valueOf(ID), null);
 
 		// Save the new config
-		try {
-			world_multiblock_config.save(world_multiblock_file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		saveFile();
 	}
 
 
@@ -114,19 +111,15 @@ public class FileHandlerWorldMultiblocks {
 			} else {
 				recipe_section.set("Time", 0);
 			}
-			multiblock_section.set("positions", multiblock.blocks);
+			multiblock_section.set(POSITIONS, multiblock.blocks);
 		}
 
 		// Save the new config
-		try {
-			world_multiblock_config.save(world_multiblock_file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		saveFile();
 	}
 
 
-	public static boolean loadMultiblocks() { //TODO: Finish this
+	public static void loadMultiblocks() { //TODO: Finish this
 		// Reload the file, just in case
 		loadFile();
 
@@ -140,7 +133,17 @@ public class FileHandlerWorldMultiblocks {
 			ConfigurationSection multiblock_section = world_multiblock_config.getConfigurationSection(id_as_string);
 
 			// Get basic variables
-			UUID uuid = UUID.fromString(multiblock_section.getString("Owner"));
+			assert multiblock_section != null;
+			String player_uuid = multiblock_section.getString("Owner");
+			if (player_uuid == null) {
+				Logger.log(
+						Logger.getWarning("uuid-not-found")
+						.replace(ConstantPlaceholders.arg1, id_as_string),
+						true);
+				continue;
+			}
+			UUID uuid = UUID.fromString(player_uuid);
+
 			String name = multiblock_section.getString("AbstractMultiblock");
 			int fuel_ticks = multiblock_section.getInt("FuelTicks");
 			AbstractMultiblock abstract_multiblock = ListAbstractMultiblocks.structures.get(name);
@@ -150,10 +153,17 @@ public class FileHandlerWorldMultiblocks {
 			if (multiblock_section.getList(POSITIONS) == null) {
 				multiblock_section.createSection(POSITIONS);
 			}
-			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS);
+			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS); // TODO handle unchecked cast
 
 			// Get current recipe information
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
+			if (recipe_section == null) {
+				Logger.log(
+						Logger.getWarning("recipe-section-not-found")
+								.replace(ConstantPlaceholders.arg1, id_as_string),
+						true);
+				continue;
+			}
 
 			// Store recipe
 			int recipe_index = recipe_section.getInt("Index");
@@ -162,8 +172,5 @@ public class FileHandlerWorldMultiblocks {
 			// Generate WorldMultiblock
 			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_multiblock, blocks, uuid, ID, fuel_ticks, recipe_index, recipe_time);
 		}
-
-		// Successful execution
-		return true;
 	}
 }

@@ -42,7 +42,7 @@ public class CommandTrust extends BaseCommand{
 		if (player == null) {
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getError("player-not-found")
-					.replace(ConstantPlaceholders.PLAYER, args[1]));
+					.replace(ConstantPlaceholders.arg1, args[1]));
 			return false;
 		}
 		
@@ -52,7 +52,7 @@ public class CommandTrust extends BaseCommand{
 			FileHandlerPlayerData.removeTrusted(owner.getUniqueId(), player.getUniqueId());
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getSuccess("player-untrusted")
-					.replace(ConstantPlaceholders.PLAYER, args[1]));
+					.replace(ConstantPlaceholders.arg2, args[1]));
 			
 		// If the player is not in the trusted list, add them
 		} else {
@@ -60,7 +60,7 @@ public class CommandTrust extends BaseCommand{
 			FileHandlerPlayerData.addTrusted(owner.getUniqueId(), player.getUniqueId());
 			MessageHandler.send((Player) sender, 
 					MessageHandler.getSuccess("player-trusted")
-					.replace(ConstantPlaceholders.PLAYER, args[1]));
+					.replace(ConstantPlaceholders.arg3, args[1]));
 		}
 		
 		// Successful execution

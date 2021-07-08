@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -78,8 +79,15 @@ public class FileHandlerPlayerData {
 			player_section = player_data_file.getConfigurationSection(player.toString());
 		}
 
+		assert player_section != null;
 		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
 
+		if (settings_section == null) {
+			player_section.createSection(SETTINGS);
+			settings_section = player_section.getConfigurationSection(SETTINGS);
+		}
+
+		assert settings_section != null;
 		settings_section.set("auto_build_enabled", settings.auto_build_enabled);
 		
 		for (String container_key : settings.settingContainerMap.keySet()) {
@@ -100,8 +108,23 @@ public class FileHandlerPlayerData {
 		PlayerSettings settings = new PlayerSettings();
 		
 		ConfigurationSection player_section = player_data_file.getConfigurationSection(player.toString());
+		if (player_section == null) {
+			Logger.log(
+					Logger.getWarning("data-section-not-found")
+					.replace(ConstantPlaceholders.arg1, player.toString()),
+					true);
+			return;
+		}
+
 		ConfigurationSection settings_section = player_section.getConfigurationSection(SETTINGS);
-		
+		if (settings_section == null) {
+			Logger.log(
+					Logger.getWarning("settings-section-not-found")
+							.replace(ConstantPlaceholders.arg1, player.toString()),
+					true);
+			return;
+		}
+
 		settings.auto_build_enabled = settings_section.getBoolean("auto_build_enabled");
 		
 		for (String container_key : settings.settingContainerMap.keySet()) {
@@ -129,9 +152,10 @@ public class FileHandlerPlayerData {
 			player_data_file.createSection(owner.toString());
 			player_section = player_data_file.getConfigurationSection(owner.toString());
 
-			player_data_file.set(owner.toString() + _TRUSTED, new ArrayList<String> ());
+			player_data_file.set(owner + _TRUSTED, new ArrayList<String> ());
 		}
 
+		assert player_section != null;
 		if (player_section.getConfigurationSection(SETTINGS) == null) {
 
 			player_section.createSection(SETTINGS);
@@ -148,35 +172,33 @@ public class FileHandlerPlayerData {
 		checkPlayer(owner);
 		
 		// Add the specified player to the list of trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
+		List<String> trusted_array = player_data_file.getStringList(owner + _TRUSTED);
 		trusted_array.add(member.toString());
-		player_data_file.set(owner.toString() + _TRUSTED, trusted_array);
+		player_data_file.set(owner + _TRUSTED, trusted_array);
 		
 		saveAndReload();
 	}
 	
 	
 	
-	public static boolean removeTrusted(UUID owner, UUID member) {
+	public static void removeTrusted(UUID owner, UUID member) {
 		
 		// Ensure the player actually exists
 		checkPlayer(owner);
 		
 		// Get already trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
+		List<String> trusted_array = player_data_file.getStringList(owner + _TRUSTED);
 		
-		// Check the specified player to untrust is already trusted (if not, display an error)
-		if (!trusted_array.contains(member.toString()))
-			return false;
+		// Check the specified player to untrust is already trusted
+		if (!trusted_array.contains(member.toString())) {
+			return;
+		}
 		
 		// If they do exist, remove them and set the stored array to the new array
 		trusted_array.remove(member.toString());
-		player_data_file.set(owner.toString() + _TRUSTED, trusted_array);
+		player_data_file.set(owner + _TRUSTED, trusted_array);
 		
 		saveAndReload();
-		
-		// Successful execution
-		return true;
 	}
 	
 	
@@ -187,7 +209,7 @@ public class FileHandlerPlayerData {
 		checkPlayer(owner);
 		
 		// Get already trusted players
-		List<String> trusted_array = player_data_file.getStringList(owner.toString() + _TRUSTED);
+		List<String> trusted_array = player_data_file.getStringList(owner + _TRUSTED);
 		
 		// Read trusted players into a new array
 		ArrayList<Player> players = new ArrayList<> ();
@@ -195,6 +217,6 @@ public class FileHandlerPlayerData {
 			players.add(Bukkit.getPlayer(UUID.fromString(uuid)));
 		
 		// Return the new array
-		return players.toArray(new Player[players.size()]);
+		return players.toArray(new Player[0]);
 	}
 }

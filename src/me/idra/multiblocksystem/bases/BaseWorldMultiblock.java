@@ -73,8 +73,8 @@ public abstract class BaseWorldMultiblock {
 		if (owner_name != null) {
 			Logger.log(
 					Logger.getInfo("on-assemble")
-							.replace("%player%", owner_name)
-							.replace("%id%", String.valueOf(ID)),
+							.replace(ConstantPlaceholders.arg1, owner_name)
+							.replace(ConstantPlaceholders.arg2, String.valueOf(ID)),
 					false);
 		}
 	}
@@ -195,7 +195,7 @@ public abstract class BaseWorldMultiblock {
 			if (holder == null) {
 				Logger.log(
 						Logger.getWarning("inventory-holder-not-found")
-						.replace(ConstantPlaceholders.ID, String.valueOf(ID)),
+						.replace(ConstantPlaceholders.arg1, String.valueOf(ID)),
 						true);
 				return null;
 			}

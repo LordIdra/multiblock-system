@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import me.idra.multiblocksystem.helpers.ConfigHelper;
 import me.idra.multiblocksystem.helpers.ItemStackHelper;
 import me.idra.multiblocksystem.helpers.Logger;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class ListItemGroups {
 
-	public static Map<String, ItemGroup> material_groups = new HashMap<> ();
+	public static final Map<String, ItemGroup> material_groups = new HashMap<> ();
 
 	private ListItemGroups() {
 		// Empty constructor
@@ -41,14 +42,15 @@ public class ListItemGroups {
 
 		// Verify config is valid
 		FileConfiguration item_group_config = YamlConfiguration.loadConfiguration(item_group_file);
-		ConfigurationSection config_section = item_group_config.getConfigurationSection("ItemGroups");
+		ConfigurationSection config_section = item_group_config.getConfigurationSection(ConfigHelper.ITEM_GROUPS);
 
 		if (config_section == null) {
-			item_group_config.createSection("ItemGroups");
-			config_section = item_group_config.getConfigurationSection("ItemGroups");
+			item_group_config.createSection(ConfigHelper.ITEM_GROUPS);
+			config_section = item_group_config.getConfigurationSection(ConfigHelper.ITEM_GROUPS);
 		}
 
 		// Get each group and add it to the map
+		assert config_section != null;
 		for (String group_name : config_section.getKeys(false)) {
 
 			List<String> group_item_names = config_section.getStringList(group_name);

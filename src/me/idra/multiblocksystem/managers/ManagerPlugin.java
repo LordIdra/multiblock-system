@@ -32,11 +32,8 @@ public class ManagerPlugin {
 	
 	public static long tick;
 	public static int tick_interval;
-	private static TaskIncrementTick task_increment_tick;
-	private static TaskTickScoreboards task_tick_scoreboards;
-	
-	
-	
+
+
 	public static void initialize(MultiblockSystem in_plugin) {
 		
     	// Set important attributes
@@ -67,11 +64,11 @@ public class ManagerPlugin {
 		
 		// Handle ticks
 		tick = FileHandlerPermanentVariables.getStoredTick();
-		task_increment_tick = new TaskIncrementTick();
+		TaskIncrementTick task_increment_tick = new TaskIncrementTick();
 		task_increment_tick.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
 
 		// Handle scoreboards
-		task_tick_scoreboards = new TaskTickScoreboards();
+		TaskTickScoreboards task_tick_scoreboards = new TaskTickScoreboards();
 		task_tick_scoreboards.runTaskTimer(ManagerPlugin.plugin, 0, tick_interval);
 
     	// Initialize classes

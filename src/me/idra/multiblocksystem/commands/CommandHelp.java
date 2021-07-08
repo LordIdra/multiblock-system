@@ -5,6 +5,7 @@ package me.idra.multiblocksystem.commands;
 import java.util.List;
 import java.util.ArrayList;
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -71,17 +72,17 @@ public class CommandHelp extends BaseCommand{
 			
 			// Format command
 			for (String arg : command_object.name)
-				name.append(arg + " ");
+				name.append(arg).append(" ");
 					
 			for (String argument : command_object.arguments)
-				arguments.append("<" + argument + "> ");
+				arguments.append("<").append(argument).append("> ");
 			
 			// Add formatted command to ChatLister
 			formatted_commands.add(new ComponentBuilder("").append(
 					ChatColor.translateAlternateColorCodes('&', MessageHandler.getInfo("help-commands-format"))
-					.replace("%name%", name)
-					.replace("%args%", arguments)
-					.replace("%description%", description)));
+					.replace(ConstantPlaceholders.arg1, name)
+					.replace(ConstantPlaceholders.arg2, arguments)
+					.replace(ConstantPlaceholders.arg3, description)));
 		}
 		
 		// Set chatlister

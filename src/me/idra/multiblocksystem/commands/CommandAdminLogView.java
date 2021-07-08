@@ -5,6 +5,7 @@ package me.idra.multiblocksystem.commands;
 import java.util.List;
 import java.util.ArrayList;
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -47,8 +48,8 @@ public class CommandAdminLogView extends BaseCommand{
 		for (int ID : Logger.getIDSet())
 			formatted_errors.add(new ComponentBuilder("").append(
 					ChatColor.translateAlternateColorCodes('&', MessageHandler.getInfo("admin-log-format")
-					.replace("%time%", Logger.getLogTime(ID))
-					.replace("%error%", Logger.getLogMessage(ID)))));
+					.replace(ConstantPlaceholders.arg1, Logger.getLogTime(ID))
+					.replace(ConstantPlaceholders.arg2, Logger.getLogMessage(ID)))));
 		
 		// Set chatlister
 		ListChatListers.chat_listers.put(sender, new ChatLister(

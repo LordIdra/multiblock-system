@@ -1,7 +1,6 @@
 package me.idra.multiblocksystem.multiblocks;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;

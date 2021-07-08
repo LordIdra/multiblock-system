@@ -51,7 +51,7 @@ public class AbstractMultiblock {
 		if (!multiblock_file.exists()) {
 			Logger.log(
 					Logger.getWarning("multiblock-file-not-found")
-							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
+							.replace(ConstantPlaceholders.arg1, name_of_structure_block),
 					true);
 			return;
 		}
@@ -59,7 +59,7 @@ public class AbstractMultiblock {
 		if (!structure_file.exists()) {
 			Logger.log(
 					Logger.getWarning("structure-file-not-found")
-							.replace(ConstantPlaceholders.NAME, name_of_structure_block),
+							.replace(ConstantPlaceholders.arg1, name_of_structure_block),
 					true);
 			return;
 		}
@@ -84,7 +84,7 @@ public class AbstractMultiblock {
 		} catch (ClassNotFoundException e) {
 			Logger.log(
 					Logger.getWarning("class-not-found")
-							.replace("%class%", class_location),
+							.replace(ConstantPlaceholders.arg1, class_location),
 					true);
 		}
 	}
@@ -188,7 +188,8 @@ public class AbstractMultiblock {
 
 			// Get config sections
 			ConfigurationSection current_recipe = config.getConfigurationSection(key);
-			ConfigurationSection config_inputs, config_outputs;
+			ConfigurationSection config_inputs;
+			ConfigurationSection config_outputs;
 			if (current_recipe != null) {
 				config_inputs = current_recipe.getConfigurationSection("INPUT");
 				config_outputs = current_recipe.getConfigurationSection("OUTPUT");
@@ -245,19 +246,21 @@ public class AbstractMultiblock {
 
 		// Account for orientation using a huge if-else block
 		switch (central_block_orientation) {
-			case SOUTH -> {
+			case SOUTH:
 				starting_point.subtract(relative_corner_location);
 				end_point = starting_point.clone();
 				end_point.subtract(relative_offset);
-			}
-			case NORTH -> {
+				break;
+
+			case NORTH:
 				relative_corner_location.setZ(-abstract_descriptor.central_block.getBlockZ());
 				starting_point.subtract(relative_corner_location);
 				end_point = starting_point.clone();
 				relative_offset.setZ(-starting_point.getBlockZ());
 				end_point.subtract(relative_offset);
-			}
-			case EAST -> {
+				break;
+
+			case EAST:
 				int temp_x = relative_corner_location.getBlockX();
 				relative_corner_location.setX(relative_corner_location.getBlockZ());
 				relative_corner_location.setZ(temp_x);
@@ -267,10 +270,11 @@ public class AbstractMultiblock {
 				relative_offset.setX(relative_offset.getBlockZ());
 				relative_offset.setZ(temp_x);
 				end_point.subtract(relative_offset);
-			}
-			case WEST -> {
+				break;
+
+			case WEST:
 				relative_corner_location.setZ(-abstract_descriptor.central_block.getBlockZ());
-				int temp_x = relative_corner_location.getBlockX();
+				temp_x = relative_corner_location.getBlockX();
 				relative_corner_location.setX(relative_corner_location.getBlockZ());
 				relative_corner_location.setZ(temp_x);
 				starting_point.subtract(relative_corner_location);
@@ -280,7 +284,7 @@ public class AbstractMultiblock {
 				relative_offset.setX(relative_offset.getBlockZ());
 				relative_offset.setZ(temp_x);
 				end_point.subtract(relative_offset);
-			}
+				break;
 		}
 
 
@@ -294,13 +298,22 @@ public class AbstractMultiblock {
 				for (int z = 0; z < abstract_descriptor.structure_dimensions.getBlockZ(); z++) {
 
 					// Get the block at the XYZ relative to the predetermined starting point
-					Location block_location = switch (central_block_orientation) {
-						case SOUTH -> starting_point.clone().add(new Location(player.getWorld(), x, y, z));
-						case NORTH -> starting_point.clone().add(new Location(player.getWorld(), x, y, -z));
-						case EAST -> starting_point.clone().add(new Location(player.getWorld(), z, y, x));
-						case WEST -> starting_point.clone().add(new Location(player.getWorld(), -z, y, x));
-						default -> null;
-					};
+					Location block_location = null;
+
+					switch (central_block_orientation) {
+						case SOUTH:
+							block_location = starting_point.clone().add(new Location(player.getWorld(), x, y, z));
+							break;
+						case NORTH:
+							block_location = starting_point.clone().add(new Location(player.getWorld(), x, y, -z));
+							break;
+						case EAST:
+							block_location = starting_point.clone().add(new Location(player.getWorld(), z, y, x));
+							break;
+						case WEST:
+							block_location = starting_point.clone().add(new Location(player.getWorld(), -z, y, x));
+							break;
+					}
 
 					if (block_location != null) {
 

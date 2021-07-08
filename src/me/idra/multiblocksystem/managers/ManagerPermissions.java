@@ -23,8 +23,8 @@ public class ManagerPermissions {
 
 
 
-	private static List<Permission> command_permissions = new ArrayList<> ();
-	private static List<Permission> multiblock_permissions = new ArrayList<> ();
+	private static final List<Permission> command_permissions = new ArrayList<> ();
+	private static final List<Permission> multiblock_permissions = new ArrayList<> ();
 	
 	
 	

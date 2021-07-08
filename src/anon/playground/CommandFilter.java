@@ -2,17 +2,14 @@ package anon.playground;
 
 
 
-import java.util.List;
 import java.util.Arrays;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.util.BlockIterator;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
@@ -21,7 +18,6 @@ import me.idra.multiblocksystem.filehandlers.FileHandlerPlayerData;
 import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
-import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
 
 
 
@@ -65,8 +61,6 @@ public class CommandFilter extends BaseCommand{
 			return false;
 		}
 
-		BlockPosition position = new BlockPosition(target_block.getLocation());
-
 		// Get the multiblock the player is trying to interface with
 		BaseWorldMultiblock multiblock = ListWorldMultiblocks.getMultiblockFromLocation(target_block.getLocation());
 
@@ -81,7 +75,7 @@ public class CommandFilter extends BaseCommand{
 		if (!(multiblock.owner == player.getUniqueId() || Arrays.asList(FileHandlerPlayerData.getTrustedPlayers(multiblock.owner)).contains(player))) {
 			MessageHandler.send(player,
 					MessageHandler.getError("cannot-modify-multiblock")
-					.replace("%player", player.getName()));
+					.replace(ConstantPlaceholders.arg1, player.getName()));
 			return false;
 		}
 
@@ -97,8 +91,8 @@ public class CommandFilter extends BaseCommand{
 //			if (!multiblock.abstract_multiblock.inventory_tags.contains(args[1])) {
 //				MessageHandler.send(player,
 //						MessageHandler.getError("invalid-inventory-tag")
-//						.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
-//						.replace(ConstantPlaceholders.TAG, args[1]));
+//						.replace(ConstantPlaceholders.arg1, multiblock.abstract_multiblock.name_of_structure_block)
+//						.replace(ConstantPlaceholders.arg2, args[1]));
 //				return false;
 //			}
 //
@@ -138,8 +132,8 @@ public class CommandFilter extends BaseCommand{
 //		if (!multiblock.abstract_multiblock.position_tags.keySet().contains(args[1])) {
 //			MessageHandler.send(player,
 //					MessageHandler.getError("invalid-position-tag")
-//					.replace(ConstantPlaceholders.MULTIBLOCK, multiblock.abstract_multiblock.name_of_structure_block)
-//					.replace(ConstantPlaceholders.TAG, args[1]));
+//					.replace(ConstantPlaceholders.arg1, multiblock.abstract_multiblock.name_of_structure_block)
+//					.replace(ConstantPlaceholders.arg2, args[1]));
 //			return false;
 //		}
 //

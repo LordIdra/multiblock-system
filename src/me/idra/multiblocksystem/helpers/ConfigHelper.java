@@ -17,28 +17,6 @@ public class ConfigHelper {
 	private ConfigHelper() {
 	}
 
-	public static Map<String, Integer> getEnergyMap(File file, ConfigurationSection config_energy) {
-
-		// Create new energy map
-		Map<String, Integer> energy = new HashMap<>();
-
-		// Add each pair of tag to energy
-		for (String energy_tag : config_energy.getKeys(false)) {
-
-			int energy_value = config_energy.getInt(energy_tag);
-
-			// Check energy value is valid
-			if (energy_value == 0) {
-				Logger.configError(Logger.OPTION_INVALID, file, config_energy, energy_tag);
-				continue;
-			}
-
-			energy.put(energy_tag, energy_value);
-		}
-
-		return energy;
-	}
-
 	public static List<ItemStack> getItemStackList(File file, ConfigurationSection config_outputs) {
 		List<ItemStack> outputs = new ArrayList<>();
 		Set<String> output_item_keys = config_outputs.getKeys(false);
@@ -48,7 +26,7 @@ public class ConfigHelper {
 
 			if (output_amount_and_item == null || output_amount_and_item.isBlank()) {
 				Logger.configError(Logger.OPTION_INVALID, file, config_outputs, item_key + "." + output_amount_and_item);
-				return null;
+				return new ArrayList<>();
 			}
 
 			String[] split_string = output_amount_and_item.split("\\s");
@@ -83,7 +61,12 @@ public class ConfigHelper {
 		// Load config
 		FileConfiguration group_config = YamlConfiguration.loadConfiguration(group_file);
 		ConfigurationSection group_section = group_config.getConfigurationSection(ITEM_GROUPS);
-		Logger.log(name, true);
+
+		if (group_section == null) {
+			// Error message handled outside of this group
+			return new ArrayList<>();
+		}
+
 		List<String> item_names = group_section.getStringList(name.toLowerCase());
 
 		// Convert names to MixedItemStacks

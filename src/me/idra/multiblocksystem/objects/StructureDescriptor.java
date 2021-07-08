@@ -1,5 +1,6 @@
 package me.idra.multiblocksystem.objects;
 
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.Logger;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
@@ -46,7 +47,10 @@ public class StructureDescriptor {
 				}
 			}
 		}
-		Logger.log(Logger.getWarning("abstract-lectern-not-found").replace("%multiblock%", multiblock_name), true);
+		Logger.log(
+				Logger.getWarning("abstract-lectern-not-found")
+				.replace(ConstantPlaceholders.arg1, multiblock_name),
+				true);
 	}
 
 	/**

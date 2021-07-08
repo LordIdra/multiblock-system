@@ -1,0 +1,13 @@
+name: MultiblockSystem
+main: me.idra.multiblocksystem.MultiblockSystem
+depend: [Slimefun, ParticleLib]
+version: 0.0.1
+api-version: 1.16
+author: Idra
+
+
+commands:
+  multiblock:
+    aliases: mb
+    description: Multiblock plugin command
+    usage: /multiblock help
