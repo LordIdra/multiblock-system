@@ -1,6 +1,6 @@
 package hyn.IsMultiblockLoaded;
 
-public class createMultiblockIsLoadedMap_ {
+public class createMultiblockIsLoadedMap {
 
     // What this class needs to do:
     // 1. Create an array of loaded Chunks from bukkit method getLoadedChunks()
