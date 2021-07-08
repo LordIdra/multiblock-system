@@ -1,4 +1,4 @@
-package me.idra.multiblocksystem.commands;
+package anon.playground;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
