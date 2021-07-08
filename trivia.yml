@@ -601,9 +601,10 @@ questions:
       - 'No'
 
   124:
-    question: 'What block, other than netherrack, can keep a fire going indefinitely?'
+    question: 'Name a block, other than Netherrack, which allows for Eternal Fire (Can burn forever)'
     answer:
       - 'Bedrock'
+      - 'Magma Block'
 
   125:
     question: 'Can bone blocks generate naturally?'
@@ -720,5 +721,5 @@ questions:
   148:
     question: 'Name a block which can spawn on top of the Nether'
     answer:
-      - 'red mushroom'
-      - 'brown mushroom'
+      - 'Red Mushroom'
+      - 'Brown Mushroom'
