@@ -285,6 +285,9 @@ public class AbstractMultiblock {
 				relative_offset.setZ(temp_x);
 				end_point.subtract(relative_offset);
 				break;
+
+			default:
+				break;
 		}
 
 
@@ -312,6 +315,8 @@ public class AbstractMultiblock {
 							break;
 						case WEST:
 							block_location = starting_point.clone().add(new Location(player.getWorld(), -z, y, x));
+							break;
+						default:
 							break;
 					}
 

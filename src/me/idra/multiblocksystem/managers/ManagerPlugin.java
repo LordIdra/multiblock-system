@@ -34,6 +34,11 @@ public class ManagerPlugin {
 	public static int tick_interval;
 
 
+	private static void saveConfigFromPath(String path) {
+		plugin.saveResource(path, false);
+	}
+
+
 	public static void initialize(MultiblockSystem in_plugin) {
 		
     	// Set important attributes
@@ -41,9 +46,8 @@ public class ManagerPlugin {
     	config = plugin.getConfig();
     	messages = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
     	tick_interval = config.getInt("Ticks.multiblock-tick-interval");
-    	
-    	// Set up config
-    	plugin.saveDefaultConfig();
+
+		plugin.saveDefaultConfig();
     	
     	// Ensure default folders exist
 		File multiblock_folder = new File(plugin.getDataFolder(), "multiblocks");
@@ -58,6 +62,30 @@ public class ManagerPlugin {
 			if (!slimefun_folder.exists())
 				slimefun_folder.mkdir();
 		
+		// Save default configs
+		String[] paths = new String[] {
+			"config.yml",
+			"itemgroups.yml",
+			"messages.yml",
+
+			"data/PermanentVariables.yml",
+			"data/PlayerData.yml",
+			"data/WorldMultiblocks.yml",
+
+			"slimefun/items.yml",
+			"slimefun/researches.yml",
+
+			"multiblocks/LargeGoldPan/settings.yml",
+			"multiblocks/LargeGoldPan/structure.yml"
+		};
+
+		for (String path : paths) {
+			saveConfigFromPath(path);
+		}
+
+		new File(plugin.getDataFolder(), "config").delete();
+		
+		// Load file handlers
 		FileHandlerPermanentVariables.loadFile();
 		FileHandlerPlayerData.loadFile();
 		FileHandlerWorldMultiblocks.loadFile();
