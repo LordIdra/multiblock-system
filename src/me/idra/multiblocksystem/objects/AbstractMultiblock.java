@@ -1,7 +1,18 @@
 package me.idra.multiblocksystem.objects;
 
+<<<<<<< Updated upstream
 import me.idra.multiblocksystem.helpers.*;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
+=======
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Scanner;
+
+>>>>>>> Stashed changes
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -234,10 +245,17 @@ public class AbstractMultiblock {
 			Location central_block_location,
 			BlockFace central_block_orientation,
 			StructureDescriptor abstract_descriptor) {
+<<<<<<< Updated upstream
 
 		// Initialize empty map that will store every block and its corresponding group
 		Map<Block, ItemGroup> block_to_group_map = new LinkedHashMap<>();
 
+=======
+		
+		// Initialize empty map that will store every BlockInfo and its corresponding ItemInfo
+		Map<WorldMixedItemStack, AbstractMixedItemStack> world_to_abstract_map = new LinkedHashMap<> ();
+		
+>>>>>>> Stashed changes
 		// Figure out block locations
 		Location starting_point = central_block_location.clone();
 		Vector relative_corner_location = abstract_descriptor.central_block.clone();

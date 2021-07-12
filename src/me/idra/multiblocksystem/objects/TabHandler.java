@@ -15,10 +15,16 @@ import org.bukkit.util.StringUtil;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
+<<<<<<< Updated upstream
 import me.idra.multiblocksystem.commands.CommandFilter;
 import me.idra.multiblocksystem.lists.ListCommands;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+=======
+import me.idra.multiblocksystem.commands.CommandTag;
+import me.idra.multiblocksystem.lists.ListCommands;
+import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
+>>>>>>> Stashed changes
 
 
 
@@ -40,7 +46,11 @@ public class TabHandler implements TabCompleter {
 	    		continue;
 
 			// If the command is /mb tag
+<<<<<<< Updated upstream
 			if (base_command instanceof CommandFilter && args.length == 2) {
+=======
+			if (base_command instanceof CommandTag && args.length == 2) {
+>>>>>>> Stashed changes
 				
 				BlockIterator block_iterator = new BlockIterator((Player) sender, 5);
 				Block target_block = null;
@@ -65,6 +75,7 @@ public class TabHandler implements TabCompleter {
 					continue;
 				}
 
+<<<<<<< Updated upstream
 				// TODO ????????????
 				if (target_block.getType() == Material.CHEST || target_block.getType() == Material.BARREL) {
 
@@ -81,6 +92,10 @@ public class TabHandler implements TabCompleter {
 //					for (String tag : multiblock.abstract_multiblock.position_tags.keySet()) {
 //						possibilities.add(tag);
 //					}
+=======
+				for (String tag : multiblock.abstract_multiblock.tags) {
+					possibilities.add(tag);
+>>>>>>> Stashed changes
 				}
 
 				continue;
