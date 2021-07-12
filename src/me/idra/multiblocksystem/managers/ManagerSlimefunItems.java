@@ -12,7 +12,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+<<<<<<< Updated upstream
 import me.idra.multiblocksystem.helpers.ItemStackHelper;
+=======
+>>>>>>> Stashed changes
 import me.idra.multiblocksystem.helpers.Logger;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -110,12 +113,17 @@ public class ManagerSlimefunItems {
 			// Get variables
 			ConfigurationSection research_section = research_config.getConfigurationSection(key);
 
+<<<<<<< Updated upstream
 			 assert research_section != null;
 			 int number 	= research_section.getInt("number");
+=======
+			int number 	= research_section.getInt("number");
+>>>>>>> Stashed changes
 			int xp 		= research_section.getInt("xp");
 			String name = research_section.getString("name");
 
 			// Variable checking
+<<<<<<< Updated upstream
 			if (number == 0) {
 				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "number");
 				continue;
@@ -130,6 +138,11 @@ public class ManagerSlimefunItems {
 				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "name");
 				continue;
 			}
+=======
+			if (number == 0) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "number");
+			if (xp == 0) 		Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "xp");
+			if (name == null) 	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, research_section, "name");
+>>>>>>> Stashed changes
 
 			// Generate research
 			NamespacedKey research_key = new NamespacedKey(ManagerPlugin.plugin, key.toUpperCase());
@@ -149,6 +162,7 @@ public class ManagerSlimefunItems {
 			ConfigurationSection section = item_config.getConfigurationSection(key);
 			assert section != null;
 
+<<<<<<< Updated upstream
 			ConfigurationSection display_item_section = section.getConfigurationSection("Item");
 			ConfigurationSection recipe_section = section.getConfigurationSection("Recipe");
 
@@ -200,6 +214,28 @@ public class ManagerSlimefunItems {
 			}
 
 			display_item_type = display_item_type.toUpperCase();
+=======
+			if (display_item_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, null);
+			if (recipe_section == null)			Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, null);
+			
+			ConfigurationSection recipe_items_section = recipe_section.getConfigurationSection("items");
+
+			if (recipe_items_section == null)	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_items_section, null);
+
+			// Variables
+			String name 				= section.getString("name");
+			String display_item_type 	= display_item_section.getString("type").toUpperCase();
+			String display_item_id 		= display_item_section.getString("id");
+			int amount 			 		= recipe_section.getInt("amount");
+			RecipeType recipe_type		= RECIPE_TYPES.get(recipe_section.getString("type"));
+
+			if (name == null)							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, section, "name");
+			if (display_item_type == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "type");
+			if (display_item_id == null)				Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, display_item_section, "id");
+			if (!display_item_type.equals("NORMAL")
+				&&  !display_item_type.equals("HEAD"))	Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "amount");
+			if (amount == 0) 							Logger.configError(Logger.OPTION_NOT_FOUND, slimefun_item_file, recipe_section, "type");
+>>>>>>> Stashed changes
 
 
 			// Get recipe items + amount
