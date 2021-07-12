@@ -1,0 +1,106 @@
+layer-1:
+  x1:
+    z1: iron_bars
+    z2: iron_block
+    z3: iron_bars
+
+  x2:
+    z1: iron_block
+    z2: iron_block
+    z3: iron_block
+
+  x3:
+    z1: iron_block
+    z2: cauldron
+    z3: iron_block
+  
+  x4:
+    z1: iron_block
+    z2: iron_block
+    z3: iron_block
+
+  x5:
+    z1: iron_bars
+    z2: iron_block
+    z3: iron_bars
+
+
+layer-2:
+  x1:
+    z1: air
+    z2: chest[FuelIn]
+    z3: air
+  
+  x2:
+    z1: air
+    z2: electric_gold_pan_3
+    z3: chest[ItemOut]
+  
+  x3:
+    z1: chest[ItemIn]
+    z2: group:trapdoor
+    z3: lectern
+
+  x4:
+    z1: air
+    z2: electric_gold_pan_3
+    z3: chest[ItemOut]
+  
+  x5:
+    z1: air
+    z2: energized_capacitor[EnergyIn]
+    z3: air
+
+
+layer-3:
+  x1:
+    z1: air
+    z2: air
+    z3: air
+  
+  x2:
+    z1: air
+    z2: electric_gold_pan_3 
+    z3: air
+
+  x3:
+    z1: air
+    z2: air
+    z3: air
+
+  x4:
+    z1: air
+    z2: electric_gold_pan_3 
+    z3: air
+
+  x5:
+    z1: air
+    z2: air
+    z3: air
+
+
+layer-4:
+  x1:
+    z1: air
+    z2: air
+    z3: air
+  
+  x2:
+    z1: air
+    z2: electric_gold_pan_3 
+    z3: air
+
+  x3:
+    z1: air
+    z2: air
+    z3: air
+
+  x4:
+    z1: air
+    z2: electric_gold_pan_3 
+    z3: air
+
+  x5:
+    z1: air
+    z2: air
+    z3: air

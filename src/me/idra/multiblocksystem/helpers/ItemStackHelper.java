@@ -1,5 +1,6 @@
 package me.idra.multiblocksystem.helpers;
 
+import me.idra.multiblocksystem.lists.ListItemGroups;
 import me.idra.multiblocksystem.objects.ItemGroup;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -7,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 
 import java.io.File;
 
@@ -61,11 +64,17 @@ public class ItemStackHelper {
 	}
 
 	public static ItemGroup groupFromBlock(Block block) {
-
-		// TODO
 		ItemStack stack = blockToItemStack(block);
 
-//		for (String key : ListItemGroups.material_groups)
+		for (String key : ListItemGroups.material_groups.keySet()) {
+			ItemGroup value = ListItemGroups.material_groups.get(key);
+			for (ItemStack group_stack : value.stacks) {
+				if (SlimefunUtils.isItemSimilar(stack, group_stack, true, false)) {
+					return value;
+				}
+			}
+		}
+
 		return null;
 	}
 }

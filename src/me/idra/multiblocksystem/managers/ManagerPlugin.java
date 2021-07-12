@@ -42,9 +42,6 @@ public class ManagerPlugin {
     	messages = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
     	tick_interval = config.getInt("Ticks.multiblock-tick-interval");
     	
-    	// Set up config
-    	plugin.saveDefaultConfig();
-    	
     	// Ensure default folders exist
 		File multiblock_folder = new File(plugin.getDataFolder(), "multiblocks");
 		if (!multiblock_folder.exists())
@@ -55,8 +52,36 @@ public class ManagerPlugin {
 			data_folder.mkdir();
 
 		File slimefun_folder = new File(plugin.getDataFolder(), "slimefun");
-			if (!slimefun_folder.exists())
-				slimefun_folder.mkdir();
+		if (!slimefun_folder.exists())
+			slimefun_folder.mkdir();
+
+		File editor_folder = new File(plugin.getDataFolder(), "editor");
+		if (!editor_folder.exists())
+			editor_folder.mkdir();
+		
+		// Copy across default configs
+		final String[] paths_of_configs_to_copy = new String[] {
+
+			"config.yml",
+			"messages.yml",
+			"itemgroups.yml",
+
+			"slimefun/items.yml",
+			"slimefun/researches.yml",
+
+			"data/PermanentVariables.yml",
+			"data/PlayerData.yml",
+			"data/WorldMultiblocks.yml",
+
+			"multiblocks/LargeGoldPan/settings.yml",
+			"multiblocks/LargeGoldPan/structure.yml"
+		};
+
+		for (String path : paths_of_configs_to_copy) {
+			if (!new File(plugin.getDataFolder(), path).exists()) {
+				plugin.saveResource(path, false);
+			}
+		}
 		
 		FileHandlerPermanentVariables.loadFile();
 		FileHandlerPlayerData.loadFile();
