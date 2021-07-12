@@ -42,7 +42,6 @@ public class TabHandler implements TabCompleter {
 	    for (BaseCommand base_command : ListCommands.command_object_array) {
 	    	
 	    	// If the player has permission to use the command
-<<<<<<< Updated upstream
 	    	if (!sender.hasPermission(base_command.permission))
 	    		continue;
 
@@ -99,11 +98,9 @@ public class TabHandler implements TabCompleter {
 >>>>>>> Stashed changes
 				}
 
-=======
-	    	if (!sender.hasPermission(base_command.permission)) {
->>>>>>> Stashed changes
 				continue;
 			}
+
 	    	
 	    	// If there are less arguments inputted than the number of arguments in the command
 	    	if (args.length <= base_command.all_arguments.size()) {
@@ -118,11 +115,9 @@ public class TabHandler implements TabCompleter {
 	    			}
 	    		}
 	    		
-	    		if (args_match) {
-					for (String arg : base_command.all_arguments.get(args.length - 1)) {
-						possibilities.add(arg);
-					}
-				}
+	    		if (args_match)
+	    			for (String arg : base_command.all_arguments.get(args.length-1))
+	    				possibilities.add(arg);
 	    	}
 	    }
 	    

@@ -24,7 +24,10 @@ public class StructureDescriptor {
 	 */
 	public StructureDescriptor(String multiblock_name, List<List<List<ItemGroup>>> layer_groups) {
 		groups = layer_groups;
-		structure_dimensions = new Vector(groups.get(0).size(), groups.size(), groups.get(0).get(0).size());
+		structure_dimensions = new Vector();
+		structure_dimensions.setX(groups.size());
+		structure_dimensions.setY(groups.get(0).size());
+		structure_dimensions.setZ(groups.get(0).get(0).size());
 
 		setCentralBlock(multiblock_name);
 		calculateAmountsOfDifferentBlocks();

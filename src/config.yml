@@ -1,7 +1,0 @@
-Ticks:
-  
-  # Minecraft ticks per multiblock tick
-  multiblock-tick-interval: 1
-
-  # Number of ticks between error ticking
-  error-tick-interval: 5

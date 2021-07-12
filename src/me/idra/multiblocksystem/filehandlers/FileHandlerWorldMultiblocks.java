@@ -119,8 +119,7 @@ public class FileHandlerWorldMultiblocks {
 	}
 
 
-	@SuppressWarnings("unchecked")
-	public static void loadMultiblocks() {
+	public static void loadMultiblocks() { //TODO: Finish this
 		// Reload the file, just in case
 		loadFile();
 
@@ -154,8 +153,7 @@ public class FileHandlerWorldMultiblocks {
 			if (multiblock_section.getList(POSITIONS) == null) {
 				multiblock_section.createSection(POSITIONS);
 			}
-
-			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS);
+			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS); // TODO handle unchecked cast
 
 			// Get current recipe information
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
@@ -167,7 +165,7 @@ public class FileHandlerWorldMultiblocks {
 				continue;
 			}
 
-			// Load recipe
+			// Store recipe
 			int recipe_index = recipe_section.getInt("Index");
 			int recipe_time = recipe_section.getInt("Time");
 

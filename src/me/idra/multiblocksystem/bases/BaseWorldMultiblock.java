@@ -28,8 +28,8 @@ public abstract class BaseWorldMultiblock {
 
 	public AbstractMultiblock abstract_multiblock;
 	public List<BlockPosition> blocks;
-	public final List<Inventory> inputs = new ArrayList<Inventory> ();
-	public final List<Inventory> outputs = new ArrayList<Inventory> ();
+	public List<Inventory> inputs;
+	public List<Inventory> outputs;
 	public Map<Inventory, List<ItemStack>> out_filter;
 
 	public MultiblockRecipe active_recipe = null;
