@@ -2,6 +2,7 @@ package me.idra.multiblocksystem.commands;
 
 import me.idra.multiblocksystem.bases.BaseCommand;
 import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
+import me.idra.multiblocksystem.helpers.ConstantPlaceholders;
 import me.idra.multiblocksystem.helpers.MessageHandler;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import org.bukkit.ChatColor;
@@ -19,7 +20,7 @@ public class CommandToggleIO extends BaseCommand {
 
 		name = new String[]{"toggle", "io"};
 		description = ChatColor.DARK_AQUA + "Toggles the inventory as either a Input or Output";
-		arguments = null;
+		arguments = new String[] {};
 		hidden = false;
 		console = false;
 
@@ -31,7 +32,7 @@ public class CommandToggleIO extends BaseCommand {
 	public boolean commandFunction(CommandSender sender, Command command, String label, String[] args) {
 		Player player = (Player) sender;
 		BlockIterator block_iterator = new BlockIterator(player, 5);
-		BaseWorldMultiblock multi_block;
+		BaseWorldMultiblock multiblock;
 
 
 		Inventory container_block = null;
@@ -46,17 +47,24 @@ public class CommandToggleIO extends BaseCommand {
 				break;
 			}
 		}
+
 		if (container_block == null || container_block.getLocation() == null) {
 			MessageHandler.send(player, MessageHandler.getError("not-looking-at-container"));
 			return false;
 		} else {
-			multi_block = ListWorldMultiblocks.getMultiblockFromLocation(container_block.getLocation());
-			if (multi_block == null) {
+			multiblock = ListWorldMultiblocks.getMultiblockFromLocation(container_block.getLocation());
+			if (multiblock == null) {
 				MessageHandler.send(player, MessageHandler.getError("not-part-of-multiblock"));
 				return false;
 			}
-			multi_block.flipIO(container_block);
+
+			if (multiblock.flipIO(container_block) == BaseWorldMultiblock.INPUT) {
+				MessageHandler.send(player, MessageHandler.getSuccess("io-toggled").replace(ConstantPlaceholders.arg1, "&2input"));
+			} else {
+				MessageHandler.send(player, MessageHandler.getSuccess("io-toggled").replace(ConstantPlaceholders.arg1, "&4output"));
+			}
 		}
+
 		return true;
 	}
 }

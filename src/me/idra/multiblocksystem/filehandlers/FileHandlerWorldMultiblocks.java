@@ -8,12 +8,18 @@ import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
 import me.idra.multiblocksystem.managers.ManagerPlugin;
 import me.idra.multiblocksystem.objects.AbstractMultiblock;
 import me.mrCookieSlime.Slimefun.cscorelib2.blocks.BlockPosition;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.block.Container;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.Inventory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,12 +94,20 @@ public class FileHandlerWorldMultiblocks {
 				multiblock_section = world_multiblock_config.getConfigurationSection(String.valueOf(multiblock.ID));
 			}
 
+			// Create input position array
+			List<Long> inputs = new ArrayList<> ();
+
+			for (Inventory inv : multiblock.inputs) {
+				inputs.add(BlockPosition.getAsLong(inv.getLocation()));
+			}
+
 			// Set basic variables
 			assert multiblock_section != null;
 			multiblock_section.set("Owner", multiblock.owner.toString());
-			multiblock_section.set("World", multiblock.world.toString());    // no idea wtf I'm doing // Anon fixed it
+			multiblock_section.set("World", multiblock.world.getName());
 			multiblock_section.set("AbstractMultiblock", multiblock.abstract_multiblock.name_of_structure_block.toUpperCase());
 			multiblock_section.set("FuelTicks", multiblock.fuel_ticks);
+			multiblock_section.set("Inputs", inputs);
 
 			// Check current recipe section exists
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
@@ -111,7 +125,15 @@ public class FileHandlerWorldMultiblocks {
 			} else {
 				recipe_section.set("Time", 0);
 			}
-			multiblock_section.set(POSITIONS, multiblock.blocks);
+
+			// Store blocks
+			List<Long> positions_as_longs = new ArrayList<> ();
+
+			for (BlockPosition position : multiblock.blocks) {
+				positions_as_longs.add(position.getPosition());
+			}
+
+			multiblock_section.set(POSITIONS, positions_as_longs);
 		}
 
 		// Save the new config
@@ -147,13 +169,21 @@ public class FileHandlerWorldMultiblocks {
 			String name = multiblock_section.getString("AbstractMultiblock");
 			int fuel_ticks = multiblock_section.getInt("FuelTicks");
 			AbstractMultiblock abstract_multiblock = ListAbstractMultiblocks.structures.get(name);
+			World world = Bukkit.getWorld(multiblock_section.getString("World"));
+			List<Long> inputs = multiblock_section.getLongList("Inputs");
 
 			// Check map sections exist
-			List<BlockPosition> blocks;
+			List<BlockPosition> blocks = new ArrayList<> ();
 			if (multiblock_section.getList(POSITIONS) == null) {
 				multiblock_section.createSection(POSITIONS);
 			}
-			blocks = (List<BlockPosition>) multiblock_section.getList(POSITIONS); // TODO handle unchecked cast
+
+
+			List<Long> blocks_as_longs = (List<Long>) multiblock_section.getList(POSITIONS); // TODO handle unchecked cast
+
+			for (Long position : blocks_as_longs) {
+				blocks.add(new BlockPosition(world, position));
+			}
 
 			// Get current recipe information
 			ConfigurationSection recipe_section = multiblock_section.getConfigurationSection(RECIPE);
@@ -171,6 +201,13 @@ public class FileHandlerWorldMultiblocks {
 
 			// Generate WorldMultiblock
 			ListWorldMultiblocks.instantiateWorldMultiblock(abstract_multiblock, blocks, uuid, ID, fuel_ticks, recipe_index, recipe_time);
+
+			// Set inputs on new multiblock
+			for (Long position : inputs) {
+				BaseWorldMultiblock new_multiblock = ListWorldMultiblocks.multiblock_objects.get(ID);
+				new_multiblock.flipIO(((Container) (new BlockPosition(world, position).getBlock().getState())).getInventory());
+				ListWorldMultiblocks.multiblock_objects.put(ID, new_multiblock);
+			}
 		}
 	}
 }

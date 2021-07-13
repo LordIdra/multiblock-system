@@ -46,6 +46,9 @@ public abstract class BaseWorldMultiblock {
 	public static final String PAUSED_NOT_ENOUGH_ITEMS = ChatColor.RED + "No inputs";
 	public static final String PAUSED_NO_FUEL = ChatColor.RED + "No fuel";
 
+	public static final boolean INPUT = true;
+	public static final boolean OUTPUT = false;
+
 	/**
 	 * Constructor for a Multiblock in the Minecraft World. Defaults all inventories to outputs
 	 *
@@ -90,14 +93,18 @@ public abstract class BaseWorldMultiblock {
 		}
 	}
 
-	public void flipIO(Inventory inv) {
+	public boolean flipIO(Inventory inv) {
 		if (inputs.contains(inv)) {
 			outputs.add(inv);
 			inputs.remove(inv);
+			return INPUT;
+
 		} else if (outputs.contains(inv)) {
 			inputs.add(inv);
 			outputs.remove(inv);
 		}
+
+		return OUTPUT;
 	}
 
 	public abstract void tick();
@@ -208,9 +215,7 @@ public abstract class BaseWorldMultiblock {
 				acceptedInventories.put(output, clonedOutputInventory);
 			}
 		}
+
 		return acceptedInventories;
-
 	}
-
-
 }

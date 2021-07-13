@@ -97,7 +97,7 @@ Messages:
     not-part-of-multiblock: '&cThis block is not part of a multiblock.'
     invalid-block: '&cYou must be looking at a solid block.'
 
-    not-looking-at-container: '&cYou must be looking at a container to do this.'
+    not-looking-at-container: '&cYou must be looking at a chest or other inventory block to do this.'
 
 
   Success:
@@ -110,3 +110,5 @@ Messages:
     admin-logs-cleared: '&aError logs cleared successfully.'
     
     auto-build-cancel: '&aAuto-build cancelled.'
+
+    io-toggled: '&aThis inventory is now %arg1%'

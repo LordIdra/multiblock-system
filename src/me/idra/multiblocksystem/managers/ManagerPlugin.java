@@ -35,7 +35,9 @@ public class ManagerPlugin {
 
 
 	private static void saveConfigFromPath(String path) {
-		plugin.saveResource(path, false);
+		if (!new File(plugin.getDataFolder(), path).exists()) {
+			plugin.saveResource(path, false);
+		}
 	}
 
 
