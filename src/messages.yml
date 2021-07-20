@@ -66,6 +66,8 @@ Messages:
     admin-log-title: '&f&l[&7&lError Log&f&l]'
     admin-log-format: '&4[&6%arg1%&4] &e%arg2%'
 
+    io-type: '&fThis inventory is set to %arg1%'
+
 
   Error:
     multiblock-not-recognised: '&cMultiblock &6%arg1% &cnot recognised.'

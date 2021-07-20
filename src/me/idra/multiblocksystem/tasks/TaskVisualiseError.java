@@ -33,7 +33,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 		
 		// Set direct variables
 		this.error = error;
-		this.visual_time = visual_time;
+		this.visual_time = visual_time * 3;
 		
 		// Get particle offset from config
 		settings = ListPlayerSettings.getPlayerSettings(error.player.getUniqueId());
@@ -62,7 +62,7 @@ public class TaskVisualiseError extends BukkitRunnable{
 		error.player.sendTitle(
 				main_title, sub_title, 
 				2, 
-				settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_TIME) * 20, 
+				settings.getContainerValueAsInt(ConstantSettingNames.UNRESOLVED_ERROR_TIME) * 50, 
 				2);
 	}
 	

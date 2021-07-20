@@ -49,7 +49,7 @@ public class PlayerSettings {
 		
 		settingContainerMap.put(ConstantSettingNames.UNRESOLVED_ERROR_TIME, new SettingContainer(15,4,30));
 		settingContainerMap.put(ConstantSettingNames.RESOLVED_ERROR_TIME, new SettingContainer(1,0,5));
-		settingContainerMap.put(ConstantSettingNames.ERROR_PARTICLE_AMOUNT, new SettingContainer(1,20,100));
+		settingContainerMap.put(ConstantSettingNames.ERROR_PARTICLE_AMOUNT, new SettingContainer(60,20,100));
 		settingContainerMap.put(ConstantSettingNames.LOCATION_PARTICLE_TIME, new SettingContainer(5,2,10));	
 		settingContainerMap.put(ConstantSettingNames.LOCATION_PARTICLE_AMOUNT, new SettingContainer(5,2,10));	
 		settingContainerMap.put(ConstantSettingNames.LIST_ITEMS_PER_PAGE, new SettingContainer(8,3,15));	

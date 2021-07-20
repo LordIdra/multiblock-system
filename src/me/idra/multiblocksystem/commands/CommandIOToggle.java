@@ -14,11 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.util.BlockIterator;
 
-public class CommandToggleIO extends BaseCommand {
-	public CommandToggleIO() {
+public class CommandIOToggle extends BaseCommand {
+	public CommandIOToggle() {
 		super();
 
-		name = new String[]{"toggle", "io"};
+		name = new String[]{"io", "toggle"};
 		description = ChatColor.DARK_AQUA + "Toggles the inventory as either a Input or Output";
 		arguments = new String[] {};
 		hidden = false;

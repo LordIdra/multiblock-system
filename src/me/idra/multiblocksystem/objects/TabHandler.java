@@ -18,7 +18,6 @@ import me.idra.multiblocksystem.bases.BaseWorldMultiblock;
 import me.idra.multiblocksystem.commands.CommandFilter;
 import me.idra.multiblocksystem.lists.ListCommands;
 import me.idra.multiblocksystem.lists.ListWorldMultiblocks;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 
 
@@ -72,11 +71,6 @@ public class TabHandler implements TabCompleter {
 //						possibilities.add(tag);
 //					}
 
-				} else if ((BlockStorage.check(target_block) != null) && (BlockStorage.check(target_block).getId().contains("CAPACITOR"))) {
-//					for (String tag : multiblock.abstract_multiblock.energy_tags) {
-//						possibilities.add(tag);
-//					}
-				
 				} else {
 //					for (String tag : multiblock.abstract_multiblock.position_tags.keySet()) {
 //						possibilities.add(tag);

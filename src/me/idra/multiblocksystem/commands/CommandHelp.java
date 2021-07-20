@@ -43,10 +43,10 @@ public class CommandHelp extends BaseCommand{
 				MessageHandler.getInfo("help-title"));
 		MessageHandler.send(sender,
 				MessageHandler.getInfo("help-version")
-				.replace("%version%", ManagerPlugin.VERSION));
+				.replace(ConstantPlaceholders.arg1, ManagerPlugin.VERSION));
 		MessageHandler.send(sender,
 				MessageHandler.getInfo("help-author")
-				.replace("%author%", ManagerPlugin.AUTHOR));
+				.replace(ConstantPlaceholders.arg1, ManagerPlugin.AUTHOR));
 		MessageHandler.send(sender,
 				MessageHandler.getInfo("newline"));
 		

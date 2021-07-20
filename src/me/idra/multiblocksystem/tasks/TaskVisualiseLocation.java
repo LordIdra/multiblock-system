@@ -30,7 +30,7 @@ public class TaskVisualiseLocation extends BukkitRunnable{
 		player_settings = ListPlayerSettings.getPlayerSettings(player.getUniqueId());
 		
 		// Time we should display this for
-		visual_time = player_settings.getContainerValueAsInt(ConstantSettingNames.LOCATION_PARTICLE_TIME);
+		visual_time = player_settings.getContainerValueAsInt(ConstantSettingNames.LOCATION_PARTICLE_TIME) * 3;
 		
 		// Where we should display it
 		loc = in_loc.add(new Location(in_loc.getWorld(), 0.5, 0.5, 0.5));

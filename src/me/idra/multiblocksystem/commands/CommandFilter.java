@@ -27,7 +27,7 @@ public class CommandFilter extends BaseCommand{
 		super();
 
 		name = new String[] {"filter"};
-		description = ChatColor.DARK_AQUA + "Set a Item Filter for a Block Entity";
+		description = ChatColor.DARK_AQUA + "Set a filter for an inventory block";
 		arguments = new String[] {"filter"};
 		hidden = false;
 		console = false;

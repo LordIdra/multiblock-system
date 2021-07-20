@@ -11,7 +11,8 @@ import me.idra.multiblocksystem.commands.CommandListTrusted;
 import me.idra.multiblocksystem.commands.CommandPage;
 import me.idra.multiblocksystem.commands.CommandSettings;
 import me.idra.multiblocksystem.commands.CommandShowError;
-import me.idra.multiblocksystem.commands.CommandToggleIO;
+import me.idra.multiblocksystem.commands.CommandIOToggle;
+import me.idra.multiblocksystem.commands.CommandIOView;
 import me.idra.multiblocksystem.commands.CommandFilter;
 import me.idra.multiblocksystem.commands.CommandTrust;
 
@@ -20,18 +21,19 @@ import me.idra.multiblocksystem.commands.CommandTrust;
 public class ListCommands {
 
 	public static final BaseCommand[] command_object_array = {
+			new CommandHelp(),
 			new CommandAdminLogClear(),
 			new CommandAdminLogView(),
 			new CommandAssemble(),
 			new CommandEditorCreate(),
 			new CommandFilter(),
-			new CommandHelp(),
 			new CommandListMultiblocks(),
 			new CommandListTrusted(),
 			new CommandPage(),
 			new CommandSettings(),
 			new CommandShowError(),
-			new CommandToggleIO(),
+			new CommandIOToggle(),
+			new CommandIOView(),
 			new CommandTrust()
 	};
 
