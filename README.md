@@ -1,6 +1,8 @@
 <h1>MultiBlockSystem</h1>  
 <h2>(Alpha Version)</h2>
 
+***THIS PLUGIN DOES NOT WORK WITH THE LATEST VERSIONS OF SLIEMFUN.***
+
 A custom plugin for creating Customized MultiBlocks with SlimeFun 4 integration.
 
 Multiblocks Can be Setup to allow use of interchangable materials within the multiblock structure to allow it to nicely
